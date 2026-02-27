@@ -1,0 +1,67 @@
+name: AWS CloudFormation API
+description: API definition for AWS CloudFormation service
+image: https://aws.amazon.com/cloudformation/logo.png
+created: '2024'
+modified: '2024'
+url: https://docs.aws.amazon.com/cloudformation/
+specificationVersion: '0.16'
+tags:
+- infrastructure as code
+- IaC
+- automation
+- AWS
+- cloud resources
+- stack management
+apis:
+- name: AWS CloudFormation API
+  description: AWS CloudFormation gives you an easy way to model a collection of related AWS and third-party resources, provision them quickly and consistently, and manage them throughout their lifecycles
+  image: https://aws.amazon.com/cloudformation/logo.png
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - infrastructure
+  - stacks
+  - templates
+  - resources
+  properties:
+  - type: X-documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: X-api-documentation
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/
+  - type: X-openapi
+    url: https://api.apis.guru/v2/specs/amazonaws.com/cloudformation/2010-05-15/openapi.yaml
+  - type: X-pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: X-getting-started
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: X-features
+    url: https://aws.amazon.com/cloudformation/features/
+  - type: X-faq
+    url: https://aws.amazon.com/cloudformation/faqs/
+  - type: X-templates
+    url: https://aws.amazon.com/cloudformation/resources/templates/
+  - type: X-user-guide
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/
+  - type: X-cli-reference
+    url: https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudformation/index.html
+  - type: X-service-level-agreement
+    url: https://aws.amazon.com/cloudformation/sla/
+  - type: X-change-log
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  contact:
+  - FN: AWS Support
+    url: https://aws.amazon.com/contact-us/
+    email: ''
+common:
+- type: X-terms-of-service
+  url: https://aws.amazon.com/terms/
+- type: X-privacy-policy
+  url: https://aws.amazon.com/privacy/
+- type: X-blog
+  url: https://aws.amazon.com/blogs/devops/category/management-tools/aws-cloudformation/
+- type: X-status
+  url: https://status.aws.amazon.com/
+maintainers:
+- FN: Amazon Web Services
+  email: ''
+  url: https://aws.amazon.com
