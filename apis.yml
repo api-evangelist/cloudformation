@@ -1,67 +1,126 @@
 name: AWS CloudFormation API
-description: API definition for AWS CloudFormation service
+description: >-
+  A collection of APIs provided by AWS for infrastructure as code provisioning
+  and management of AWS and third-party resources using CloudFormation templates
+  and the Cloud Control API.
 image: https://aws.amazon.com/cloudformation/logo.png
 created: '2024'
-modified: '2024'
+modified: '2026-03-03'
 url: https://docs.aws.amazon.com/cloudformation/
-specificationVersion: '0.16'
+specificationVersion: '0.18'
 tags:
-- infrastructure as code
+- Infrastructure As Code
 - IaC
-- automation
+- Automation
 - AWS
-- cloud resources
-- stack management
+- Cloud Resources
+- Stack Management
 apis:
 - name: AWS CloudFormation API
-  description: AWS CloudFormation gives you an easy way to model a collection of related AWS and third-party resources, provision them quickly and consistently, and manage them throughout their lifecycles
+  description: >-
+    AWS CloudFormation gives you an easy way to model a collection of related
+    AWS and third-party resources, provision them quickly and consistently, and
+    manage them throughout their lifecycles. It uses templates to define stacks
+    of resources and provides API operations for creating, updating, and deleting
+    stacks.
   image: https://aws.amazon.com/cloudformation/logo.png
   humanURL: https://aws.amazon.com/cloudformation/
   baseURL: https://cloudformation.{region}.amazonaws.com
   tags:
-  - infrastructure
-  - stacks
-  - templates
-  - resources
+  - Infrastructure
+  - Stacks
+  - Templates
+  - Resources
   properties:
-  - type: X-documentation
+  - type: Documentation
     url: https://docs.aws.amazon.com/cloudformation/
-  - type: X-api-documentation
-    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/
-  - type: X-openapi
-    url: https://api.apis.guru/v2/specs/amazonaws.com/cloudformation/2010-05-15/openapi.yaml
-  - type: X-pricing
+  - type: Reference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: OpenAPI
+    url: openapi/cloudformation-api.yml
+  - type: Pricing
     url: https://aws.amazon.com/cloudformation/pricing/
-  - type: X-getting-started
+  - type: Getting Started
     url: https://aws.amazon.com/cloudformation/getting-started/
-  - type: X-features
-    url: https://aws.amazon.com/cloudformation/features/
-  - type: X-faq
-    url: https://aws.amazon.com/cloudformation/faqs/
-  - type: X-templates
-    url: https://aws.amazon.com/cloudformation/resources/templates/
-  - type: X-user-guide
-    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/
-  - type: X-cli-reference
-    url: https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudformation/index.html
-  - type: X-service-level-agreement
-    url: https://aws.amazon.com/cloudformation/sla/
-  - type: X-change-log
+  - type: Change Log
     url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: Client Libraries
+    url: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  contact:
+  - FN: AWS Support
+    url: https://aws.amazon.com/contact-us/
+    email: ''
+- name: AWS Cloud Control API
+  description: >-
+    AWS Cloud Control API provides a uniform CRUDL (create, read, update,
+    delete, list) interface for managing AWS and third-party resources. It
+    offers a standardized way to access and provision resource types available
+    in the CloudFormation Registry without needing to learn each individual
+    service API.
+  image: https://aws.amazon.com/cloudformation/logo.png
+  humanURL: https://aws.amazon.com/cloudcontrolapi/
+  baseURL: https://cloudcontrolapi.{region}.amazonaws.com
+  tags:
+  - Cloud Control
+  - Resources
+  - CRUDL
+  - Provisioning
+  properties:
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: OpenAPI
+    url: openapi/cloud-control-api.yml
+  - type: Reference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
   contact:
   - FN: AWS Support
     url: https://aws.amazon.com/contact-us/
     email: ''
 common:
-- type: X-terms-of-service
+- type: Portal
+  url: https://aws.amazon.com/cloudformation/resources/
+- type: Getting Started
+  url: https://aws.amazon.com/cloudformation/getting-started/
+- type: Documentation
+  url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/
+- type: Pricing
+  url: https://aws.amazon.com/cloudformation/pricing/
+- type: Terms of Service
   url: https://aws.amazon.com/terms/
-- type: X-privacy-policy
+- type: Privacy Policy
   url: https://aws.amazon.com/privacy/
-- type: X-blog
+- type: Blog
   url: https://aws.amazon.com/blogs/devops/category/management-tools/aws-cloudformation/
-- type: X-status
+- type: Status
   url: https://status.aws.amazon.com/
+- type: Console
+  url: https://console.aws.amazon.com/cloudformation/
+- type: Sign Up
+  url: https://portal.aws.amazon.com/billing/signup
+- type: GitHub Organization
+  url: https://github.com/aws-cloudformation
+- type: GitHubRepository
+  url: https://github.com/aws-cloudformation/aws-cloudformation-templates
+- type: Stack Overflow
+  url: https://stackoverflow.com/questions/tagged/aws-cloudformation
+- type: PostmanCollection
+  url: https://www.postman.com/api-evangelist/amazon-web-services-aws/collection/whlqs3o/aws-cloudformation
+- type: JSONSchema
+  url: json-schema/stack.json
+  title: Stack Schema
+- type: JSONSchema
+  url: json-schema/template.json
+  title: Template Schema
+- type: JSONSchema
+  url: json-schema/resource.json
+  title: Resource Schema
+- type: JSONSchema
+  url: json-schema/change-set.json
+  title: Change Set Schema
+- type: JSON-LD
+  url: json-ld/context.jsonld
+  title: JSON-LD Context
 maintainers:
-- FN: Amazon Web Services
-  email: ''
-  url: https://aws.amazon.com
+- name: Kin Lane
+  email: kin@apievangelist.com
+  url: https://apievangelist.com

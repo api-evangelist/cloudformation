@@ -1,0 +1,3360 @@
+openapi: 3.1.0
+info:
+  title: AWS CloudFormation API
+  description: >-
+    AWS CloudFormation gives you an easy way to model a collection of related
+    AWS and third-party resources, provision them quickly and consistently, and
+    manage them throughout their lifecycles. It uses templates to define stacks
+    of resources and provides API operations for creating, updating, and
+    deleting stacks. The API uses a query-style interface where all operations
+    are submitted as POST requests with an Action parameter.
+  version: '2010-05-15'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/contact-us/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-logo:
+    url: https://aws.amazon.com/cloudformation/logo.png
+servers:
+  - url: https://cloudformation.{region}.amazonaws.com
+    description: AWS CloudFormation Regional Endpoint
+    variables:
+      region:
+        default: us-east-1
+        description: AWS region
+        enum:
+          - us-east-1
+          - us-east-2
+          - us-west-1
+          - us-west-2
+          - eu-west-1
+          - eu-west-2
+          - eu-central-1
+          - ap-southeast-1
+          - ap-southeast-2
+          - ap-northeast-1
+security:
+  - AWS_Signature_V4: []
+tags:
+  - name: Stacks
+    description: Operations for creating, updating, deleting, and describing CloudFormation stacks.
+  - name: Stack Events
+    description: Operations for retrieving stack-related events.
+  - name: Stack Resources
+    description: Operations for describing resources within a stack.
+  - name: Stack Drift
+    description: Operations for detecting and describing configuration drift.
+  - name: Change Sets
+    description: Operations for creating and managing change sets to preview stack changes.
+  - name: Templates
+    description: Operations for retrieving, validating, and summarizing templates.
+  - name: Stack Sets
+    description: Operations for managing stack sets across multiple accounts and regions.
+  - name: Stack Instances
+    description: Operations for managing stack instances within a stack set.
+  - name: Stack Policies
+    description: Operations for getting and setting stack policies.
+  - name: Registry
+    description: Operations for managing extension types in the CloudFormation Registry.
+  - name: IaC Generator
+    description: Operations for generating templates from existing resources.
+  - name: Exports
+    description: Operations for listing stack exports and imports.
+paths:
+  /?Action=CreateStack:
+    post:
+      operationId: createStack
+      summary: Create a new stack
+      description: >-
+        Creates a stack as specified in the template. After the call completes
+        successfully, the stack creation starts. You can check the status of the
+        stack through the DescribeStacks operation.
+      tags:
+        - Stacks
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+              properties:
+                StackName:
+                  type: string
+                  description: >-
+                    The name associated with the stack. Must be unique within a
+                    region. Max 128 characters, alphanumeric and hyphens.
+                  maxLength: 128
+                TemplateBody:
+                  type: string
+                  description: >-
+                    Structure containing the template body with a minimum length
+                    of 1 byte and a maximum length of 51,200 bytes.
+                TemplateURL:
+                  type: string
+                  description: >-
+                    Location of file containing the template body. Must be a URL
+                    pointing to a template in an Amazon S3 bucket (max 1 MB).
+                  format: uri
+                Parameters:
+                  type: array
+                  description: A list of Parameter structures specifying input parameters for the stack.
+                  items:
+                    $ref: '#/components/schemas/Parameter'
+                DisableRollback:
+                  type: boolean
+                  description: Set to true to disable rollback of the stack if stack creation fails.
+                  default: false
+                RollbackConfiguration:
+                  $ref: '#/components/schemas/RollbackConfiguration'
+                TimeoutInMinutes:
+                  type: integer
+                  description: >-
+                    The amount of time that can pass before the stack status
+                    becomes CREATE_FAILED.
+                  minimum: 1
+                NotificationARNs:
+                  type: array
+                  description: The Amazon SNS topic ARNs to publish stack related events.
+                  items:
+                    type: string
+                  maxItems: 5
+                Capabilities:
+                  type: array
+                  description: >-
+                    A list of capabilities that you must specify before
+                    CloudFormation can create certain stacks.
+                  items:
+                    type: string
+                    enum:
+                      - CAPABILITY_IAM
+                      - CAPABILITY_NAMED_IAM
+                      - CAPABILITY_AUTO_EXPAND
+                OnFailure:
+                  type: string
+                  description: Determines what action to take if stack creation fails.
+                  enum:
+                    - DO_NOTHING
+                    - ROLLBACK
+                    - DELETE
+                  default: ROLLBACK
+                StackPolicyBody:
+                  type: string
+                  description: Structure containing the stack policy body (1-16,384 bytes).
+                StackPolicyURL:
+                  type: string
+                  description: Location of a file containing the stack policy.
+                  format: uri
+                Tags:
+                  type: array
+                  description: Key-value pairs to associate with this stack. Max 50 tags.
+                  items:
+                    $ref: '#/components/schemas/Tag'
+                  maxItems: 50
+                RoleARN:
+                  type: string
+                  description: >-
+                    The Amazon Resource Name (ARN) of an IAM role that
+                    CloudFormation assumes to create the stack.
+                  minLength: 20
+                  maxLength: 2048
+                EnableTerminationProtection:
+                  type: boolean
+                  description: Whether to enable termination protection on the stack.
+                  default: false
+                ClientRequestToken:
+                  type: string
+                  description: >-
+                    A unique identifier for this CreateStack request. Max 128
+                    characters.
+                  maxLength: 128
+                RetainExceptOnCreate:
+                  type: boolean
+                  description: When true, newly created resources are deleted when the operation rolls back.
+                  default: false
+      responses:
+        '200':
+          description: Stack creation initiated successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  CreateStackResult:
+                    type: object
+                    properties:
+                      StackId:
+                        type: string
+                        description: Unique identifier of the stack.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '409':
+          $ref: '#/components/responses/AlreadyExistsError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=UpdateStack:
+    post:
+      operationId: updateStack
+      summary: Update an existing stack
+      description: >-
+        Updates a stack as specified in the template. After the call completes
+        successfully, the stack update starts. You can check the status of the
+        stack through the DescribeStacks operation.
+      tags:
+        - Stacks
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+              properties:
+                StackName:
+                  type: string
+                  description: The name or unique stack ID of the stack to update.
+                TemplateBody:
+                  type: string
+                  description: Structure containing the updated template body.
+                TemplateURL:
+                  type: string
+                  description: Location of the updated template in Amazon S3.
+                  format: uri
+                UsePreviousTemplate:
+                  type: boolean
+                  description: Reuse the existing template associated with the stack.
+                Parameters:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Parameter'
+                Capabilities:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                      - CAPABILITY_IAM
+                      - CAPABILITY_NAMED_IAM
+                      - CAPABILITY_AUTO_EXPAND
+                Tags:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Tag'
+                  maxItems: 50
+                RoleARN:
+                  type: string
+                  minLength: 20
+                  maxLength: 2048
+                RollbackConfiguration:
+                  $ref: '#/components/schemas/RollbackConfiguration'
+                StackPolicyBody:
+                  type: string
+                StackPolicyURL:
+                  type: string
+                  format: uri
+                StackPolicyDuringUpdateBody:
+                  type: string
+                  description: Temporary stack policy body used during the update.
+                StackPolicyDuringUpdateURL:
+                  type: string
+                  description: Temporary stack policy URL used during the update.
+                  format: uri
+                NotificationARNs:
+                  type: array
+                  items:
+                    type: string
+                  maxItems: 5
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+                DisableRollback:
+                  type: boolean
+                RetainExceptOnCreate:
+                  type: boolean
+      responses:
+        '200':
+          description: Stack update initiated successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  UpdateStackResult:
+                    type: object
+                    properties:
+                      StackId:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DeleteStack:
+    post:
+      operationId: deleteStack
+      summary: Delete an existing stack
+      description: >-
+        Deletes a specified stack. Once the call completes successfully, stack
+        deletion starts. Deleted stacks do not show up in DescribeStacks calls
+        by default.
+      tags:
+        - Stacks
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+              properties:
+                StackName:
+                  type: string
+                  description: The name or unique stack ID of the stack to delete.
+                RetainResources:
+                  type: array
+                  description: >-
+                    A list of logical resource IDs for resources you want to
+                    retain after stack deletion.
+                  items:
+                    type: string
+                RoleARN:
+                  type: string
+                  description: IAM role ARN for CloudFormation to assume during deletion.
+                  minLength: 20
+                  maxLength: 2048
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+                DeletionMode:
+                  type: string
+                  description: Specifies the deletion mode.
+                  enum:
+                    - STANDARD
+                    - FORCE_DELETE_STACK
+      responses:
+        '200':
+          description: Stack deletion initiated successfully.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '409':
+          description: Stack cannot be deleted due to termination protection.
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DescribeStacks:
+    post:
+      operationId: describeStacks
+      summary: Describe one or more stacks
+      description: >-
+        Returns the description for the specified stack. If no stack name was
+        specified, then it returns descriptions for all stacks. Use ListStacks
+        instead if you do not need full stack details for performance reasons.
+      tags:
+        - Stacks
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                StackName:
+                  type: string
+                  description: Stack name or unique ID. Required for deleted stacks to use unique ID.
+                NextToken:
+                  type: string
+                  description: Token for pagination from a prior call.
+                  maxLength: 1024
+      responses:
+        '200':
+          description: Stack details returned successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStacksResult:
+                    type: object
+                    properties:
+                      Stacks:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Stack'
+                      NextToken:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=ListStacks:
+    post:
+      operationId: listStacks
+      summary: List all stacks
+      description: >-
+        Returns summary information for all stacks. Deleted stacks are included
+        for 90 days after deletion. You can filter by stack status.
+      tags:
+        - Stacks
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                NextToken:
+                  type: string
+                  maxLength: 1024
+                StackStatusFilter:
+                  type: array
+                  description: Filter stacks by status.
+                  items:
+                    $ref: '#/components/schemas/StackStatus'
+      responses:
+        '200':
+          description: Stack summaries returned successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListStacksResult:
+                    type: object
+                    properties:
+                      StackSummaries:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackSummary'
+                      NextToken:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=CancelUpdateStack:
+    post:
+      operationId: cancelUpdateStack
+      summary: Cancel a stack update in progress
+      description: >-
+        Cancels an update on the specified stack. If the call completes
+        successfully, the stack rolls back the update and reverts to the
+        previous stack configuration.
+      tags:
+        - Stacks
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+              properties:
+                StackName:
+                  type: string
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+      responses:
+        '200':
+          description: Stack update cancellation initiated.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=ContinueUpdateRollback:
+    post:
+      operationId: continueUpdateRollback
+      summary: Continue rolling back a failed stack update
+      description: >-
+        For a specified stack in UPDATE_ROLLBACK_FAILED state, continues rolling
+        back to the previous stable state. A stack enters this state when a
+        resource fails during the update rollback process.
+      tags:
+        - Stacks
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+              properties:
+                StackName:
+                  type: string
+                RoleARN:
+                  type: string
+                  minLength: 20
+                  maxLength: 2048
+                ResourcesToSkip:
+                  type: array
+                  items:
+                    type: string
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+      responses:
+        '200':
+          description: Update rollback continuation initiated.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=RollbackStack:
+    post:
+      operationId: rollbackStack
+      summary: Rollback a stack to a previous stable state
+      description: >-
+        Rolls back the specified stack to the last known stable state.
+      tags:
+        - Stacks
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+              properties:
+                StackName:
+                  type: string
+                RoleARN:
+                  type: string
+                  minLength: 20
+                  maxLength: 2048
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+                RetainExceptOnCreate:
+                  type: boolean
+      responses:
+        '200':
+          description: Stack rollback initiated successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  RollbackStackResult:
+                    type: object
+                    properties:
+                      StackId:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=UpdateTerminationProtection:
+    post:
+      operationId: updateTerminationProtection
+      summary: Enable or disable termination protection on a stack
+      description: >-
+        Updates termination protection for the specified stack. If a user
+        attempts to delete a stack with termination protection enabled, the
+        operation fails and the stack remains unchanged.
+      tags:
+        - Stacks
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+                - EnableTerminationProtection
+              properties:
+                StackName:
+                  type: string
+                EnableTerminationProtection:
+                  type: boolean
+      responses:
+        '200':
+          description: Termination protection updated.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  UpdateTerminationProtectionResult:
+                    type: object
+                    properties:
+                      StackId:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DescribeStackEvents:
+    post:
+      operationId: describeStackEvents
+      summary: Retrieve events for a stack
+      description: >-
+        Returns all stack-related events for a specified stack in reverse
+        chronological order.
+      tags:
+        - Stack Events
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                StackName:
+                  type: string
+                NextToken:
+                  type: string
+                  maxLength: 1024
+      responses:
+        '200':
+          description: Stack events returned successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackEventsResult:
+                    type: object
+                    properties:
+                      StackEvents:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackEvent'
+                      NextToken:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DescribeStackResource:
+    post:
+      operationId: describeStackResource
+      summary: Describe a specific resource in a stack
+      description: >-
+        Returns a description of the specified resource in the specified stack.
+      tags:
+        - Stack Resources
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+                - LogicalResourceId
+              properties:
+                StackName:
+                  type: string
+                LogicalResourceId:
+                  type: string
+                  description: The logical name of the resource as specified in the template.
+      responses:
+        '200':
+          description: Stack resource details returned successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackResourceResult:
+                    type: object
+                    properties:
+                      StackResourceDetail:
+                        $ref: '#/components/schemas/StackResource'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DescribeStackResources:
+    post:
+      operationId: describeStackResources
+      summary: Describe all resources in a stack
+      description: >-
+        Returns AWS resource descriptions for running or deleted stacks. You
+        must specify a StackName or PhysicalResourceId.
+      tags:
+        - Stack Resources
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                StackName:
+                  type: string
+                LogicalResourceId:
+                  type: string
+                PhysicalResourceId:
+                  type: string
+      responses:
+        '200':
+          description: Stack resources returned successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackResourcesResult:
+                    type: object
+                    properties:
+                      StackResources:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackResource'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=ListStackResources:
+    post:
+      operationId: listStackResources
+      summary: List resources in a stack
+      description: >-
+        Returns descriptions of all resources of the specified stack.
+      tags:
+        - Stack Resources
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+              properties:
+                StackName:
+                  type: string
+                NextToken:
+                  type: string
+                  maxLength: 1024
+      responses:
+        '200':
+          description: Stack resource summaries returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListStackResourcesResult:
+                    type: object
+                    properties:
+                      StackResourceSummaries:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackResourceSummary'
+                      NextToken:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=SignalResource:
+    post:
+      operationId: signalResource
+      summary: Send a signal to a resource in a stack
+      description: >-
+        Sends a signal to the specified resource with a success or failure
+        status. You can use the SignalResource operation in conjunction with a
+        creation policy or update policy.
+      tags:
+        - Stack Resources
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+                - LogicalResourceId
+                - UniqueId
+                - Status
+              properties:
+                StackName:
+                  type: string
+                LogicalResourceId:
+                  type: string
+                UniqueId:
+                  type: string
+                  description: A unique ID of the signal.
+                  maxLength: 64
+                Status:
+                  type: string
+                  enum:
+                    - SUCCESS
+                    - FAILURE
+      responses:
+        '200':
+          description: Signal sent successfully.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DetectStackDrift:
+    post:
+      operationId: detectStackDrift
+      summary: Detect configuration drift on a stack
+      description: >-
+        Detects whether a stack's actual configuration differs from its expected
+        configuration as defined in the stack template. Returns a drift detection
+        ID you can use to monitor the progress of the operation.
+      tags:
+        - Stack Drift
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+              properties:
+                StackName:
+                  type: string
+                LogicalResourceIds:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Drift detection initiated.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DetectStackDriftResult:
+                    type: object
+                    properties:
+                      StackDriftDetectionId:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DescribeStackDriftDetectionStatus:
+    post:
+      operationId: describeStackDriftDetectionStatus
+      summary: Check status of drift detection
+      description: >-
+        Returns information about a stack drift detection operation. Provides
+        the current status and results of the operation.
+      tags:
+        - Stack Drift
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackDriftDetectionId
+              properties:
+                StackDriftDetectionId:
+                  type: string
+                  description: The ID of the drift detection operation.
+      responses:
+        '200':
+          description: Drift detection status returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackDriftDetectionStatusResult:
+                    type: object
+                    properties:
+                      StackId:
+                        type: string
+                      StackDriftDetectionId:
+                        type: string
+                      StackDriftStatus:
+                        type: string
+                        enum:
+                          - DRIFTED
+                          - IN_SYNC
+                          - UNKNOWN
+                          - NOT_CHECKED
+                      DetectionStatus:
+                        type: string
+                        enum:
+                          - DETECTION_IN_PROGRESS
+                          - DETECTION_FAILED
+                          - DETECTION_COMPLETE
+                      DetectionStatusReason:
+                        type: string
+                      DriftedStackResourceCount:
+                        type: integer
+                      Timestamp:
+                        type: string
+                        format: date-time
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DescribeStackResourceDrifts:
+    post:
+      operationId: describeStackResourceDrifts
+      summary: Get drift information for stack resources
+      description: >-
+        Returns drift information for the resources that have been checked for
+        drift in the specified stack.
+      tags:
+        - Stack Drift
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+              properties:
+                StackName:
+                  type: string
+                StackResourceDriftStatusFilters:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                      - IN_SYNC
+                      - MODIFIED
+                      - DELETED
+                      - NOT_CHECKED
+                NextToken:
+                  type: string
+                  maxLength: 1024
+                MaxResults:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+      responses:
+        '200':
+          description: Resource drift information returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackResourceDriftsResult:
+                    type: object
+                    properties:
+                      StackResourceDrifts:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackResourceDrift'
+                      NextToken:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DetectStackResourceDrift:
+    post:
+      operationId: detectStackResourceDrift
+      summary: Detect drift on a specific resource
+      description: >-
+        Returns information about whether a resource's actual configuration
+        differs from its expected configuration.
+      tags:
+        - Stack Drift
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+                - LogicalResourceId
+              properties:
+                StackName:
+                  type: string
+                LogicalResourceId:
+                  type: string
+      responses:
+        '200':
+          description: Resource drift detection result returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DetectStackResourceDriftResult:
+                    type: object
+                    properties:
+                      StackResourceDrift:
+                        $ref: '#/components/schemas/StackResourceDrift'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=CreateChangeSet:
+    post:
+      operationId: createChangeSet
+      summary: Create a change set to preview stack changes
+      description: >-
+        Creates a list of changes that will be applied to a stack so that you
+        can review the changes before executing them. Change sets allow you to
+        see how your changes might impact running resources before implementing them.
+      tags:
+        - Change Sets
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+                - ChangeSetName
+              properties:
+                StackName:
+                  type: string
+                ChangeSetName:
+                  type: string
+                  description: The name of the change set. Max 128 characters.
+                  maxLength: 128
+                TemplateBody:
+                  type: string
+                TemplateURL:
+                  type: string
+                  format: uri
+                UsePreviousTemplate:
+                  type: boolean
+                Parameters:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Parameter'
+                Capabilities:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                      - CAPABILITY_IAM
+                      - CAPABILITY_NAMED_IAM
+                      - CAPABILITY_AUTO_EXPAND
+                ResourceTypes:
+                  type: array
+                  items:
+                    type: string
+                RoleARN:
+                  type: string
+                  minLength: 20
+                  maxLength: 2048
+                RollbackConfiguration:
+                  $ref: '#/components/schemas/RollbackConfiguration'
+                NotificationARNs:
+                  type: array
+                  items:
+                    type: string
+                  maxItems: 5
+                Tags:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Tag'
+                  maxItems: 50
+                ChangeSetType:
+                  type: string
+                  description: The type of change set operation.
+                  enum:
+                    - CREATE
+                    - UPDATE
+                    - IMPORT
+                Description:
+                  type: string
+                  description: A description for the change set.
+                  maxLength: 1024
+                IncludeNestedStacks:
+                  type: boolean
+                ImportExistingResources:
+                  type: boolean
+                ClientToken:
+                  type: string
+                  maxLength: 128
+      responses:
+        '200':
+          description: Change set creation initiated.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  CreateChangeSetResult:
+                    type: object
+                    properties:
+                      Id:
+                        type: string
+                        description: The ARN of the change set.
+                      StackId:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DescribeChangeSet:
+    post:
+      operationId: describeChangeSet
+      summary: Describe a change set
+      description: >-
+        Returns the inputs and a list of changes that CloudFormation will make
+        if you execute the change set.
+      tags:
+        - Change Sets
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - ChangeSetName
+              properties:
+                ChangeSetName:
+                  type: string
+                  description: The name or ARN of the change set.
+                StackName:
+                  type: string
+                NextToken:
+                  type: string
+                  maxLength: 1024
+                IncludePropertyValues:
+                  type: boolean
+      responses:
+        '200':
+          description: Change set details returned.
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ChangeSetDetail'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          description: Change set not found.
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=ExecuteChangeSet:
+    post:
+      operationId: executeChangeSet
+      summary: Execute a change set
+      description: >-
+        Updates a stack using the input information provided when the specified
+        change set was created. After the call successfully completes,
+        CloudFormation starts updating the stack.
+      tags:
+        - Change Sets
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - ChangeSetName
+              properties:
+                ChangeSetName:
+                  type: string
+                StackName:
+                  type: string
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+                DisableRollback:
+                  type: boolean
+                RetainExceptOnCreate:
+                  type: boolean
+      responses:
+        '200':
+          description: Change set execution initiated.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          description: Change set not found.
+        '409':
+          description: Change set is not in a valid state for execution.
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DeleteChangeSet:
+    post:
+      operationId: deleteChangeSet
+      summary: Delete a change set
+      description: >-
+        Deletes the specified change set. Deleting change sets ensures that no
+        one executes the wrong change set. Only change sets in CREATE_COMPLETE
+        or FAILED status can be deleted.
+      tags:
+        - Change Sets
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - ChangeSetName
+              properties:
+                ChangeSetName:
+                  type: string
+                StackName:
+                  type: string
+      responses:
+        '200':
+          description: Change set deleted successfully.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          description: Change set not found.
+        '409':
+          description: Change set cannot be deleted in current status.
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=ListChangeSets:
+    post:
+      operationId: listChangeSets
+      summary: List all change sets for a stack
+      description: >-
+        Returns the ID and status of each active change set for a stack. For
+        example, CloudFormation lists change sets that are in the
+        CREATE_IN_PROGRESS or CREATE_COMPLETE status.
+      tags:
+        - Change Sets
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+              properties:
+                StackName:
+                  type: string
+                NextToken:
+                  type: string
+                  maxLength: 1024
+      responses:
+        '200':
+          description: Change set summaries returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListChangeSetsResult:
+                    type: object
+                    properties:
+                      Summaries:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ChangeSetSummary'
+                      NextToken:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=GetTemplate:
+    post:
+      operationId: getTemplate
+      summary: Retrieve a stack template
+      description: >-
+        Returns the template body for a specified stack. You can get the
+        template for running or deleted stacks.
+      tags:
+        - Templates
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                StackName:
+                  type: string
+                ChangeSetName:
+                  type: string
+                TemplateStage:
+                  type: string
+                  description: >-
+                    The stage of the template to return. Original returns
+                    the template before transforms; Processed returns after.
+                  enum:
+                    - Original
+                    - Processed
+      responses:
+        '200':
+          description: Template body returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  GetTemplateResult:
+                    type: object
+                    properties:
+                      TemplateBody:
+                        type: string
+                      StagesAvailable:
+                        type: array
+                        items:
+                          type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=GetTemplateSummary:
+    post:
+      operationId: getTemplateSummary
+      summary: Get summary information about a template
+      description: >-
+        Returns information about a new or existing template including parameter
+        declarations, a list of resources, and capabilities required.
+      tags:
+        - Templates
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                TemplateBody:
+                  type: string
+                TemplateURL:
+                  type: string
+                  format: uri
+                StackName:
+                  type: string
+                StackSetName:
+                  type: string
+      responses:
+        '200':
+          description: Template summary returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  GetTemplateSummaryResult:
+                    type: object
+                    properties:
+                      Description:
+                        type: string
+                      Capabilities:
+                        type: array
+                        items:
+                          type: string
+                      CapabilitiesReason:
+                        type: string
+                      ResourceTypes:
+                        type: array
+                        items:
+                          type: string
+                      Version:
+                        type: string
+                      Metadata:
+                        type: string
+                      DeclaredTransforms:
+                        type: array
+                        items:
+                          type: string
+                      Parameters:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ParameterDeclaration'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=ValidateTemplate:
+    post:
+      operationId: validateTemplate
+      summary: Validate a CloudFormation template
+      description: >-
+        Validates a specified template. CloudFormation checks whether the
+        template is valid JSON or YAML, whether all required values are present,
+        and whether all references are valid.
+      tags:
+        - Templates
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                TemplateBody:
+                  type: string
+                  description: Template body string (1-51,200 bytes).
+                TemplateURL:
+                  type: string
+                  description: Location of template file in Amazon S3.
+                  format: uri
+      responses:
+        '200':
+          description: Template validation result returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ValidateTemplateResult:
+                    type: object
+                    properties:
+                      Description:
+                        type: string
+                      Capabilities:
+                        type: array
+                        items:
+                          type: string
+                      CapabilitiesReason:
+                        type: string
+                      Parameters:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ParameterDeclaration'
+                      DeclaredTransforms:
+                        type: array
+                        items:
+                          type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=GetStackPolicy:
+    post:
+      operationId: getStackPolicy
+      summary: Retrieve a stack policy
+      description: >-
+        Returns the stack policy for a specified stack. If a stack does not have
+        a policy, a null value is returned.
+      tags:
+        - Stack Policies
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+              properties:
+                StackName:
+                  type: string
+      responses:
+        '200':
+          description: Stack policy returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  GetStackPolicyResult:
+                    type: object
+                    properties:
+                      StackPolicyBody:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=SetStackPolicy:
+    post:
+      operationId: setStackPolicy
+      summary: Set a stack policy
+      description: >-
+        Sets a stack policy for a specified stack. A stack policy controls
+        whether changes to stack resources are allowed during updates.
+      tags:
+        - Stack Policies
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackName
+              properties:
+                StackName:
+                  type: string
+                StackPolicyBody:
+                  type: string
+                  description: Stack policy body (1-16,384 bytes).
+                StackPolicyURL:
+                  type: string
+                  description: Location of the stack policy in S3.
+                  format: uri
+      responses:
+        '200':
+          description: Stack policy set successfully.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=ListExports:
+    post:
+      operationId: listExports
+      summary: List stack exports
+      description: >-
+        Lists all exported output values in the account and Region.
+      tags:
+        - Exports
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                NextToken:
+                  type: string
+                  maxLength: 1024
+      responses:
+        '200':
+          description: Exports returned successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListExportsResult:
+                    type: object
+                    properties:
+                      Exports:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Export'
+                      NextToken:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=ListImports:
+    post:
+      operationId: listImports
+      summary: List stacks that import an exported value
+      description: >-
+        Lists all stacks that import an exported output value. To find the
+        exports, use ListExports.
+      tags:
+        - Exports
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - ExportName
+              properties:
+                ExportName:
+                  type: string
+                  description: The name of the exported output value.
+                NextToken:
+                  type: string
+                  maxLength: 1024
+      responses:
+        '200':
+          description: Importing stacks returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListImportsResult:
+                    type: object
+                    properties:
+                      Imports:
+                        type: array
+                        items:
+                          type: string
+                      NextToken:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=CreateStackSet:
+    post:
+      operationId: createStackSet
+      summary: Create a stack set
+      description: >-
+        Creates a stack set with the specified name and template. A stack set
+        lets you create stacks in AWS accounts across regions by using a single
+        CloudFormation template.
+      tags:
+        - Stack Sets
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackSetName
+              properties:
+                StackSetName:
+                  type: string
+                  maxLength: 128
+                Description:
+                  type: string
+                  maxLength: 1024
+                TemplateBody:
+                  type: string
+                TemplateURL:
+                  type: string
+                  format: uri
+                Parameters:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Parameter'
+                Capabilities:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                      - CAPABILITY_IAM
+                      - CAPABILITY_NAMED_IAM
+                      - CAPABILITY_AUTO_EXPAND
+                Tags:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Tag'
+                  maxItems: 50
+                AdministrationRoleARN:
+                  type: string
+                  minLength: 20
+                  maxLength: 2048
+                ExecutionRoleName:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                PermissionModel:
+                  type: string
+                  enum:
+                    - SERVICE_MANAGED
+                    - SELF_MANAGED
+                CallAs:
+                  type: string
+                  enum:
+                    - SELF
+                    - DELEGATED_ADMIN
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+      responses:
+        '200':
+          description: Stack set created.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  CreateStackSetResult:
+                    type: object
+                    properties:
+                      StackSetId:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '409':
+          $ref: '#/components/responses/AlreadyExistsError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DescribeStackSet:
+    post:
+      operationId: describeStackSet
+      summary: Describe a stack set
+      description: >-
+        Returns the description of the specified stack set.
+      tags:
+        - Stack Sets
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackSetName
+              properties:
+                StackSetName:
+                  type: string
+                CallAs:
+                  type: string
+                  enum:
+                    - SELF
+                    - DELEGATED_ADMIN
+      responses:
+        '200':
+          description: Stack set details returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackSetResult:
+                    type: object
+                    properties:
+                      StackSet:
+                        $ref: '#/components/schemas/StackSet'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=UpdateStackSet:
+    post:
+      operationId: updateStackSet
+      summary: Update a stack set
+      description: >-
+        Updates the stack set, and associated stack instances in the specified
+        accounts and regions.
+      tags:
+        - Stack Sets
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackSetName
+              properties:
+                StackSetName:
+                  type: string
+                Description:
+                  type: string
+                  maxLength: 1024
+                TemplateBody:
+                  type: string
+                TemplateURL:
+                  type: string
+                  format: uri
+                UsePreviousTemplate:
+                  type: boolean
+                Parameters:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Parameter'
+                Capabilities:
+                  type: array
+                  items:
+                    type: string
+                Tags:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Tag'
+                  maxItems: 50
+                OperationPreferences:
+                  $ref: '#/components/schemas/StackSetOperationPreferences'
+                AdministrationRoleARN:
+                  type: string
+                  minLength: 20
+                  maxLength: 2048
+                ExecutionRoleName:
+                  type: string
+                PermissionModel:
+                  type: string
+                  enum:
+                    - SERVICE_MANAGED
+                    - SELF_MANAGED
+                Accounts:
+                  type: array
+                  items:
+                    type: string
+                Regions:
+                  type: array
+                  items:
+                    type: string
+                CallAs:
+                  type: string
+                  enum:
+                    - SELF
+                    - DELEGATED_ADMIN
+                OperationId:
+                  type: string
+                  maxLength: 128
+      responses:
+        '200':
+          description: Stack set update initiated.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  UpdateStackSetResult:
+                    type: object
+                    properties:
+                      OperationId:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DeleteStackSet:
+    post:
+      operationId: deleteStackSet
+      summary: Delete a stack set
+      description: >-
+        Deletes a stack set. Before you can delete a stack set, all its member
+        stack instances must be deleted.
+      tags:
+        - Stack Sets
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackSetName
+              properties:
+                StackSetName:
+                  type: string
+                CallAs:
+                  type: string
+                  enum:
+                    - SELF
+                    - DELEGATED_ADMIN
+      responses:
+        '200':
+          description: Stack set deleted.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '409':
+          description: Stack set has active instances and cannot be deleted.
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=ListStackSets:
+    post:
+      operationId: listStackSets
+      summary: List all stack sets
+      description: >-
+        Returns summary information about stack sets in the caller's account.
+      tags:
+        - Stack Sets
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                NextToken:
+                  type: string
+                  maxLength: 1024
+                MaxResults:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+                Status:
+                  type: string
+                  enum:
+                    - ACTIVE
+                    - DELETED
+                CallAs:
+                  type: string
+                  enum:
+                    - SELF
+                    - DELEGATED_ADMIN
+      responses:
+        '200':
+          description: Stack set summaries returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListStackSetsResult:
+                    type: object
+                    properties:
+                      Summaries:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackSetSummary'
+                      NextToken:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=CreateStackInstances:
+    post:
+      operationId: createStackInstances
+      summary: Create stack instances in accounts and regions
+      description: >-
+        Creates stack instances for the specified accounts in the specified
+        regions. A stack instance refers to a stack in a specific account and region.
+      tags:
+        - Stack Instances
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackSetName
+                - Regions
+              properties:
+                StackSetName:
+                  type: string
+                Accounts:
+                  type: array
+                  items:
+                    type: string
+                Regions:
+                  type: array
+                  items:
+                    type: string
+                ParameterOverrides:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Parameter'
+                OperationPreferences:
+                  $ref: '#/components/schemas/StackSetOperationPreferences'
+                OperationId:
+                  type: string
+                  maxLength: 128
+                CallAs:
+                  type: string
+                  enum:
+                    - SELF
+                    - DELEGATED_ADMIN
+      responses:
+        '200':
+          description: Stack instances creation initiated.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  CreateStackInstancesResult:
+                    type: object
+                    properties:
+                      OperationId:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DescribeStackInstance:
+    post:
+      operationId: describeStackInstance
+      summary: Describe a stack instance
+      description: >-
+        Returns the stack instance associated with the specified stack set,
+        account, and region.
+      tags:
+        - Stack Instances
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackSetName
+                - StackInstanceAccount
+                - StackInstanceRegion
+              properties:
+                StackSetName:
+                  type: string
+                StackInstanceAccount:
+                  type: string
+                StackInstanceRegion:
+                  type: string
+                CallAs:
+                  type: string
+                  enum:
+                    - SELF
+                    - DELEGATED_ADMIN
+      responses:
+        '200':
+          description: Stack instance details returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackInstanceResult:
+                    type: object
+                    properties:
+                      StackInstance:
+                        $ref: '#/components/schemas/StackInstance'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=ListStackInstances:
+    post:
+      operationId: listStackInstances
+      summary: List stack instances in a stack set
+      description: >-
+        Returns summary information about stack instances associated with the
+        specified stack set.
+      tags:
+        - Stack Instances
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackSetName
+              properties:
+                StackSetName:
+                  type: string
+                NextToken:
+                  type: string
+                  maxLength: 1024
+                MaxResults:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+                StackInstanceAccount:
+                  type: string
+                StackInstanceRegion:
+                  type: string
+                CallAs:
+                  type: string
+                  enum:
+                    - SELF
+                    - DELEGATED_ADMIN
+      responses:
+        '200':
+          description: Stack instance summaries returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListStackInstancesResult:
+                    type: object
+                    properties:
+                      Summaries:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackInstanceSummary'
+                      NextToken:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DeleteStackInstances:
+    post:
+      operationId: deleteStackInstances
+      summary: Delete stack instances from a stack set
+      description: >-
+        Deletes stack instances for the specified accounts in the specified regions.
+      tags:
+        - Stack Instances
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - StackSetName
+                - Regions
+                - RetainStacks
+              properties:
+                StackSetName:
+                  type: string
+                Accounts:
+                  type: array
+                  items:
+                    type: string
+                Regions:
+                  type: array
+                  items:
+                    type: string
+                RetainStacks:
+                  type: boolean
+                  description: Whether to remove the stack instances from the stack set but not delete the stacks.
+                OperationPreferences:
+                  $ref: '#/components/schemas/StackSetOperationPreferences'
+                OperationId:
+                  type: string
+                  maxLength: 128
+                CallAs:
+                  type: string
+                  enum:
+                    - SELF
+                    - DELEGATED_ADMIN
+      responses:
+        '200':
+          description: Stack instance deletion initiated.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DeleteStackInstancesResult:
+                    type: object
+                    properties:
+                      OperationId:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=ListTypes:
+    post:
+      operationId: listTypes
+      summary: List available extension types in the registry
+      description: >-
+        Returns summary information about extension types registered in the
+        CloudFormation Registry.
+      tags:
+        - Registry
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                Visibility:
+                  type: string
+                  enum:
+                    - PUBLIC
+                    - PRIVATE
+                ProvisioningType:
+                  type: string
+                  enum:
+                    - NON_PROVISIONABLE
+                    - IMMUTABLE
+                    - FULLY_MUTABLE
+                Type:
+                  type: string
+                  enum:
+                    - RESOURCE
+                    - MODULE
+                    - HOOK
+                Filters:
+                  type: object
+                  properties:
+                    Category:
+                      type: string
+                      enum:
+                        - REGISTERED
+                        - ACTIVATED
+                        - THIRD_PARTY
+                        - AWS_TYPES
+                    PublisherId:
+                      type: string
+                    TypeNamePrefix:
+                      type: string
+                NextToken:
+                  type: string
+                  maxLength: 1024
+                MaxResults:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+      responses:
+        '200':
+          description: Type summaries returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListTypesResult:
+                    type: object
+                    properties:
+                      TypeSummaries:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/TypeSummary'
+                      NextToken:
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DescribeType:
+    post:
+      operationId: describeType
+      summary: Describe an extension type in the registry
+      description: >-
+        Returns detailed information about an extension type registered in the
+        CloudFormation Registry.
+      tags:
+        - Registry
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                Type:
+                  type: string
+                  enum:
+                    - RESOURCE
+                    - MODULE
+                    - HOOK
+                TypeName:
+                  type: string
+                Arn:
+                  type: string
+                VersionId:
+                  type: string
+                PublisherId:
+                  type: string
+                PublicVersionNumber:
+                  type: string
+      responses:
+        '200':
+          description: Type details returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeTypeResult:
+                    type: object
+                    properties:
+                      Arn:
+                        type: string
+                      Type:
+                        type: string
+                      TypeName:
+                        type: string
+                      Description:
+                        type: string
+                      Schema:
+                        type: string
+                      ProvisioningType:
+                        type: string
+                      Visibility:
+                        type: string
+                      DefaultVersionId:
+                        type: string
+                      IsDefaultVersion:
+                        type: boolean
+                      TimeCreated:
+                        type: string
+                        format: date-time
+                      LastUpdated:
+                        type: string
+                        format: date-time
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+components:
+  securitySchemes:
+    AWS_Signature_V4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication.
+
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2010-05-15'
+      description: The API version. Fixed to 2010-05-15.
+
+  responses:
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: The specified resource was not found.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    AlreadyExistsError:
+      description: The resource already exists.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: An internal service error occurred.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+        RequestId:
+          type: string
+
+    Stack:
+      type: object
+      required:
+        - StackName
+        - CreationTime
+        - StackStatus
+      properties:
+        StackId:
+          type: string
+          description: Unique identifier of the stack.
+        StackName:
+          type: string
+          description: The name associated with the stack.
+        ChangeSetId:
+          type: string
+          description: The unique ID of the change set.
+        Description:
+          type: string
+          description: A user-defined description associated with the stack.
+        CreationTime:
+          type: string
+          format: date-time
+          description: The time the stack was created.
+        DeletionTime:
+          type: string
+          format: date-time
+          description: The time the stack was deleted.
+        LastUpdatedTime:
+          type: string
+          format: date-time
+          description: The time the stack was last updated.
+        StackStatus:
+          $ref: '#/components/schemas/StackStatus'
+        StackStatusReason:
+          type: string
+          description: Explanation for the current stack status.
+        DisableRollback:
+          type: boolean
+          description: Whether rollback on stack creation failures is disabled.
+        NotificationARNs:
+          type: array
+          description: Amazon SNS topic ARNs for stack event notifications.
+          items:
+            type: string
+          maxItems: 5
+        TimeoutInMinutes:
+          type: integer
+          description: Time allowed for stack creation before failure.
+        Capabilities:
+          type: array
+          description: The capabilities allowed in the stack.
+          items:
+            type: string
+            enum:
+              - CAPABILITY_IAM
+              - CAPABILITY_NAMED_IAM
+              - CAPABILITY_AUTO_EXPAND
+        Outputs:
+          type: array
+          description: A list of output structures.
+          items:
+            $ref: '#/components/schemas/Output'
+        RoleARN:
+          type: string
+          description: The IAM role ARN used by CloudFormation.
+          minLength: 20
+          maxLength: 2048
+        Tags:
+          type: array
+          description: Tags associated with the stack.
+          items:
+            $ref: '#/components/schemas/Tag'
+          maxItems: 50
+        EnableTerminationProtection:
+          type: boolean
+          description: Whether termination protection is enabled.
+        Parameters:
+          type: array
+          description: A list of parameter structures.
+          items:
+            $ref: '#/components/schemas/Parameter'
+        RollbackConfiguration:
+          $ref: '#/components/schemas/RollbackConfiguration'
+        ParentId:
+          type: string
+          description: For nested stacks, the stack ID of the direct parent.
+        RootId:
+          type: string
+          description: For nested stacks, the stack ID of the top-level stack.
+        DriftInformation:
+          $ref: '#/components/schemas/StackDriftInformation'
+        DeletionMode:
+          type: string
+          enum:
+            - STANDARD
+            - FORCE_DELETE_STACK
+        DetailedStatus:
+          type: string
+          enum:
+            - CONFIGURATION_COMPLETE
+            - VALIDATION_FAILED
+        RetainExceptOnCreate:
+          type: boolean
+
+    StackStatus:
+      type: string
+      enum:
+        - CREATE_IN_PROGRESS
+        - CREATE_FAILED
+        - CREATE_COMPLETE
+        - ROLLBACK_IN_PROGRESS
+        - ROLLBACK_FAILED
+        - ROLLBACK_COMPLETE
+        - DELETE_IN_PROGRESS
+        - DELETE_FAILED
+        - DELETE_COMPLETE
+        - UPDATE_IN_PROGRESS
+        - UPDATE_COMPLETE_CLEANUP_IN_PROGRESS
+        - UPDATE_COMPLETE
+        - UPDATE_FAILED
+        - UPDATE_ROLLBACK_IN_PROGRESS
+        - UPDATE_ROLLBACK_FAILED
+        - UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS
+        - UPDATE_ROLLBACK_COMPLETE
+        - REVIEW_IN_PROGRESS
+        - IMPORT_IN_PROGRESS
+        - IMPORT_COMPLETE
+        - IMPORT_ROLLBACK_IN_PROGRESS
+        - IMPORT_ROLLBACK_FAILED
+        - IMPORT_ROLLBACK_COMPLETE
+
+    StackSummary:
+      type: object
+      required:
+        - StackName
+        - CreationTime
+        - StackStatus
+      properties:
+        StackId:
+          type: string
+        StackName:
+          type: string
+        TemplateDescription:
+          type: string
+        CreationTime:
+          type: string
+          format: date-time
+        LastUpdatedTime:
+          type: string
+          format: date-time
+        DeletionTime:
+          type: string
+          format: date-time
+        StackStatus:
+          $ref: '#/components/schemas/StackStatus'
+        StackStatusReason:
+          type: string
+        ParentId:
+          type: string
+        RootId:
+          type: string
+        DriftInformation:
+          $ref: '#/components/schemas/StackDriftInformation'
+
+    StackResource:
+      type: object
+      required:
+        - LogicalResourceId
+        - ResourceType
+        - ResourceStatus
+        - Timestamp
+      properties:
+        StackName:
+          type: string
+          description: The name of the stack.
+        StackId:
+          type: string
+          description: Unique identifier of the stack.
+        LogicalResourceId:
+          type: string
+          description: The logical name of the resource specified in the template.
+        PhysicalResourceId:
+          type: string
+          description: The name or unique identifier of the physical resource.
+        ResourceType:
+          type: string
+          description: Type of AWS resource.
+          minLength: 1
+          maxLength: 256
+        Timestamp:
+          type: string
+          format: date-time
+          description: Time the status was updated.
+        ResourceStatus:
+          type: string
+          description: Current status of the resource.
+          enum:
+            - CREATE_IN_PROGRESS
+            - CREATE_FAILED
+            - CREATE_COMPLETE
+            - DELETE_IN_PROGRESS
+            - DELETE_FAILED
+            - DELETE_COMPLETE
+            - UPDATE_IN_PROGRESS
+            - UPDATE_FAILED
+            - UPDATE_COMPLETE
+            - IMPORT_FAILED
+            - IMPORT_COMPLETE
+            - IMPORT_IN_PROGRESS
+            - IMPORT_ROLLBACK_IN_PROGRESS
+            - IMPORT_ROLLBACK_FAILED
+            - IMPORT_ROLLBACK_COMPLETE
+            - ROLLBACK_IN_PROGRESS
+            - ROLLBACK_COMPLETE
+        ResourceStatusReason:
+          type: string
+          description: Message associated with the resource status.
+        Description:
+          type: string
+          description: User-defined description.
+          maxLength: 1024
+        DriftInformation:
+          $ref: '#/components/schemas/StackResourceDriftInformation'
+        ModuleInfo:
+          $ref: '#/components/schemas/ModuleInfo'
+
+    StackResourceSummary:
+      type: object
+      required:
+        - LogicalResourceId
+        - ResourceType
+        - ResourceStatus
+        - LastUpdatedTimestamp
+      properties:
+        LogicalResourceId:
+          type: string
+        PhysicalResourceId:
+          type: string
+        ResourceType:
+          type: string
+        LastUpdatedTimestamp:
+          type: string
+          format: date-time
+        ResourceStatus:
+          type: string
+        ResourceStatusReason:
+          type: string
+        DriftInformation:
+          $ref: '#/components/schemas/StackResourceDriftInformation'
+        ModuleInfo:
+          $ref: '#/components/schemas/ModuleInfo'
+
+    StackResourceDrift:
+      type: object
+      required:
+        - StackId
+        - LogicalResourceId
+        - ResourceType
+        - StackResourceDriftStatus
+        - Timestamp
+      properties:
+        StackId:
+          type: string
+        LogicalResourceId:
+          type: string
+        PhysicalResourceId:
+          type: string
+        PhysicalResourceIdContext:
+          type: array
+          items:
+            type: object
+            properties:
+              Key:
+                type: string
+              Value:
+                type: string
+        ResourceType:
+          type: string
+        ExpectedProperties:
+          type: string
+          description: A JSON string of the expected property values as defined in the template.
+        ActualProperties:
+          type: string
+          description: A JSON string of the actual property values of the resource.
+        PropertyDifferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyDifference'
+        StackResourceDriftStatus:
+          type: string
+          enum:
+            - IN_SYNC
+            - MODIFIED
+            - DELETED
+            - NOT_CHECKED
+        Timestamp:
+          type: string
+          format: date-time
+
+    PropertyDifference:
+      type: object
+      required:
+        - PropertyPath
+        - ExpectedValue
+        - ActualValue
+        - DifferenceType
+      properties:
+        PropertyPath:
+          type: string
+        ExpectedValue:
+          type: string
+        ActualValue:
+          type: string
+        DifferenceType:
+          type: string
+          enum:
+            - ADD
+            - REMOVE
+            - NOT_EQUAL
+
+    StackDriftInformation:
+      type: object
+      required:
+        - StackDriftStatus
+      properties:
+        StackDriftStatus:
+          type: string
+          enum:
+            - DRIFTED
+            - IN_SYNC
+            - UNKNOWN
+            - NOT_CHECKED
+        LastCheckTimestamp:
+          type: string
+          format: date-time
+
+    StackResourceDriftInformation:
+      type: object
+      required:
+        - StackResourceDriftStatus
+      properties:
+        StackResourceDriftStatus:
+          type: string
+          enum:
+            - IN_SYNC
+            - MODIFIED
+            - DELETED
+            - NOT_CHECKED
+        LastCheckTimestamp:
+          type: string
+          format: date-time
+
+    StackEvent:
+      type: object
+      required:
+        - StackId
+        - EventId
+        - StackName
+        - Timestamp
+      properties:
+        StackId:
+          type: string
+        EventId:
+          type: string
+        StackName:
+          type: string
+        LogicalResourceId:
+          type: string
+        PhysicalResourceId:
+          type: string
+        ResourceType:
+          type: string
+        Timestamp:
+          type: string
+          format: date-time
+        ResourceStatus:
+          type: string
+        ResourceStatusReason:
+          type: string
+        ResourceProperties:
+          type: string
+        ClientRequestToken:
+          type: string
+        HookType:
+          type: string
+        HookStatus:
+          type: string
+        HookStatusReason:
+          type: string
+        HookInvocationPoint:
+          type: string
+        HookFailureMode:
+          type: string
+
+    ChangeSetSummary:
+      type: object
+      properties:
+        StackId:
+          type: string
+          description: The ID of the stack with which the change set is associated.
+        StackName:
+          type: string
+        ChangeSetId:
+          type: string
+          description: The ARN of the change set.
+        ChangeSetName:
+          type: string
+          maxLength: 128
+        ExecutionStatus:
+          type: string
+          enum:
+            - UNAVAILABLE
+            - AVAILABLE
+            - EXECUTE_IN_PROGRESS
+            - EXECUTE_COMPLETE
+            - EXECUTE_FAILED
+            - OBSOLETE
+        Status:
+          type: string
+          enum:
+            - CREATE_PENDING
+            - CREATE_IN_PROGRESS
+            - CREATE_COMPLETE
+            - DELETE_PENDING
+            - DELETE_IN_PROGRESS
+            - DELETE_COMPLETE
+            - DELETE_FAILED
+            - FAILED
+        StatusReason:
+          type: string
+        CreationTime:
+          type: string
+          format: date-time
+        Description:
+          type: string
+          maxLength: 1024
+        IncludeNestedStacks:
+          type: boolean
+        ImportExistingResources:
+          type: boolean
+        ParentChangeSetId:
+          type: string
+        RootChangeSetId:
+          type: string
+
+    ChangeSetDetail:
+      type: object
+      properties:
+        ChangeSetName:
+          type: string
+        ChangeSetId:
+          type: string
+        StackId:
+          type: string
+        StackName:
+          type: string
+        Description:
+          type: string
+        Parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        CreationTime:
+          type: string
+          format: date-time
+        ExecutionStatus:
+          type: string
+        Status:
+          type: string
+        StatusReason:
+          type: string
+        NotificationARNs:
+          type: array
+          items:
+            type: string
+        RollbackConfiguration:
+          $ref: '#/components/schemas/RollbackConfiguration'
+        Capabilities:
+          type: array
+          items:
+            type: string
+        Tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        Changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Change'
+        IncludeNestedStacks:
+          type: boolean
+        NextToken:
+          type: string
+
+    Change:
+      type: object
+      properties:
+        Type:
+          type: string
+          enum:
+            - Resource
+        ResourceChange:
+          $ref: '#/components/schemas/ResourceChange'
+
+    ResourceChange:
+      type: object
+      properties:
+        Action:
+          type: string
+          enum:
+            - Add
+            - Modify
+            - Remove
+            - Import
+            - Dynamic
+        LogicalResourceId:
+          type: string
+        PhysicalResourceId:
+          type: string
+        ResourceType:
+          type: string
+        Replacement:
+          type: string
+          enum:
+            - 'True'
+            - 'False'
+            - Conditional
+        Scope:
+          type: array
+          items:
+            type: string
+        Details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceChangeDetail'
+
+    ResourceChangeDetail:
+      type: object
+      properties:
+        Target:
+          type: object
+          properties:
+            Attribute:
+              type: string
+            Name:
+              type: string
+            RequiresRecreation:
+              type: string
+              enum:
+                - Never
+                - Conditionally
+                - Always
+        Evaluation:
+          type: string
+          enum:
+            - Static
+            - Dynamic
+        ChangeSource:
+          type: string
+          enum:
+            - ResourceReference
+            - ParameterReference
+            - ResourceAttribute
+            - DirectModification
+            - Automatic
+        CausingEntity:
+          type: string
+
+    Parameter:
+      type: object
+      properties:
+        ParameterKey:
+          type: string
+          description: The key associated with the parameter.
+        ParameterValue:
+          type: string
+          description: The input value associated with the parameter.
+        UsePreviousValue:
+          type: boolean
+          description: Use the existing parameter value during stack updates.
+        ResolvedValue:
+          type: string
+          description: The value that resolves to for SSM parameter types.
+
+    ParameterDeclaration:
+      type: object
+      properties:
+        ParameterKey:
+          type: string
+        DefaultValue:
+          type: string
+        ParameterType:
+          type: string
+        NoEcho:
+          type: boolean
+        Description:
+          type: string
+        ParameterConstraints:
+          type: object
+          properties:
+            AllowedValues:
+              type: array
+              items:
+                type: string
+
+    Output:
+      type: object
+      properties:
+        OutputKey:
+          type: string
+          description: The key associated with the output.
+        OutputValue:
+          type: string
+          description: The value associated with the output.
+        Description:
+          type: string
+          description: User-defined description.
+        ExportName:
+          type: string
+          description: The name of the export associated with the output.
+
+    Tag:
+      type: object
+      required:
+        - Key
+        - Value
+      properties:
+        Key:
+          type: string
+          description: Tag key.
+          minLength: 1
+          maxLength: 128
+        Value:
+          type: string
+          description: Tag value.
+          minLength: 0
+          maxLength: 256
+
+    RollbackConfiguration:
+      type: object
+      properties:
+        RollbackTriggers:
+          type: array
+          description: The triggers to monitor during stack creation or update.
+          items:
+            $ref: '#/components/schemas/RollbackTrigger'
+          maxItems: 5
+        MonitoringTimeInMinutes:
+          type: integer
+          description: The amount of time to monitor after stack deployment.
+          minimum: 0
+          maximum: 180
+
+    RollbackTrigger:
+      type: object
+      required:
+        - Arn
+        - Type
+      properties:
+        Arn:
+          type: string
+          description: The Amazon Resource Name (ARN) of the rollback trigger.
+        Type:
+          type: string
+          description: The resource type of the rollback trigger.
+
+    Export:
+      type: object
+      properties:
+        ExportingStackId:
+          type: string
+          description: The stack that contains the exported output value.
+        Name:
+          type: string
+          description: The name of the exported output value.
+        Value:
+          type: string
+          description: The value of the exported output.
+
+    ModuleInfo:
+      type: object
+      properties:
+        TypeHierarchy:
+          type: string
+          description: >-
+            A concatenated list of the module type hierarchy. For modules within
+            other modules the format is Module1::Module2.
+        LogicalIdHierarchy:
+          type: string
+          description: >-
+            A concatenated list of the logical IDs of the module.
+
+    StackSet:
+      type: object
+      properties:
+        StackSetName:
+          type: string
+        StackSetId:
+          type: string
+        Description:
+          type: string
+        Status:
+          type: string
+          enum:
+            - ACTIVE
+            - DELETED
+        TemplateBody:
+          type: string
+        Parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        Capabilities:
+          type: array
+          items:
+            type: string
+        Tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        StackSetARN:
+          type: string
+        AdministrationRoleARN:
+          type: string
+        ExecutionRoleName:
+          type: string
+        PermissionModel:
+          type: string
+          enum:
+            - SERVICE_MANAGED
+            - SELF_MANAGED
+
+    StackSetSummary:
+      type: object
+      properties:
+        StackSetName:
+          type: string
+        StackSetId:
+          type: string
+        Description:
+          type: string
+        Status:
+          type: string
+          enum:
+            - ACTIVE
+            - DELETED
+        PermissionModel:
+          type: string
+          enum:
+            - SERVICE_MANAGED
+            - SELF_MANAGED
+        DriftStatus:
+          type: string
+          enum:
+            - DRIFTED
+            - IN_SYNC
+            - NOT_CHECKED
+        LastDriftCheckTimestamp:
+          type: string
+          format: date-time
+
+    StackSetOperationPreferences:
+      type: object
+      properties:
+        RegionConcurrencyType:
+          type: string
+          enum:
+            - SEQUENTIAL
+            - PARALLEL
+        RegionOrder:
+          type: array
+          items:
+            type: string
+        FailureToleranceCount:
+          type: integer
+          minimum: 0
+        FailureTolerancePercentage:
+          type: integer
+          minimum: 0
+          maximum: 100
+        MaxConcurrentCount:
+          type: integer
+          minimum: 1
+        MaxConcurrentPercentage:
+          type: integer
+          minimum: 1
+          maximum: 100
+
+    StackInstance:
+      type: object
+      properties:
+        StackSetId:
+          type: string
+        Region:
+          type: string
+        Account:
+          type: string
+        StackId:
+          type: string
+        ParameterOverrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        Status:
+          type: string
+          enum:
+            - CURRENT
+            - OUTDATED
+            - INOPERABLE
+        StackInstanceStatus:
+          type: object
+          properties:
+            DetailedStatus:
+              type: string
+              enum:
+                - PENDING
+                - RUNNING
+                - SUCCEEDED
+                - FAILED
+                - CANCELLED
+                - INOPERABLE
+                - SKIPPED_SUSPENDED_ACCOUNT
+        StatusReason:
+          type: string
+        DriftStatus:
+          type: string
+          enum:
+            - DRIFTED
+            - IN_SYNC
+            - UNKNOWN
+            - NOT_CHECKED
+        LastDriftCheckTimestamp:
+          type: string
+          format: date-time
+
+    StackInstanceSummary:
+      type: object
+      properties:
+        StackSetId:
+          type: string
+        Region:
+          type: string
+        Account:
+          type: string
+        StackId:
+          type: string
+        Status:
+          type: string
+          enum:
+            - CURRENT
+            - OUTDATED
+            - INOPERABLE
+        StatusReason:
+          type: string
+        DriftStatus:
+          type: string
+          enum:
+            - DRIFTED
+            - IN_SYNC
+            - UNKNOWN
+            - NOT_CHECKED
+        LastDriftCheckTimestamp:
+          type: string
+          format: date-time
+
+    TypeSummary:
+      type: object
+      properties:
+        Type:
+          type: string
+          enum:
+            - RESOURCE
+            - MODULE
+            - HOOK
+        TypeName:
+          type: string
+        TypeArn:
+          type: string
+        DefaultVersionId:
+          type: string
+        Description:
+          type: string
+        LastUpdated:
+          type: string
+          format: date-time
+        PublisherId:
+          type: string
+        PublisherName:
+          type: string
+        IsActivated:
+          type: boolean
+        OriginalTypeName:
+          type: string
+        PublicVersionNumber:
+          type: string
+        LatestPublicVersion:
+          type: string

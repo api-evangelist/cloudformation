@@ -1,0 +1,817 @@
+openapi: 3.1.0
+info:
+  title: AWS Cloud Control API
+  description: >-
+    AWS Cloud Control API provides a uniform set of five API operations to
+    create, read, update, delete, and list (CRUDL) supported cloud resources.
+    It offers a standardized way to manage AWS and third-party resource types
+    available in the CloudFormation Registry, without needing to learn each
+    individual service API. You specify the resource type and a JSON blob of
+    desired state, and Cloud Control API handles the rest.
+  version: '2021-09-30'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/contact-us/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-logo:
+    url: https://aws.amazon.com/cloudformation/logo.png
+servers:
+  - url: https://cloudcontrolapi.{region}.amazonaws.com
+    description: AWS Cloud Control API Regional Endpoint
+    variables:
+      region:
+        default: us-east-1
+        description: AWS region
+        enum:
+          - us-east-1
+          - us-east-2
+          - us-west-1
+          - us-west-2
+          - eu-west-1
+          - eu-west-2
+          - eu-central-1
+          - ap-southeast-1
+          - ap-southeast-2
+          - ap-northeast-1
+security:
+  - AWS_Signature_V4: []
+tags:
+  - name: Resources
+    description: >-
+      CRUDL operations for creating, reading, updating, deleting, and listing
+      cloud resources through a uniform interface.
+  - name: Request Status
+    description: >-
+      Operations for tracking the status of asynchronous resource operations and
+      cancelling in-progress requests.
+paths:
+  /?Action=CreateResource:
+    post:
+      operationId: createResource
+      summary: Create a new cloud resource
+      description: >-
+        Creates the specified resource. For more information, see Creating a
+        resource in the CloudFormation User Guide. After you have initiated a
+        resource creation request, you can monitor the progress of your request
+        by calling GetResourceRequestStatus using the RequestToken of the
+        ProgressEvent returned by CreateResource.
+      tags:
+        - Resources
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - TypeName
+                - DesiredState
+              properties:
+                TypeName:
+                  type: string
+                  description: >-
+                    The name of the resource type. Resource type names follow the
+                    format of Vendor::Service::Resource (e.g. AWS::EC2::Instance).
+                  minLength: 10
+                  maxLength: 196
+                  pattern: '[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}'
+                DesiredState:
+                  type: string
+                  description: >-
+                    A JSON string representing the desired state of the resource,
+                    consisting of the property values for creating the resource.
+                  minLength: 1
+                  maxLength: 262144
+                TypeVersionId:
+                  type: string
+                  description: >-
+                    For private resource types, the type version to use. If not
+                    specified, the default version is used.
+                  minLength: 1
+                  maxLength: 128
+                  pattern: '[A-Za-z0-9-]+'
+                RoleArn:
+                  type: string
+                  description: >-
+                    The Amazon Resource Name (ARN) of the IAM role for Cloud
+                    Control API to use when performing this resource operation.
+                  minLength: 20
+                  maxLength: 2048
+                  pattern: 'arn:.+:iam::[0-9]{12}:role/.+'
+                ClientToken:
+                  type: string
+                  description: >-
+                    A unique identifier to ensure the idempotency of the
+                    resource request.
+                  minLength: 1
+                  maxLength: 128
+                  pattern: '[-A-Za-z0-9+/=]+'
+      responses:
+        '200':
+          description: Resource creation initiated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ProgressEvent:
+                    $ref: '#/components/schemas/ProgressEvent'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/TypeNotFoundError'
+        '409':
+          $ref: '#/components/responses/AlreadyExistsError'
+        '429':
+          $ref: '#/components/responses/ThrottlingError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=GetResource:
+    post:
+      operationId: getResource
+      summary: Read a cloud resource
+      description: >-
+        Returns information about the current state of the specified resource.
+        For details, see Reading a resource's current state in the
+        CloudFormation User Guide.
+      tags:
+        - Resources
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - TypeName
+                - Identifier
+              properties:
+                TypeName:
+                  type: string
+                  description: The name of the resource type.
+                  minLength: 10
+                  maxLength: 196
+                  pattern: '[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}'
+                Identifier:
+                  type: string
+                  description: >-
+                    The identifier for the resource. You can specify the primary
+                    identifier, or any secondary identifier defined for the
+                    resource type in its resource schema.
+                  minLength: 1
+                  maxLength: 1024
+                TypeVersionId:
+                  type: string
+                  description: >-
+                    For private resource types, the type version to use.
+                  minLength: 1
+                  maxLength: 128
+                  pattern: '[A-Za-z0-9-]+'
+                RoleArn:
+                  type: string
+                  description: IAM role ARN for Cloud Control API to assume.
+                  minLength: 20
+                  maxLength: 2048
+                  pattern: 'arn:.+:iam::[0-9]{12}:role/.+'
+      responses:
+        '200':
+          description: Resource details returned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  TypeName:
+                    type: string
+                    description: The name of the resource type.
+                  ResourceDescription:
+                    $ref: '#/components/schemas/ResourceDescription'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/ResourceNotFoundError'
+        '429':
+          $ref: '#/components/responses/ThrottlingError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=UpdateResource:
+    post:
+      operationId: updateResource
+      summary: Update an existing cloud resource
+      description: >-
+        Updates the specified property values of the resource. You specify your
+        resource property updates as a JSON patch document. After you have
+        initiated a resource update request, you can monitor the progress by
+        calling GetResourceRequestStatus using the RequestToken of the
+        ProgressEvent returned by UpdateResource.
+      tags:
+        - Resources
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - TypeName
+                - Identifier
+                - PatchDocument
+              properties:
+                TypeName:
+                  type: string
+                  description: The name of the resource type.
+                  minLength: 10
+                  maxLength: 196
+                  pattern: '[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}'
+                Identifier:
+                  type: string
+                  description: The identifier for the resource to update.
+                  minLength: 1
+                  maxLength: 1024
+                PatchDocument:
+                  type: string
+                  description: >-
+                    A JavaScript Object Notation (JSON) document listing the
+                    patch operations that represent the updates to apply to the
+                    current resource properties. Uses the RFC 6902 JSON Patch
+                    format.
+                  minLength: 1
+                  maxLength: 262144
+                TypeVersionId:
+                  type: string
+                  description: For private resource types, the type version to use.
+                  minLength: 1
+                  maxLength: 128
+                  pattern: '[A-Za-z0-9-]+'
+                RoleArn:
+                  type: string
+                  description: IAM role ARN for Cloud Control API to assume.
+                  minLength: 20
+                  maxLength: 2048
+                  pattern: 'arn:.+:iam::[0-9]{12}:role/.+'
+                ClientToken:
+                  type: string
+                  description: A unique identifier to ensure idempotency.
+                  minLength: 1
+                  maxLength: 128
+                  pattern: '[-A-Za-z0-9+/=]+'
+      responses:
+        '200':
+          description: Resource update initiated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ProgressEvent:
+                    $ref: '#/components/schemas/ProgressEvent'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/ResourceNotFoundError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
+        '429':
+          $ref: '#/components/responses/ThrottlingError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=DeleteResource:
+    post:
+      operationId: deleteResource
+      summary: Delete a cloud resource
+      description: >-
+        Deletes the specified resource. After you have initiated a resource
+        deletion request, you can monitor the progress by calling
+        GetResourceRequestStatus using the RequestToken of the ProgressEvent
+        returned by DeleteResource.
+      tags:
+        - Resources
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - TypeName
+                - Identifier
+              properties:
+                TypeName:
+                  type: string
+                  description: The name of the resource type.
+                  minLength: 10
+                  maxLength: 196
+                  pattern: '[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}'
+                Identifier:
+                  type: string
+                  description: The identifier for the resource to delete.
+                  minLength: 1
+                  maxLength: 1024
+                TypeVersionId:
+                  type: string
+                  description: For private resource types, the type version to use.
+                  minLength: 1
+                  maxLength: 128
+                  pattern: '[A-Za-z0-9-]+'
+                RoleArn:
+                  type: string
+                  description: IAM role ARN for Cloud Control API to assume.
+                  minLength: 20
+                  maxLength: 2048
+                  pattern: 'arn:.+:iam::[0-9]{12}:role/.+'
+                ClientToken:
+                  type: string
+                  description: A unique identifier to ensure idempotency.
+                  minLength: 1
+                  maxLength: 128
+                  pattern: '[-A-Za-z0-9+/=]+'
+      responses:
+        '200':
+          description: Resource deletion initiated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ProgressEvent:
+                    $ref: '#/components/schemas/ProgressEvent'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/ResourceNotFoundError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
+        '429':
+          $ref: '#/components/responses/ThrottlingError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=ListResources:
+    post:
+      operationId: listResources
+      summary: List resources of a specified type
+      description: >-
+        Returns information about the specified resources. For more information,
+        see Discovering resources in the CloudFormation User Guide. You can use
+        this operation to discover resources that are available in your account.
+      tags:
+        - Resources
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - TypeName
+              properties:
+                TypeName:
+                  type: string
+                  description: The name of the resource type to list.
+                  minLength: 10
+                  maxLength: 196
+                  pattern: '[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}'
+                TypeVersionId:
+                  type: string
+                  description: For private resource types, the type version to use.
+                  minLength: 1
+                  maxLength: 128
+                  pattern: '[A-Za-z0-9-]+'
+                RoleArn:
+                  type: string
+                  description: IAM role ARN for Cloud Control API to assume.
+                  minLength: 20
+                  maxLength: 2048
+                  pattern: 'arn:.+:iam::[0-9]{12}:role/.+'
+                NextToken:
+                  type: string
+                  description: >-
+                    If the previous paginated request did not return all
+                    available results, the response includes a NextToken.
+                  minLength: 1
+                  maxLength: 2048
+                MaxResults:
+                  type: integer
+                  description: Maximum number of results per page.
+                  minimum: 1
+                  maximum: 100
+                ResourceModel:
+                  type: string
+                  description: >-
+                    The resource model to use to select the resources to return.
+                    Used for filtering by secondary identifiers.
+      responses:
+        '200':
+          description: Resource list returned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  TypeName:
+                    type: string
+                  ResourceDescriptions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ResourceDescription'
+                  NextToken:
+                    type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/TypeNotFoundError'
+        '429':
+          $ref: '#/components/responses/ThrottlingError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=GetResourceRequestStatus:
+    post:
+      operationId: getResourceRequestStatus
+      summary: Get the status of a resource operation request
+      description: >-
+        Returns the current status of a resource operation request. For more
+        information, see Managing resource operation requests in the
+        CloudFormation User Guide.
+      tags:
+        - Request Status
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RequestToken
+              properties:
+                RequestToken:
+                  type: string
+                  description: >-
+                    A unique token used to track the progress of the resource
+                    operation request.
+                  minLength: 1
+                  maxLength: 128
+                  pattern: '[-A-Za-z0-9+/=]+'
+      responses:
+        '200':
+          description: Request status returned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ProgressEvent:
+                    $ref: '#/components/schemas/ProgressEvent'
+                  HooksProgressEvent:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/HookProgressEvent'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          description: The specified request token was not found.
+        '429':
+          $ref: '#/components/responses/ThrottlingError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=ListResourceRequests:
+    post:
+      operationId: listResourceRequests
+      summary: List resource operation requests
+      description: >-
+        Returns existing resource operation requests. This includes requests of
+        all statuses. For more information, see Managing resource operation
+        requests in the CloudFormation User Guide.
+      tags:
+        - Request Status
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                MaxResults:
+                  type: integer
+                  description: Maximum number of results per page.
+                  minimum: 1
+                  maximum: 100
+                NextToken:
+                  type: string
+                  description: Pagination token from a prior request.
+                  minLength: 1
+                  maxLength: 2048
+                ResourceRequestStatusFilter:
+                  type: object
+                  description: Filter criteria for resource requests.
+                  properties:
+                    Operations:
+                      type: array
+                      description: The operation types to include in the filter.
+                      items:
+                        type: string
+                        enum:
+                          - CREATE
+                          - DELETE
+                          - UPDATE
+                    OperationStatuses:
+                      type: array
+                      description: The operation statuses to include in the filter.
+                      items:
+                        type: string
+                        enum:
+                          - PENDING
+                          - IN_PROGRESS
+                          - SUCCESS
+                          - FAILED
+                          - CANCEL_IN_PROGRESS
+                          - CANCEL_COMPLETE
+      responses:
+        '200':
+          description: Resource requests returned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ResourceRequestStatusSummaries:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProgressEvent'
+                  NextToken:
+                    type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/ThrottlingError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /?Action=CancelResourceRequest:
+    post:
+      operationId: cancelResourceRequest
+      summary: Cancel an in-progress resource operation request
+      description: >-
+        Cancels the specified resource operation request. For more information,
+        see Canceling resource operation requests in the CloudFormation User
+        Guide. Only resource operations with a status of PENDING or IN_PROGRESS
+        can be cancelled.
+      tags:
+        - Request Status
+      parameters:
+        - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RequestToken
+              properties:
+                RequestToken:
+                  type: string
+                  description: The RequestToken of the ProgressEvent to cancel.
+                  minLength: 1
+                  maxLength: 128
+                  pattern: '[-A-Za-z0-9+/=]+'
+      responses:
+        '200':
+          description: Request cancellation initiated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ProgressEvent:
+                    $ref: '#/components/schemas/ProgressEvent'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          description: The specified request token was not found.
+        '409':
+          description: >-
+            The request is not in a cancellable state. Only PENDING or
+            IN_PROGRESS requests can be cancelled.
+        '429':
+          $ref: '#/components/responses/ThrottlingError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+components:
+  securitySchemes:
+    AWS_Signature_V4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication.
+
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2021-09-30'
+      description: The API version. Fixed to 2021-09-30.
+
+  responses:
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ResourceNotFoundError:
+      description: The specified resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TypeNotFoundError:
+      description: The specified resource type was not found in the CloudFormation Registry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    AlreadyExistsError:
+      description: A resource with the specified identifier already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ConflictError:
+      description: >-
+        The resource is currently being modified by another operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ThrottlingError:
+      description: The request was denied due to request throttling.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: An internal service error occurred.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        Message:
+          type: string
+          description: The error message.
+        Code:
+          type: string
+          description: The error code.
+
+    ProgressEvent:
+      type: object
+      description: >-
+        Represents the current status of a resource operation request.
+      properties:
+        TypeName:
+          type: string
+          description: The resource type name.
+        Identifier:
+          type: string
+          description: The primary identifier for the resource.
+        RequestToken:
+          type: string
+          description: >-
+            The unique token representing this resource operation request. Use
+            this token with GetResourceRequestStatus to check operation progress.
+        HooksRequestToken:
+          type: string
+          description: The unique token for hooks processing.
+        Operation:
+          type: string
+          description: The resource operation type.
+          enum:
+            - CREATE
+            - DELETE
+            - UPDATE
+        OperationStatus:
+          type: string
+          description: The current status of the resource operation request.
+          enum:
+            - PENDING
+            - IN_PROGRESS
+            - SUCCESS
+            - FAILED
+            - CANCEL_IN_PROGRESS
+            - CANCEL_COMPLETE
+        EventTime:
+          type: number
+          description: When the resource operation request was initiated (Unix timestamp).
+        ResourceModel:
+          type: string
+          description: A JSON string representing the resource model.
+        StatusMessage:
+          type: string
+          description: A message explaining the current status.
+        ErrorCode:
+          type: string
+          description: >-
+            The error code if the operation failed.
+          enum:
+            - NotUpdatable
+            - InvalidRequest
+            - AccessDenied
+            - InvalidCredentials
+            - AlreadyExists
+            - NotFound
+            - ResourceConflict
+            - Throttling
+            - ServiceLimitExceeded
+            - NotStabilized
+            - GeneralServiceException
+            - ServiceInternalError
+            - NetworkFailure
+            - InternalFailure
+            - InvalidTypeConfiguration
+            - HandlerInternalFailure
+            - NonCompliant
+            - Unknown
+            - UnsupportedTarget
+        RetryAfter:
+          type: number
+          description: When to retry the operation (Unix timestamp).
+
+    HookProgressEvent:
+      type: object
+      description: Represents the progress of a hook invocation.
+      properties:
+        HookTypeName:
+          type: string
+          description: The type name of the hook.
+        HookTypeVersionId:
+          type: string
+          description: The version of the hook type.
+        HookTypeArn:
+          type: string
+          description: The ARN of the hook type.
+        InvocationPoint:
+          type: string
+          description: The point in the provisioning workflow where the hook runs.
+          enum:
+            - PRE_PROVISION
+        HookStatus:
+          type: string
+          description: The status of the hook invocation.
+          enum:
+            - HOOK_IN_PROGRESS
+            - HOOK_COMPLETE_SUCCEEDED
+            - HOOK_COMPLETE_FAILED
+            - HOOK_FAILED
+        HookEventTime:
+          type: number
+          description: The time the hook event occurred.
+        HookStatusMessage:
+          type: string
+          description: A message about the hook status.
+        FailureMode:
+          type: string
+          description: How the hook failure should affect the overall operation.
+          enum:
+            - FAIL
+            - WARN
+
+    ResourceDescription:
+      type: object
+      description: Represents information about a provisioned resource.
+      properties:
+        Identifier:
+          type: string
+          description: The primary identifier for the resource.
+        Properties:
+          type: string
+          description: >-
+            A JSON string representing the current resource property values.
+            The properties returned depend on the resource type schema.

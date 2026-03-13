@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.api.aws/cloudformation/resource.json",
+  "title": "AWS CloudFormation Stack Resource",
+  "description": "Represents a resource within an AWS CloudFormation stack. Each resource corresponds to a physical AWS service resource (such as an EC2 instance, S3 bucket, or Lambda function) that is provisioned and managed as part of the stack lifecycle.",
+  "type": "object",
+  "required": [
+    "LogicalResourceId",
+    "ResourceType",
+    "ResourceStatus",
+    "Timestamp"
+  ],
+  "properties": {
+    "StackName": {
+      "type": ["string", "null"],
+      "description": "The name of the stack the resource belongs to."
+    },
+    "StackId": {
+      "type": ["string", "null"],
+      "description": "Unique identifier of the stack."
+    },
+    "LogicalResourceId": {
+      "type": "string",
+      "description": "The logical name of the resource as specified in the template."
+    },
+    "PhysicalResourceId": {
+      "type": ["string", "null"],
+      "description": "The name or unique identifier that corresponds to a physical instance ID of the resource."
+    },
+    "ResourceType": {
+      "type": "string",
+      "description": "The type of the resource (e.g. AWS::EC2::Instance, AWS::S3::Bucket).",
+      "minLength": 1,
+      "maxLength": 256,
+      "examples": [
+        "AWS::EC2::Instance",
+        "AWS::S3::Bucket",
+        "AWS::Lambda::Function",
+        "AWS::IAM::Role"
+      ]
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The time the status was updated."
+    },
+    "ResourceStatus": {
+      "type": "string",
+      "description": "Current status of the resource.",
+      "enum": [
+        "CREATE_IN_PROGRESS",
+        "CREATE_FAILED",
+        "CREATE_COMPLETE",
+        "DELETE_IN_PROGRESS",
+        "DELETE_FAILED",
+        "DELETE_COMPLETE",
+        "UPDATE_IN_PROGRESS",
+        "UPDATE_FAILED",
+        "UPDATE_COMPLETE",
+        "IMPORT_FAILED",
+        "IMPORT_COMPLETE",
+        "IMPORT_IN_PROGRESS",
+        "IMPORT_ROLLBACK_IN_PROGRESS",
+        "IMPORT_ROLLBACK_FAILED",
+        "IMPORT_ROLLBACK_COMPLETE",
+        "ROLLBACK_IN_PROGRESS",
+        "ROLLBACK_COMPLETE"
+      ]
+    },
+    "ResourceStatusReason": {
+      "type": ["string", "null"],
+      "description": "Success or failure message associated with the resource."
+    },
+    "Description": {
+      "type": ["string", "null"],
+      "description": "User-defined description associated with the resource.",
+      "maxLength": 1024
+    },
+    "DriftInformation": {
+      "$ref": "#/$defs/StackResourceDriftInformation"
+    },
+    "ModuleInfo": {
+      "$ref": "#/$defs/ModuleInfo"
+    }
+  },
+  "$defs": {
+    "StackResourceDriftInformation": {
+      "type": "object",
+      "description": "Summarizes information about whether the resource's actual configuration differs from its expected configuration.",
+      "required": [
+        "StackResourceDriftStatus"
+      ],
+      "properties": {
+        "StackResourceDriftStatus": {
+          "type": "string",
+          "description": "Status of the resource's actual configuration compared to its expected configuration.",
+          "enum": [
+            "IN_SYNC",
+            "MODIFIED",
+            "DELETED",
+            "NOT_CHECKED"
+          ]
+        },
+        "LastCheckTimestamp": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "When CloudFormation last checked if the resource had drifted from its expected configuration."
+        }
+      }
+    },
+    "ModuleInfo": {
+      "type": "object",
+      "description": "Contains information about the module from which the resource was created, if the resource was created from a module included in the stack template.",
+      "properties": {
+        "TypeHierarchy": {
+          "type": ["string", "null"],
+          "description": "A concatenated list of the module type or types containing the resource."
+        },
+        "LogicalIdHierarchy": {
+          "type": ["string", "null"],
+          "description": "A concatenated list of the logical IDs of the module or modules containing the resource."
+        }
+      }
+    }
+  }
+}

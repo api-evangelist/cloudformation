@@ -1,0 +1,353 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.api.aws/cloudformation/change-set.json",
+  "title": "AWS CloudFormation Change Set",
+  "description": "Represents an AWS CloudFormation change set. A change set allows you to preview the changes CloudFormation will make to your stack before executing them. You can create a change set, review the proposed changes, and then choose to execute or delete it.",
+  "type": "object",
+  "properties": {
+    "ChangeSetId": {
+      "type": "string",
+      "description": "The ARN of the change set.",
+      "pattern": "^arn:[-a-zA-Z0-9:/]*$",
+      "examples": [
+        "arn:aws:cloudformation:us-east-1:123456789012:changeSet/MyChangeSet/a1b2c3d4-5678-90ab-cdef-example11111"
+      ]
+    },
+    "ChangeSetName": {
+      "type": "string",
+      "description": "The name of the change set.",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-zA-Z][-a-zA-Z0-9]*$"
+    },
+    "StackId": {
+      "type": "string",
+      "description": "The ID of the stack associated with the change set."
+    },
+    "StackName": {
+      "type": "string",
+      "description": "The name of the stack associated with the change set."
+    },
+    "Description": {
+      "type": ["string", "null"],
+      "description": "Information about the change set.",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "Parameters": {
+      "type": "array",
+      "description": "A list of parameter values for the change set.",
+      "items": {
+        "$ref": "#/$defs/Parameter"
+      }
+    },
+    "CreationTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The start time when the change set was created."
+    },
+    "ExecutionStatus": {
+      "type": "string",
+      "description": "The execution status of the change set.",
+      "enum": [
+        "UNAVAILABLE",
+        "AVAILABLE",
+        "EXECUTE_IN_PROGRESS",
+        "EXECUTE_COMPLETE",
+        "EXECUTE_FAILED",
+        "OBSOLETE"
+      ]
+    },
+    "Status": {
+      "type": "string",
+      "description": "The current status of the change set.",
+      "enum": [
+        "CREATE_PENDING",
+        "CREATE_IN_PROGRESS",
+        "CREATE_COMPLETE",
+        "DELETE_PENDING",
+        "DELETE_IN_PROGRESS",
+        "DELETE_COMPLETE",
+        "DELETE_FAILED",
+        "FAILED"
+      ]
+    },
+    "StatusReason": {
+      "type": ["string", "null"],
+      "description": "A description of the change set's status, such as why the change set failed."
+    },
+    "NotificationARNs": {
+      "type": "array",
+      "description": "The ARNs of the Amazon SNS topics associated with the change set.",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 5
+    },
+    "RollbackConfiguration": {
+      "$ref": "#/$defs/RollbackConfiguration"
+    },
+    "Capabilities": {
+      "type": "array",
+      "description": "The capabilities that are allowed in the change set.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "CAPABILITY_IAM",
+          "CAPABILITY_NAMED_IAM",
+          "CAPABILITY_AUTO_EXPAND"
+        ]
+      }
+    },
+    "Tags": {
+      "type": "array",
+      "description": "Tags associated with the change set.",
+      "items": {
+        "$ref": "#/$defs/Tag"
+      },
+      "maxItems": 50
+    },
+    "Changes": {
+      "type": "array",
+      "description": "A list of structures that describe the resources and the actions that CloudFormation will perform.",
+      "items": {
+        "$ref": "#/$defs/Change"
+      }
+    },
+    "IncludeNestedStacks": {
+      "type": "boolean",
+      "description": "Whether the change set includes changes to nested stacks."
+    },
+    "ImportExistingResources": {
+      "type": "boolean",
+      "description": "Whether the change set imports resources that already exist."
+    },
+    "ParentChangeSetId": {
+      "type": ["string", "null"],
+      "description": "The parent change set ID for nested stack change sets."
+    },
+    "RootChangeSetId": {
+      "type": ["string", "null"],
+      "description": "The root change set ID for nested stack change sets."
+    },
+    "ChangeSetType": {
+      "type": "string",
+      "description": "The type of change set operation.",
+      "enum": [
+        "CREATE",
+        "UPDATE",
+        "IMPORT"
+      ]
+    }
+  },
+  "$defs": {
+    "Parameter": {
+      "type": "object",
+      "description": "A parameter value for the change set.",
+      "properties": {
+        "ParameterKey": {
+          "type": "string",
+          "description": "The key associated with the parameter."
+        },
+        "ParameterValue": {
+          "type": "string",
+          "description": "The input value associated with the parameter."
+        },
+        "UsePreviousValue": {
+          "type": "boolean",
+          "description": "During a stack update, use the existing parameter value."
+        },
+        "ResolvedValue": {
+          "type": ["string", "null"],
+          "description": "Read-only. The value that corresponds to an SSM parameter key."
+        }
+      }
+    },
+    "Tag": {
+      "type": "object",
+      "required": [
+        "Key",
+        "Value"
+      ],
+      "properties": {
+        "Key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "Value": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 256
+        }
+      }
+    },
+    "RollbackConfiguration": {
+      "type": "object",
+      "properties": {
+        "RollbackTriggers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "Arn",
+              "Type"
+            ],
+            "properties": {
+              "Arn": {
+                "type": "string"
+              },
+              "Type": {
+                "type": "string"
+              }
+            }
+          },
+          "maxItems": 5
+        },
+        "MonitoringTimeInMinutes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 180
+        }
+      }
+    },
+    "Change": {
+      "type": "object",
+      "description": "Describes a change to a resource within a change set.",
+      "properties": {
+        "Type": {
+          "type": "string",
+          "description": "The type of entity that CloudFormation changes.",
+          "enum": [
+            "Resource"
+          ]
+        },
+        "ResourceChange": {
+          "$ref": "#/$defs/ResourceChange"
+        }
+      }
+    },
+    "ResourceChange": {
+      "type": "object",
+      "description": "Describes the resource and the action that CloudFormation will perform on it.",
+      "properties": {
+        "Action": {
+          "type": "string",
+          "description": "The action that CloudFormation takes on the resource.",
+          "enum": [
+            "Add",
+            "Modify",
+            "Remove",
+            "Import",
+            "Dynamic"
+          ]
+        },
+        "LogicalResourceId": {
+          "type": "string",
+          "description": "The resource's logical ID in the template."
+        },
+        "PhysicalResourceId": {
+          "type": ["string", "null"],
+          "description": "The resource's physical ID. Null for resources being added."
+        },
+        "ResourceType": {
+          "type": "string",
+          "description": "The type of CloudFormation resource."
+        },
+        "Replacement": {
+          "type": ["string", "null"],
+          "description": "Whether the change requires the resource to be replaced.",
+          "enum": [
+            "True",
+            "False",
+            "Conditional",
+            null
+          ]
+        },
+        "Scope": {
+          "type": "array",
+          "description": "The properties or attributes whose changes triggered this resource change.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Properties",
+              "Metadata",
+              "CreationPolicy",
+              "UpdatePolicy",
+              "DeletionPolicy",
+              "UpdateReplacePolicy",
+              "Tags"
+            ]
+          }
+        },
+        "Details": {
+          "type": "array",
+          "description": "Details about the changes to the resource.",
+          "items": {
+            "$ref": "#/$defs/ResourceChangeDetail"
+          }
+        }
+      }
+    },
+    "ResourceChangeDetail": {
+      "type": "object",
+      "description": "Detailed information about a resource change.",
+      "properties": {
+        "Target": {
+          "type": "object",
+          "properties": {
+            "Attribute": {
+              "type": "string",
+              "description": "The attribute that changed.",
+              "enum": [
+                "Properties",
+                "Metadata",
+                "CreationPolicy",
+                "UpdatePolicy",
+                "DeletionPolicy",
+                "UpdateReplacePolicy",
+                "Tags"
+              ]
+            },
+            "Name": {
+              "type": ["string", "null"],
+              "description": "The property name if the attribute is Properties."
+            },
+            "RequiresRecreation": {
+              "type": "string",
+              "description": "Whether the change requires replacement.",
+              "enum": [
+                "Never",
+                "Conditionally",
+                "Always"
+              ]
+            }
+          }
+        },
+        "Evaluation": {
+          "type": "string",
+          "description": "Whether CloudFormation can determine the target value.",
+          "enum": [
+            "Static",
+            "Dynamic"
+          ]
+        },
+        "ChangeSource": {
+          "type": "string",
+          "description": "The entity that made the change.",
+          "enum": [
+            "ResourceReference",
+            "ParameterReference",
+            "ResourceAttribute",
+            "DirectModification",
+            "Automatic"
+          ]
+        },
+        "CausingEntity": {
+          "type": ["string", "null"],
+          "description": "The identity of the entity that triggered this change."
+        }
+      }
+    }
+  }
+}

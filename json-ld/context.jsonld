@@ -1,0 +1,304 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "aws": "https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/",
+    "awscc": "https://docs.aws.amazon.com/cloudcontrolapi/latest/APIReference/",
+    "cfn": "https://schemas.api.aws/cloudformation/",
+
+    "Stack": {
+      "@id": "cfn:Stack",
+      "@type": "schema:SoftwareApplication",
+      "@context": {
+        "StackId": {
+          "@id": "schema:identifier",
+          "@type": "schema:Text"
+        },
+        "StackName": {
+          "@id": "schema:name",
+          "@type": "schema:Text"
+        },
+        "Description": {
+          "@id": "schema:description",
+          "@type": "schema:Text"
+        },
+        "StackStatus": {
+          "@id": "cfn:stackStatus",
+          "@type": "schema:Text"
+        },
+        "CreationTime": {
+          "@id": "schema:dateCreated",
+          "@type": "schema:DateTime"
+        },
+        "LastUpdatedTime": {
+          "@id": "schema:dateModified",
+          "@type": "schema:DateTime"
+        },
+        "DeletionTime": {
+          "@id": "cfn:deletionTime",
+          "@type": "schema:DateTime"
+        },
+        "StackStatusReason": {
+          "@id": "cfn:statusReason",
+          "@type": "schema:Text"
+        },
+        "RoleARN": {
+          "@id": "cfn:roleArn",
+          "@type": "schema:Text"
+        },
+        "Tags": {
+          "@id": "schema:keywords",
+          "@type": "schema:DefinedTerm"
+        },
+        "Outputs": {
+          "@id": "cfn:outputs",
+          "@type": "schema:PropertyValue"
+        },
+        "Parameters": {
+          "@id": "cfn:parameters",
+          "@type": "schema:PropertyValue"
+        },
+        "Capabilities": {
+          "@id": "cfn:capabilities",
+          "@type": "schema:Text"
+        },
+        "EnableTerminationProtection": {
+          "@id": "cfn:terminationProtection",
+          "@type": "schema:Boolean"
+        },
+        "ParentId": {
+          "@id": "schema:isPartOf",
+          "@type": "@id"
+        },
+        "RootId": {
+          "@id": "cfn:rootStack",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Template": {
+      "@id": "cfn:Template",
+      "@type": "schema:SoftwareSourceCode",
+      "@context": {
+        "AWSTemplateFormatVersion": {
+          "@id": "schema:version",
+          "@type": "schema:Text"
+        },
+        "Description": {
+          "@id": "schema:description",
+          "@type": "schema:Text"
+        },
+        "Resources": {
+          "@id": "schema:hasPart",
+          "@type": "cfn:Resource"
+        },
+        "Parameters": {
+          "@id": "cfn:parameters",
+          "@type": "schema:PropertyValue"
+        },
+        "Outputs": {
+          "@id": "cfn:outputs",
+          "@type": "schema:PropertyValue"
+        },
+        "Mappings": {
+          "@id": "cfn:mappings",
+          "@type": "schema:StructuredValue"
+        },
+        "Conditions": {
+          "@id": "cfn:conditions",
+          "@type": "schema:StructuredValue"
+        },
+        "Transform": {
+          "@id": "cfn:transform",
+          "@type": "schema:Text"
+        },
+        "Metadata": {
+          "@id": "cfn:metadata",
+          "@type": "schema:StructuredValue"
+        }
+      }
+    },
+
+    "Resource": {
+      "@id": "cfn:Resource",
+      "@type": "schema:Thing",
+      "@context": {
+        "LogicalResourceId": {
+          "@id": "schema:name",
+          "@type": "schema:Text"
+        },
+        "PhysicalResourceId": {
+          "@id": "schema:identifier",
+          "@type": "schema:Text"
+        },
+        "ResourceType": {
+          "@id": "schema:additionalType",
+          "@type": "schema:Text"
+        },
+        "ResourceStatus": {
+          "@id": "cfn:resourceStatus",
+          "@type": "schema:Text"
+        },
+        "Timestamp": {
+          "@id": "schema:dateModified",
+          "@type": "schema:DateTime"
+        },
+        "Description": {
+          "@id": "schema:description",
+          "@type": "schema:Text"
+        },
+        "ResourceStatusReason": {
+          "@id": "cfn:statusReason",
+          "@type": "schema:Text"
+        },
+        "StackName": {
+          "@id": "schema:isPartOf",
+          "@type": "schema:Text"
+        }
+      }
+    },
+
+    "ChangeSet": {
+      "@id": "cfn:ChangeSet",
+      "@type": "schema:UpdateAction",
+      "@context": {
+        "ChangeSetId": {
+          "@id": "schema:identifier",
+          "@type": "schema:Text"
+        },
+        "ChangeSetName": {
+          "@id": "schema:name",
+          "@type": "schema:Text"
+        },
+        "Description": {
+          "@id": "schema:description",
+          "@type": "schema:Text"
+        },
+        "Status": {
+          "@id": "schema:actionStatus",
+          "@type": "schema:Text"
+        },
+        "ExecutionStatus": {
+          "@id": "cfn:executionStatus",
+          "@type": "schema:Text"
+        },
+        "CreationTime": {
+          "@id": "schema:startTime",
+          "@type": "schema:DateTime"
+        },
+        "StackId": {
+          "@id": "schema:targetCollection",
+          "@type": "@id"
+        },
+        "StackName": {
+          "@id": "cfn:stackName",
+          "@type": "schema:Text"
+        },
+        "Changes": {
+          "@id": "cfn:changes",
+          "@type": "cfn:Change"
+        },
+        "StatusReason": {
+          "@id": "cfn:statusReason",
+          "@type": "schema:Text"
+        }
+      }
+    },
+
+    "CloudControlResource": {
+      "@id": "awscc:Resource",
+      "@type": "schema:Thing",
+      "@context": {
+        "TypeName": {
+          "@id": "schema:additionalType",
+          "@type": "schema:Text"
+        },
+        "Identifier": {
+          "@id": "schema:identifier",
+          "@type": "schema:Text"
+        },
+        "Properties": {
+          "@id": "schema:additionalProperty",
+          "@type": "schema:PropertyValue"
+        },
+        "DesiredState": {
+          "@id": "cfn:desiredState",
+          "@type": "schema:Text"
+        }
+      }
+    },
+
+    "ProgressEvent": {
+      "@id": "awscc:ProgressEvent",
+      "@type": "schema:Action",
+      "@context": {
+        "RequestToken": {
+          "@id": "schema:identifier",
+          "@type": "schema:Text"
+        },
+        "Operation": {
+          "@id": "schema:actionStatus",
+          "@type": "schema:Text"
+        },
+        "OperationStatus": {
+          "@id": "cfn:operationStatus",
+          "@type": "schema:Text"
+        },
+        "EventTime": {
+          "@id": "schema:startTime",
+          "@type": "schema:DateTime"
+        },
+        "StatusMessage": {
+          "@id": "schema:description",
+          "@type": "schema:Text"
+        },
+        "ErrorCode": {
+          "@id": "cfn:errorCode",
+          "@type": "schema:Text"
+        },
+        "TypeName": {
+          "@id": "schema:additionalType",
+          "@type": "schema:Text"
+        }
+      }
+    },
+
+    "Tag": {
+      "@id": "cfn:Tag",
+      "@type": "schema:DefinedTerm",
+      "@context": {
+        "Key": {
+          "@id": "schema:name",
+          "@type": "schema:Text"
+        },
+        "Value": {
+          "@id": "schema:value",
+          "@type": "schema:Text"
+        }
+      }
+    },
+
+    "Output": {
+      "@id": "cfn:Output",
+      "@type": "schema:PropertyValue",
+      "@context": {
+        "OutputKey": {
+          "@id": "schema:name",
+          "@type": "schema:Text"
+        },
+        "OutputValue": {
+          "@id": "schema:value",
+          "@type": "schema:Text"
+        },
+        "Description": {
+          "@id": "schema:description",
+          "@type": "schema:Text"
+        },
+        "ExportName": {
+          "@id": "cfn:exportName",
+          "@type": "schema:Text"
+        }
+      }
+    }
+  }
+}

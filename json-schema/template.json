@@ -1,0 +1,305 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.api.aws/cloudformation/template.json",
+  "title": "AWS CloudFormation Template",
+  "description": "Represents the structure of an AWS CloudFormation template. A template is a JSON or YAML formatted text file that describes the AWS infrastructure and resources to provision. Templates can be used to create and update CloudFormation stacks.",
+  "type": "object",
+  "required": [
+    "Resources"
+  ],
+  "properties": {
+    "AWSTemplateFormatVersion": {
+      "type": "string",
+      "description": "The AWS CloudFormation template version that the template conforms to. The only valid value is 2010-09-09.",
+      "const": "2010-09-09"
+    },
+    "Description": {
+      "type": "string",
+      "description": "A text string that describes the template.",
+      "maxLength": 1024
+    },
+    "Metadata": {
+      "type": "object",
+      "description": "Objects that provide additional information about the template. Can include template-specific metadata such as AWS::CloudFormation::Interface.",
+      "additionalProperties": true
+    },
+    "Parameters": {
+      "type": "object",
+      "description": "Values to pass to your template at runtime when you create or update a stack. Parameters enable you to customize stack creation.",
+      "additionalProperties": {
+        "$ref": "#/$defs/ParameterDefinition"
+      }
+    },
+    "Rules": {
+      "type": "object",
+      "description": "Validates a parameter or a combination of parameters passed to a template during stack creation or update.",
+      "additionalProperties": {
+        "$ref": "#/$defs/Rule"
+      }
+    },
+    "Mappings": {
+      "type": "object",
+      "description": "A mapping of keys and associated values that you can use to specify conditional parameter values. Similar to a lookup table.",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Conditions": {
+      "type": "object",
+      "description": "Conditions that control whether certain resources are created or whether certain resource properties are assigned a value during stack creation or update.",
+      "additionalProperties": true
+    },
+    "Transform": {
+      "description": "For serverless applications, specifies the version of the AWS SAM to use. You can also use AWS::Include transforms to work with template snippets stored separately.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "Resources": {
+      "type": "object",
+      "description": "Specifies the stack resources and their properties, such as an Amazon EC2 instance or an Amazon S3 bucket. You must declare each resource separately.",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/Resource"
+      }
+    },
+    "Outputs": {
+      "type": "object",
+      "description": "Describes the values that are returned whenever you view your stack's properties. Output values can be used for cross-stack references.",
+      "additionalProperties": {
+        "$ref": "#/$defs/OutputDefinition"
+      },
+      "maxProperties": 200
+    }
+  },
+  "$defs": {
+    "ParameterDefinition": {
+      "type": "object",
+      "description": "A template parameter declaration.",
+      "required": [
+        "Type"
+      ],
+      "properties": {
+        "Type": {
+          "type": "string",
+          "description": "The data type for the parameter.",
+          "enum": [
+            "String",
+            "Number",
+            "List<Number>",
+            "CommaDelimitedList",
+            "AWS::SSM::Parameter::Type",
+            "AWS::SSM::Parameter::Value<String>",
+            "AWS::SSM::Parameter::Value<List<String>>",
+            "AWS::SSM::Parameter::Value<CommaDelimitedList>",
+            "AWS::EC2::AvailabilityZone::Name",
+            "AWS::EC2::Image::Id",
+            "AWS::EC2::Instance::Id",
+            "AWS::EC2::KeyPair::KeyName",
+            "AWS::EC2::SecurityGroup::GroupName",
+            "AWS::EC2::SecurityGroup::Id",
+            "AWS::EC2::Subnet::Id",
+            "AWS::EC2::Volume::Id",
+            "AWS::EC2::VPC::Id",
+            "AWS::Route53::HostedZone::Id",
+            "List<AWS::EC2::AvailabilityZone::Name>",
+            "List<AWS::EC2::Image::Id>",
+            "List<AWS::EC2::Instance::Id>",
+            "List<AWS::EC2::SecurityGroup::GroupName>",
+            "List<AWS::EC2::SecurityGroup::Id>",
+            "List<AWS::EC2::Subnet::Id>",
+            "List<AWS::EC2::Volume::Id>",
+            "List<AWS::EC2::VPC::Id>",
+            "List<AWS::Route53::HostedZone::Id>"
+          ]
+        },
+        "Default": {
+          "description": "A value of the appropriate type for the template to use if no value is specified."
+        },
+        "NoEcho": {
+          "type": "boolean",
+          "description": "Whether to mask the parameter value to prevent it from being displayed.",
+          "default": false
+        },
+        "AllowedValues": {
+          "type": "array",
+          "description": "An array containing the list of values allowed for the parameter."
+        },
+        "AllowedPattern": {
+          "type": "string",
+          "description": "A regular expression that represents the patterns to allow for String types."
+        },
+        "MaxLength": {
+          "type": "integer",
+          "description": "Maximum number of characters for String types."
+        },
+        "MinLength": {
+          "type": "integer",
+          "description": "Minimum number of characters for String types."
+        },
+        "MaxValue": {
+          "type": "number",
+          "description": "Maximum numeric value for Number types."
+        },
+        "MinValue": {
+          "type": "number",
+          "description": "Minimum numeric value for Number types."
+        },
+        "Description": {
+          "type": "string",
+          "description": "A string that describes the parameter.",
+          "maxLength": 4000
+        },
+        "ConstraintDescription": {
+          "type": "string",
+          "description": "A string that explains a constraint when the constraint is violated."
+        }
+      }
+    },
+    "Rule": {
+      "type": "object",
+      "description": "A rule that validates parameter values.",
+      "properties": {
+        "RuleCondition": {
+          "description": "Determines when a rule takes effect."
+        },
+        "Assertions": {
+          "type": "array",
+          "description": "The assertions for the rule.",
+          "items": {
+            "type": "object",
+            "required": [
+              "Assert",
+              "AssertDescription"
+            ],
+            "properties": {
+              "Assert": {
+                "description": "The assertion condition."
+              },
+              "AssertDescription": {
+                "type": "string",
+                "description": "The assertion description."
+              }
+            }
+          }
+        }
+      }
+    },
+    "Resource": {
+      "type": "object",
+      "description": "A resource declaration in the template.",
+      "required": [
+        "Type"
+      ],
+      "properties": {
+        "Type": {
+          "type": "string",
+          "description": "The resource type (e.g. AWS::EC2::Instance).",
+          "pattern": "^[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}$|^Custom::.+$"
+        },
+        "Properties": {
+          "type": "object",
+          "description": "Resource-specific properties.",
+          "additionalProperties": true
+        },
+        "DependsOn": {
+          "description": "Specifies that the creation of a specific resource follows another.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "Condition": {
+          "type": "string",
+          "description": "Associates a condition with the resource so that it is created only when the condition is true."
+        },
+        "DeletionPolicy": {
+          "type": "string",
+          "description": "Determines what happens to the resource when the stack is deleted.",
+          "enum": [
+            "Delete",
+            "Retain",
+            "Snapshot",
+            "RetainExceptOnCreate"
+          ]
+        },
+        "UpdatePolicy": {
+          "type": "object",
+          "description": "Specifies how CloudFormation handles updates to specific resources.",
+          "additionalProperties": true
+        },
+        "UpdateReplacePolicy": {
+          "type": "string",
+          "description": "Determines what happens to the resource when it is replaced during a stack update.",
+          "enum": [
+            "Delete",
+            "Retain",
+            "Snapshot"
+          ]
+        },
+        "CreationPolicy": {
+          "type": "object",
+          "description": "Prevents a resource's status from reaching CREATE_COMPLETE until CloudFormation receives a specified number of success signals.",
+          "additionalProperties": true
+        },
+        "Metadata": {
+          "type": "object",
+          "description": "Metadata to associate with the resource.",
+          "additionalProperties": true
+        }
+      }
+    },
+    "OutputDefinition": {
+      "type": "object",
+      "description": "An output declaration in the template.",
+      "required": [
+        "Value"
+      ],
+      "properties": {
+        "Description": {
+          "type": "string",
+          "description": "A description of the output value.",
+          "maxLength": 1024
+        },
+        "Value": {
+          "description": "The value of the property returned by the aws cloudformation describe-stacks command."
+        },
+        "Export": {
+          "type": "object",
+          "description": "The name of the resource output to be exported for cross-stack reference.",
+          "properties": {
+            "Name": {
+              "description": "The export name."
+            }
+          },
+          "required": [
+            "Name"
+          ]
+        },
+        "Condition": {
+          "type": "string",
+          "description": "Associates a condition with the output."
+        }
+      }
+    }
+  }
+}
