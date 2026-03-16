@@ -5,9 +5,9 @@ description: >-
   and the Cloud Control API.
 image: https://aws.amazon.com/cloudformation/logo.png
 created: '2024'
-modified: '2026-03-03'
+modified: '2026-03-16'
 url: https://docs.aws.amazon.com/cloudformation/
-specificationVersion: '0.18'
+specificationVersion: '0.19'
 tags:
 - Infrastructure As Code
 - IaC
@@ -121,6 +121,5 @@ common:
   url: json-ld/context.jsonld
   title: JSON-LD Context
 maintainers:
-- name: Kin Lane
-  email: kin@apievangelist.com
-  url: https://apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
