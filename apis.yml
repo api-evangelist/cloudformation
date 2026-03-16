@@ -1,4 +1,4 @@
-name: AWS CloudFormation API
+name: AWS CloudFormation
 description: >-
   A collection of APIs provided by AWS for infrastructure as code provisioning
   and management of AWS and third-party resources using CloudFormation templates
