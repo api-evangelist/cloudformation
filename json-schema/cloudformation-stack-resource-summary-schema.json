@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StackResourceSummary",
+  "type": "object",
+  "properties": {
+    "LogicalResourceId": {
+      "type": "string"
+    },
+    "PhysicalResourceId": {
+      "type": "string"
+    },
+    "ResourceType": {
+      "type": "string"
+    },
+    "LastUpdatedTimestamp": {
+      "type": "string"
+    },
+    "ResourceStatus": {
+      "type": "string"
+    },
+    "ResourceStatusReason": {
+      "type": "string"
+    }
+  }
+}

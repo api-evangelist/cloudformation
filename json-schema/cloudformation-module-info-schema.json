@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ModuleInfo",
+  "type": "object",
+  "properties": {
+    "TypeHierarchy": {
+      "type": "string",
+      "description": "A concatenated list of the module type hierarchy. For modules within other modules the format is Module1::Module2."
+    },
+    "LogicalIdHierarchy": {
+      "type": "string",
+      "description": "A concatenated list of the logical IDs of the module."
+    }
+  }
+}

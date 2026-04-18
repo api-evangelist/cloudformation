@@ -1,0 +1,12 @@
+{
+  "StackId": "500123",
+  "LogicalResourceId": "500123",
+  "PhysicalResourceId": "500123",
+  "PhysicalResourceIdContext": [],
+  "ResourceType": "example_value",
+  "ExpectedProperties": "example_value",
+  "ActualProperties": "example_value",
+  "PropertyDifferences": [],
+  "StackResourceDriftStatus": "example_value",
+  "Timestamp": "example_value"
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ChangeSetDetail",
+  "type": "object",
+  "properties": {
+    "ChangeSetName": {
+      "type": "string"
+    },
+    "ChangeSetId": {
+      "type": "string"
+    },
+    "StackId": {
+      "type": "string"
+    },
+    "StackName": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "Parameters": {
+      "type": "array"
+    },
+    "CreationTime": {
+      "type": "string"
+    },
+    "ExecutionStatus": {
+      "type": "string"
+    },
+    "Status": {
+      "type": "string"
+    },
+    "StatusReason": {
+      "type": "string"
+    },
+    "NotificationARNs": {
+      "type": "array"
+    },
+    "Capabilities": {
+      "type": "array"
+    },
+    "Tags": {
+      "type": "array"
+    },
+    "Changes": {
+      "type": "array"
+    },
+    "IncludeNestedStacks": {
+      "type": "boolean"
+    },
+    "NextToken": {
+      "type": "string"
+    }
+  }
+}

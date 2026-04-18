@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Stack",
+  "type": "object",
+  "properties": {
+    "StackId": {
+      "type": "string"
+    },
+    "StackName": {
+      "type": "string"
+    },
+    "ChangeSetId": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "CreationTime": {
+      "type": "string"
+    },
+    "DeletionTime": {
+      "type": "string"
+    },
+    "LastUpdatedTime": {
+      "type": "string"
+    },
+    "StackStatusReason": {
+      "type": "string"
+    },
+    "DisableRollback": {
+      "type": "boolean"
+    },
+    "NotificationARNs": {
+      "type": "array"
+    },
+    "TimeoutInMinutes": {
+      "type": "integer"
+    },
+    "Capabilities": {
+      "type": "array"
+    },
+    "Outputs": {
+      "type": "array"
+    },
+    "RoleARN": {
+      "type": "string"
+    },
+    "Tags": {
+      "type": "array"
+    },
+    "EnableTerminationProtection": {
+      "type": "boolean"
+    },
+    "Parameters": {
+      "type": "array"
+    },
+    "ParentId": {
+      "type": "string"
+    },
+    "RootId": {
+      "type": "string"
+    },
+    "DeletionMode": {
+      "type": "string"
+    },
+    "DetailedStatus": {
+      "type": "string"
+    },
+    "RetainExceptOnCreate": {
+      "type": "boolean"
+    }
+  }
+}

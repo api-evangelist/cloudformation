@@ -1,0 +1,14 @@
+{
+  "StackSetName": "example_value",
+  "StackSetId": "500123",
+  "Description": "A sample description.",
+  "Status": "example_value",
+  "TemplateBody": "example_value",
+  "Parameters": [],
+  "Capabilities": [],
+  "Tags": [],
+  "StackSetARN": "example_value",
+  "AdministrationRoleARN": "example_value",
+  "ExecutionRoleName": "example_value",
+  "PermissionModel": "example_value"
+}

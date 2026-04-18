@@ -1,0 +1,9 @@
+{
+  "Action": "example_value",
+  "LogicalResourceId": "500123",
+  "PhysicalResourceId": "500123",
+  "ResourceType": "example_value",
+  "Replacement": "example_value",
+  "Scope": [],
+  "Details": []
+}

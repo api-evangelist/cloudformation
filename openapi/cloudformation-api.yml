@@ -18,63 +18,63 @@ info:
   x-logo:
     url: https://aws.amazon.com/cloudformation/logo.png
 servers:
-  - url: https://cloudformation.{region}.amazonaws.com
-    description: AWS CloudFormation Regional Endpoint
-    variables:
-      region:
-        default: us-east-1
-        description: AWS region
-        enum:
-          - us-east-1
-          - us-east-2
-          - us-west-1
-          - us-west-2
-          - eu-west-1
-          - eu-west-2
-          - eu-central-1
-          - ap-southeast-1
-          - ap-southeast-2
-          - ap-northeast-1
+- url: https://cloudformation.{region}.amazonaws.com
+  description: AWS CloudFormation Regional Endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-central-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
 security:
-  - AWS_Signature_V4: []
+- AWS_Signature_V4: []
 tags:
-  - name: Stacks
-    description: Operations for creating, updating, deleting, and describing CloudFormation stacks.
-  - name: Stack Events
-    description: Operations for retrieving stack-related events.
-  - name: Stack Resources
-    description: Operations for describing resources within a stack.
-  - name: Stack Drift
-    description: Operations for detecting and describing configuration drift.
-  - name: Change Sets
-    description: Operations for creating and managing change sets to preview stack changes.
-  - name: Templates
-    description: Operations for retrieving, validating, and summarizing templates.
-  - name: Stack Sets
-    description: Operations for managing stack sets across multiple accounts and regions.
-  - name: Stack Instances
-    description: Operations for managing stack instances within a stack set.
-  - name: Stack Policies
-    description: Operations for getting and setting stack policies.
-  - name: Registry
-    description: Operations for managing extension types in the CloudFormation Registry.
-  - name: IaC Generator
-    description: Operations for generating templates from existing resources.
-  - name: Exports
-    description: Operations for listing stack exports and imports.
+- name: Stacks
+  description: Operations for creating, updating, deleting, and describing CloudFormation stacks.
+- name: Stack Events
+  description: Operations for retrieving stack-related events.
+- name: Stack Resources
+  description: Operations for describing resources within a stack.
+- name: Stack Drift
+  description: Operations for detecting and describing configuration drift.
+- name: Change Sets
+  description: Operations for creating and managing change sets to preview stack changes.
+- name: Templates
+  description: Operations for retrieving, validating, and summarizing templates.
+- name: Stack Sets
+  description: Operations for managing stack sets across multiple accounts and regions.
+- name: Stack Instances
+  description: Operations for managing stack instances within a stack set.
+- name: Stack Policies
+  description: Operations for getting and setting stack policies.
+- name: Registry
+  description: Operations for managing extension types in the CloudFormation Registry.
+- name: IaC Generator
+  description: Operations for generating templates from existing resources.
+- name: Exports
+  description: Operations for listing stack exports and imports.
 paths:
   /?Action=CreateStack:
     post:
       operationId: createStack
-      summary: Create a new stack
+      summary: Create a New Stack
       description: >-
         Creates a stack as specified in the template. After the call completes
         successfully, the stack creation starts. You can check the status of the
         stack through the DescribeStacks operation.
       tags:
-        - Stacks
+      - Stacks
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -82,7 +82,7 @@ paths:
             schema:
               type: object
               required:
-                - StackName
+              - StackName
               properties:
                 StackName:
                   type: string
@@ -132,16 +132,16 @@ paths:
                   items:
                     type: string
                     enum:
-                      - CAPABILITY_IAM
-                      - CAPABILITY_NAMED_IAM
-                      - CAPABILITY_AUTO_EXPAND
+                    - CAPABILITY_IAM
+                    - CAPABILITY_NAMED_IAM
+                    - CAPABILITY_AUTO_EXPAND
                 OnFailure:
                   type: string
                   description: Determines what action to take if stack creation fails.
                   enum:
-                    - DO_NOTHING
-                    - ROLLBACK
-                    - DELETE
+                  - DO_NOTHING
+                  - ROLLBACK
+                  - DELETE
                   default: ROLLBACK
                 StackPolicyBody:
                   type: string
@@ -177,6 +177,39 @@ paths:
                   type: boolean
                   description: When true, newly created resources are deleted when the operation rolls back.
                   default: false
+            examples:
+              CreatestackRequestExample:
+                summary: Default createStack request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
+                  Parameters:
+                  - ParameterKey: example_value
+                    ParameterValue: example_value
+                    UsePreviousValue: true
+                    ResolvedValue: example_value
+                  DisableRollback: true
+                  RollbackConfiguration:
+                    RollbackTriggers:
+                    - {}
+                    MonitoringTimeInMinutes: 10
+                  TimeoutInMinutes: 10
+                  NotificationARNs:
+                  - example_value
+                  Capabilities:
+                  - CAPABILITY_IAM
+                  OnFailure: DO_NOTHING
+                  StackPolicyBody: example_value
+                  StackPolicyURL: https://www.example.com
+                  Tags:
+                  - Key: example_value
+                    Value: example_value
+                  RoleARN: example_value
+                  EnableTerminationProtection: true
+                  ClientRequestToken: example_value
+                  RetainExceptOnCreate: true
       responses:
         '200':
           description: Stack creation initiated successfully.
@@ -191,6 +224,13 @@ paths:
                       StackId:
                         type: string
                         description: Unique identifier of the stack.
+              examples:
+                Createstack200Example:
+                  summary: Default createStack 200 response
+                  x-microcks-default: true
+                  value:
+                    CreateStackResult:
+                      StackId: '500123'
         '400':
           $ref: '#/components/responses/ValidationError'
         '409':
@@ -198,18 +238,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=UpdateStack:
     post:
       operationId: updateStack
-      summary: Update an existing stack
+      summary: Update an Existing Stack
       description: >-
         Updates a stack as specified in the template. After the call completes
         successfully, the stack update starts. You can check the status of the
         stack through the DescribeStacks operation.
       tags:
-        - Stacks
+      - Stacks
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -217,7 +260,7 @@ paths:
             schema:
               type: object
               required:
-                - StackName
+              - StackName
               properties:
                 StackName:
                   type: string
@@ -241,9 +284,9 @@ paths:
                   items:
                     type: string
                     enum:
-                      - CAPABILITY_IAM
-                      - CAPABILITY_NAMED_IAM
-                      - CAPABILITY_AUTO_EXPAND
+                    - CAPABILITY_IAM
+                    - CAPABILITY_NAMED_IAM
+                    - CAPABILITY_AUTO_EXPAND
                 Tags:
                   type: array
                   items:
@@ -279,6 +322,39 @@ paths:
                   type: boolean
                 RetainExceptOnCreate:
                   type: boolean
+            examples:
+              UpdatestackRequestExample:
+                summary: Default updateStack request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
+                  UsePreviousTemplate: true
+                  Parameters:
+                  - ParameterKey: example_value
+                    ParameterValue: example_value
+                    UsePreviousValue: true
+                    ResolvedValue: example_value
+                  Capabilities:
+                  - CAPABILITY_IAM
+                  Tags:
+                  - Key: example_value
+                    Value: example_value
+                  RoleARN: example_value
+                  RollbackConfiguration:
+                    RollbackTriggers:
+                    - {}
+                    MonitoringTimeInMinutes: 10
+                  StackPolicyBody: example_value
+                  StackPolicyURL: https://www.example.com
+                  StackPolicyDuringUpdateBody: example_value
+                  StackPolicyDuringUpdateURL: https://www.example.com
+                  NotificationARNs:
+                  - example_value
+                  ClientRequestToken: example_value
+                  DisableRollback: true
+                  RetainExceptOnCreate: true
       responses:
         '200':
           description: Stack update initiated successfully.
@@ -292,6 +368,13 @@ paths:
                     properties:
                       StackId:
                         type: string
+              examples:
+                Updatestack200Example:
+                  summary: Default updateStack 200 response
+                  x-microcks-default: true
+                  value:
+                    UpdateStackResult:
+                      StackId: '500123'
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -299,18 +382,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DeleteStack:
     post:
       operationId: deleteStack
-      summary: Delete an existing stack
+      summary: Delete an Existing Stack
       description: >-
         Deletes a specified stack. Once the call completes successfully, stack
         deletion starts. Deleted stacks do not show up in DescribeStacks calls
         by default.
       tags:
-        - Stacks
+      - Stacks
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -318,7 +404,7 @@ paths:
             schema:
               type: object
               required:
-                - StackName
+              - StackName
               properties:
                 StackName:
                   type: string
@@ -342,8 +428,19 @@ paths:
                   type: string
                   description: Specifies the deletion mode.
                   enum:
-                    - STANDARD
-                    - FORCE_DELETE_STACK
+                  - STANDARD
+                  - FORCE_DELETE_STACK
+            examples:
+              DeletestackRequestExample:
+                summary: Default deleteStack request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  RetainResources:
+                  - example_value
+                  RoleARN: example_value
+                  ClientRequestToken: example_value
+                  DeletionMode: STANDARD
       responses:
         '200':
           description: Stack deletion initiated successfully.
@@ -356,18 +453,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DescribeStacks:
     post:
       operationId: describeStacks
-      summary: Describe one or more stacks
+      summary: Describe One or More Stacks
       description: >-
         Returns the description for the specified stack. If no stack name was
         specified, then it returns descriptions for all stacks. Use ListStacks
         instead if you do not need full stack details for performance reasons.
       tags:
-        - Stacks
+      - Stacks
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -381,6 +481,13 @@ paths:
                   type: string
                   description: Token for pagination from a prior call.
                   maxLength: 1024
+            examples:
+              DescribestacksRequestExample:
+                summary: Default describeStacks request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  NextToken: example_value
       responses:
         '200':
           description: Stack details returned successfully.
@@ -398,22 +505,55 @@ paths:
                           $ref: '#/components/schemas/Stack'
                       NextToken:
                         type: string
+              examples:
+                Describestacks200Example:
+                  summary: Default describeStacks 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStacksResult:
+                      Stacks:
+                      - StackId: '500123'
+                        StackName: example_value
+                        ChangeSetId: '500123'
+                        Description: A sample description.
+                        CreationTime: '2026-01-15T10:30:00Z'
+                        DeletionTime: '2026-01-15T10:30:00Z'
+                        LastUpdatedTime: '2026-01-15T10:30:00Z'
+                        StackStatusReason: example_value
+                        DisableRollback: true
+                        NotificationARNs: {}
+                        TimeoutInMinutes: 10
+                        Capabilities: {}
+                        Outputs: {}
+                        RoleARN: example_value
+                        Tags: {}
+                        EnableTerminationProtection: true
+                        Parameters: {}
+                        ParentId: '500123'
+                        RootId: '500123'
+                        DeletionMode: STANDARD
+                        DetailedStatus: CONFIGURATION_COMPLETE
+                        RetainExceptOnCreate: true
+                      NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=ListStacks:
     post:
       operationId: listStacks
-      summary: List all stacks
+      summary: List All Stacks
       description: >-
         Returns summary information for all stacks. Deleted stacks are included
         for 90 days after deletion. You can filter by stack status.
       tags:
-        - Stacks
+      - Stacks
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -428,6 +568,14 @@ paths:
                   description: Filter stacks by status.
                   items:
                     $ref: '#/components/schemas/StackStatus'
+            examples:
+              ListstacksRequestExample:
+                summary: Default listStacks request
+                x-microcks-default: true
+                value:
+                  NextToken: example_value
+                  StackStatusFilter:
+                  - CREATE_IN_PROGRESS
       responses:
         '200':
           description: Stack summaries returned successfully.
@@ -445,23 +593,43 @@ paths:
                           $ref: '#/components/schemas/StackSummary'
                       NextToken:
                         type: string
+              examples:
+                Liststacks200Example:
+                  summary: Default listStacks 200 response
+                  x-microcks-default: true
+                  value:
+                    ListStacksResult:
+                      StackSummaries:
+                      - StackId: '500123'
+                        StackName: example_value
+                        TemplateDescription: example_value
+                        CreationTime: '2026-01-15T10:30:00Z'
+                        LastUpdatedTime: '2026-01-15T10:30:00Z'
+                        DeletionTime: '2026-01-15T10:30:00Z'
+                        StackStatusReason: example_value
+                        ParentId: '500123'
+                        RootId: '500123'
+                      NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=CancelUpdateStack:
     post:
       operationId: cancelUpdateStack
-      summary: Cancel a stack update in progress
+      summary: Cancel a Stack Update in Progress
       description: >-
         Cancels an update on the specified stack. If the call completes
         successfully, the stack rolls back the update and reverts to the
         previous stack configuration.
       tags:
-        - Stacks
+      - Stacks
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -469,13 +637,20 @@ paths:
             schema:
               type: object
               required:
-                - StackName
+              - StackName
               properties:
                 StackName:
                   type: string
                 ClientRequestToken:
                   type: string
                   maxLength: 128
+            examples:
+              CancelupdatestackRequestExample:
+                summary: Default cancelUpdateStack request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  ClientRequestToken: example_value
       responses:
         '200':
           description: Stack update cancellation initiated.
@@ -486,18 +661,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=ContinueUpdateRollback:
     post:
       operationId: continueUpdateRollback
-      summary: Continue rolling back a failed stack update
+      summary: Continue Rolling Back a Failed Stack Update
       description: >-
         For a specified stack in UPDATE_ROLLBACK_FAILED state, continues rolling
         back to the previous stable state. A stack enters this state when a
         resource fails during the update rollback process.
       tags:
-        - Stacks
+      - Stacks
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -505,7 +683,7 @@ paths:
             schema:
               type: object
               required:
-                - StackName
+              - StackName
               properties:
                 StackName:
                   type: string
@@ -520,6 +698,16 @@ paths:
                 ClientRequestToken:
                   type: string
                   maxLength: 128
+            examples:
+              ContinueupdaterollbackRequestExample:
+                summary: Default continueUpdateRollback request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  RoleARN: example_value
+                  ResourcesToSkip:
+                  - example_value
+                  ClientRequestToken: example_value
       responses:
         '200':
           description: Update rollback continuation initiated.
@@ -530,16 +718,19 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=RollbackStack:
     post:
       operationId: rollbackStack
-      summary: Rollback a stack to a previous stable state
+      summary: Rollback a Stack to a Previous Stable State
       description: >-
         Rolls back the specified stack to the last known stable state.
       tags:
-        - Stacks
+      - Stacks
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -547,7 +738,7 @@ paths:
             schema:
               type: object
               required:
-                - StackName
+              - StackName
               properties:
                 StackName:
                   type: string
@@ -560,6 +751,15 @@ paths:
                   maxLength: 128
                 RetainExceptOnCreate:
                   type: boolean
+            examples:
+              RollbackstackRequestExample:
+                summary: Default rollbackStack request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  RoleARN: example_value
+                  ClientRequestToken: example_value
+                  RetainExceptOnCreate: true
       responses:
         '200':
           description: Stack rollback initiated successfully.
@@ -573,6 +773,13 @@ paths:
                     properties:
                       StackId:
                         type: string
+              examples:
+                Rollbackstack200Example:
+                  summary: Default rollbackStack 200 response
+                  x-microcks-default: true
+                  value:
+                    RollbackStackResult:
+                      StackId: '500123'
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -580,18 +787,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=UpdateTerminationProtection:
     post:
       operationId: updateTerminationProtection
-      summary: Enable or disable termination protection on a stack
+      summary: Enable or Disable Termination Protection on a Stack
       description: >-
         Updates termination protection for the specified stack. If a user
         attempts to delete a stack with termination protection enabled, the
         operation fails and the stack remains unchanged.
       tags:
-        - Stacks
+      - Stacks
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -599,13 +809,20 @@ paths:
             schema:
               type: object
               required:
-                - StackName
-                - EnableTerminationProtection
+              - StackName
+              - EnableTerminationProtection
               properties:
                 StackName:
                   type: string
                 EnableTerminationProtection:
                   type: boolean
+            examples:
+              UpdateterminationprotectionRequestExample:
+                summary: Default updateTerminationProtection request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  EnableTerminationProtection: true
       responses:
         '200':
           description: Termination protection updated.
@@ -619,6 +836,13 @@ paths:
                     properties:
                       StackId:
                         type: string
+              examples:
+                Updateterminationprotection200Example:
+                  summary: Default updateTerminationProtection 200 response
+                  x-microcks-default: true
+                  value:
+                    UpdateTerminationProtectionResult:
+                      StackId: '500123'
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -626,17 +850,20 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DescribeStackEvents:
     post:
       operationId: describeStackEvents
-      summary: Retrieve events for a stack
+      summary: Retrieve Events for a Stack
       description: >-
         Returns all stack-related events for a specified stack in reverse
         chronological order.
       tags:
-        - Stack Events
+      - Stack Events
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -648,6 +875,13 @@ paths:
                 NextToken:
                   type: string
                   maxLength: 1024
+            examples:
+              DescribestackeventsRequestExample:
+                summary: Default describeStackEvents request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  NextToken: example_value
       responses:
         '200':
           description: Stack events returned successfully.
@@ -665,21 +899,48 @@ paths:
                           $ref: '#/components/schemas/StackEvent'
                       NextToken:
                         type: string
+              examples:
+                Describestackevents200Example:
+                  summary: Default describeStackEvents 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackEventsResult:
+                      StackEvents:
+                      - StackId: '500123'
+                        EventId: '500123'
+                        StackName: example_value
+                        LogicalResourceId: '500123'
+                        PhysicalResourceId: '500123'
+                        ResourceType: example_value
+                        Timestamp: '2026-01-15T10:30:00Z'
+                        ResourceStatus: example_value
+                        ResourceStatusReason: example_value
+                        ResourceProperties: example_value
+                        ClientRequestToken: example_value
+                        HookType: example_value
+                        HookStatus: example_value
+                        HookStatusReason: example_value
+                        HookInvocationPoint: example_value
+                        HookFailureMode: example_value
+                      NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DescribeStackResource:
     post:
       operationId: describeStackResource
-      summary: Describe a specific resource in a stack
+      summary: Describe a Specific Resource in a Stack
       description: >-
         Returns a description of the specified resource in the specified stack.
       tags:
-        - Stack Resources
+      - Stack Resources
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -687,14 +948,21 @@ paths:
             schema:
               type: object
               required:
-                - StackName
-                - LogicalResourceId
+              - StackName
+              - LogicalResourceId
               properties:
                 StackName:
                   type: string
                 LogicalResourceId:
                   type: string
                   description: The logical name of the resource as specified in the template.
+            examples:
+              DescribestackresourceRequestExample:
+                summary: Default describeStackResource request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  LogicalResourceId: '500123'
       responses:
         '200':
           description: Stack resource details returned successfully.
@@ -708,6 +976,22 @@ paths:
                     properties:
                       StackResourceDetail:
                         $ref: '#/components/schemas/StackResource'
+              examples:
+                Describestackresource200Example:
+                  summary: Default describeStackResource 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackResourceResult:
+                      StackResourceDetail:
+                        StackName: example_value
+                        StackId: '500123'
+                        LogicalResourceId: '500123'
+                        PhysicalResourceId: '500123'
+                        ResourceType: example_value
+                        Timestamp: '2026-01-15T10:30:00Z'
+                        ResourceStatus: CREATE_IN_PROGRESS
+                        ResourceStatusReason: example_value
+                        Description: A sample description.
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -715,17 +999,20 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DescribeStackResources:
     post:
       operationId: describeStackResources
-      summary: Describe all resources in a stack
+      summary: Describe All Resources in a Stack
       description: >-
         Returns AWS resource descriptions for running or deleted stacks. You
         must specify a StackName or PhysicalResourceId.
       tags:
-        - Stack Resources
+      - Stack Resources
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -738,6 +1025,14 @@ paths:
                   type: string
                 PhysicalResourceId:
                   type: string
+            examples:
+              DescribestackresourcesRequestExample:
+                summary: Default describeStackResources request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  LogicalResourceId: '500123'
+                  PhysicalResourceId: '500123'
       responses:
         '200':
           description: Stack resources returned successfully.
@@ -753,21 +1048,40 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/StackResource'
+              examples:
+                Describestackresources200Example:
+                  summary: Default describeStackResources 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackResourcesResult:
+                      StackResources:
+                      - StackName: example_value
+                        StackId: '500123'
+                        LogicalResourceId: '500123'
+                        PhysicalResourceId: '500123'
+                        ResourceType: example_value
+                        Timestamp: '2026-01-15T10:30:00Z'
+                        ResourceStatus: CREATE_IN_PROGRESS
+                        ResourceStatusReason: example_value
+                        Description: A sample description.
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=ListStackResources:
     post:
       operationId: listStackResources
-      summary: List resources in a stack
+      summary: List Resources in a Stack
       description: >-
         Returns descriptions of all resources of the specified stack.
       tags:
-        - Stack Resources
+      - Stack Resources
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -775,13 +1089,20 @@ paths:
             schema:
               type: object
               required:
-                - StackName
+              - StackName
               properties:
                 StackName:
                   type: string
                 NextToken:
                   type: string
                   maxLength: 1024
+            examples:
+              ListstackresourcesRequestExample:
+                summary: Default listStackResources request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  NextToken: example_value
       responses:
         '200':
           description: Stack resource summaries returned.
@@ -799,23 +1120,40 @@ paths:
                           $ref: '#/components/schemas/StackResourceSummary'
                       NextToken:
                         type: string
+              examples:
+                Liststackresources200Example:
+                  summary: Default listStackResources 200 response
+                  x-microcks-default: true
+                  value:
+                    ListStackResourcesResult:
+                      StackResourceSummaries:
+                      - LogicalResourceId: '500123'
+                        PhysicalResourceId: '500123'
+                        ResourceType: example_value
+                        LastUpdatedTimestamp: '2026-01-15T10:30:00Z'
+                        ResourceStatus: example_value
+                        ResourceStatusReason: example_value
+                      NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=SignalResource:
     post:
       operationId: signalResource
-      summary: Send a signal to a resource in a stack
+      summary: Send a Signal to a Resource in a Stack
       description: >-
         Sends a signal to the specified resource with a success or failure
         status. You can use the SignalResource operation in conjunction with a
         creation policy or update policy.
       tags:
-        - Stack Resources
+      - Stack Resources
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -823,10 +1161,10 @@ paths:
             schema:
               type: object
               required:
-                - StackName
-                - LogicalResourceId
-                - UniqueId
-                - Status
+              - StackName
+              - LogicalResourceId
+              - UniqueId
+              - Status
               properties:
                 StackName:
                   type: string
@@ -839,8 +1177,17 @@ paths:
                 Status:
                   type: string
                   enum:
-                    - SUCCESS
-                    - FAILURE
+                  - SUCCESS
+                  - FAILURE
+            examples:
+              SignalresourceRequestExample:
+                summary: Default signalResource request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  LogicalResourceId: '500123'
+                  UniqueId: '500123'
+                  Status: SUCCESS
       responses:
         '200':
           description: Signal sent successfully.
@@ -851,18 +1198,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DetectStackDrift:
     post:
       operationId: detectStackDrift
-      summary: Detect configuration drift on a stack
+      summary: Detect Configuration Drift on a Stack
       description: >-
         Detects whether a stack's actual configuration differs from its expected
         configuration as defined in the stack template. Returns a drift detection
         ID you can use to monitor the progress of the operation.
       tags:
-        - Stack Drift
+      - Stack Drift
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -870,7 +1220,7 @@ paths:
             schema:
               type: object
               required:
-                - StackName
+              - StackName
               properties:
                 StackName:
                   type: string
@@ -878,6 +1228,14 @@ paths:
                   type: array
                   items:
                     type: string
+            examples:
+              DetectstackdriftRequestExample:
+                summary: Default detectStackDrift request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  LogicalResourceIds:
+                  - example_value
       responses:
         '200':
           description: Drift detection initiated.
@@ -891,6 +1249,13 @@ paths:
                     properties:
                       StackDriftDetectionId:
                         type: string
+              examples:
+                Detectstackdrift200Example:
+                  summary: Default detectStackDrift 200 response
+                  x-microcks-default: true
+                  value:
+                    DetectStackDriftResult:
+                      StackDriftDetectionId: '500123'
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -898,17 +1263,20 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DescribeStackDriftDetectionStatus:
     post:
       operationId: describeStackDriftDetectionStatus
-      summary: Check status of drift detection
+      summary: Check Status of Drift Detection
       description: >-
         Returns information about a stack drift detection operation. Provides
         the current status and results of the operation.
       tags:
-        - Stack Drift
+      - Stack Drift
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -916,11 +1284,17 @@ paths:
             schema:
               type: object
               required:
-                - StackDriftDetectionId
+              - StackDriftDetectionId
               properties:
                 StackDriftDetectionId:
                   type: string
                   description: The ID of the drift detection operation.
+            examples:
+              DescribestackdriftdetectionstatusRequestExample:
+                summary: Default describeStackDriftDetectionStatus request
+                x-microcks-default: true
+                value:
+                  StackDriftDetectionId: '500123'
       responses:
         '200':
           description: Drift detection status returned.
@@ -939,16 +1313,16 @@ paths:
                       StackDriftStatus:
                         type: string
                         enum:
-                          - DRIFTED
-                          - IN_SYNC
-                          - UNKNOWN
-                          - NOT_CHECKED
+                        - DRIFTED
+                        - IN_SYNC
+                        - UNKNOWN
+                        - NOT_CHECKED
                       DetectionStatus:
                         type: string
                         enum:
-                          - DETECTION_IN_PROGRESS
-                          - DETECTION_FAILED
-                          - DETECTION_COMPLETE
+                        - DETECTION_IN_PROGRESS
+                        - DETECTION_FAILED
+                        - DETECTION_COMPLETE
                       DetectionStatusReason:
                         type: string
                       DriftedStackResourceCount:
@@ -956,22 +1330,38 @@ paths:
                       Timestamp:
                         type: string
                         format: date-time
+              examples:
+                Describestackdriftdetectionstatus200Example:
+                  summary: Default describeStackDriftDetectionStatus 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackDriftDetectionStatusResult:
+                      StackId: '500123'
+                      StackDriftDetectionId: '500123'
+                      StackDriftStatus: DRIFTED
+                      DetectionStatus: DETECTION_IN_PROGRESS
+                      DetectionStatusReason: example_value
+                      DriftedStackResourceCount: 10
+                      Timestamp: '2026-01-15T10:30:00Z'
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DescribeStackResourceDrifts:
     post:
       operationId: describeStackResourceDrifts
-      summary: Get drift information for stack resources
+      summary: Get Drift Information for Stack Resources
       description: >-
         Returns drift information for the resources that have been checked for
         drift in the specified stack.
       tags:
-        - Stack Drift
+      - Stack Drift
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -979,7 +1369,7 @@ paths:
             schema:
               type: object
               required:
-                - StackName
+              - StackName
               properties:
                 StackName:
                   type: string
@@ -988,10 +1378,10 @@ paths:
                   items:
                     type: string
                     enum:
-                      - IN_SYNC
-                      - MODIFIED
-                      - DELETED
-                      - NOT_CHECKED
+                    - IN_SYNC
+                    - MODIFIED
+                    - DELETED
+                    - NOT_CHECKED
                 NextToken:
                   type: string
                   maxLength: 1024
@@ -999,6 +1389,16 @@ paths:
                   type: integer
                   minimum: 1
                   maximum: 100
+            examples:
+              DescribestackresourcedriftsRequestExample:
+                summary: Default describeStackResourceDrifts request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  StackResourceDriftStatusFilters:
+                  - IN_SYNC
+                  NextToken: example_value
+                  MaxResults: 10
       responses:
         '200':
           description: Resource drift information returned.
@@ -1016,22 +1416,43 @@ paths:
                           $ref: '#/components/schemas/StackResourceDrift'
                       NextToken:
                         type: string
+              examples:
+                Describestackresourcedrifts200Example:
+                  summary: Default describeStackResourceDrifts 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackResourceDriftsResult:
+                      StackResourceDrifts:
+                      - StackId: '500123'
+                        LogicalResourceId: '500123'
+                        PhysicalResourceId: '500123'
+                        PhysicalResourceIdContext: {}
+                        ResourceType: example_value
+                        ExpectedProperties: example_value
+                        ActualProperties: example_value
+                        PropertyDifferences: {}
+                        StackResourceDriftStatus: IN_SYNC
+                        Timestamp: '2026-01-15T10:30:00Z'
+                      NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DetectStackResourceDrift:
     post:
       operationId: detectStackResourceDrift
-      summary: Detect drift on a specific resource
+      summary: Detect Drift on a Specific Resource
       description: >-
         Returns information about whether a resource's actual configuration
         differs from its expected configuration.
       tags:
-        - Stack Drift
+      - Stack Drift
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -1039,13 +1460,20 @@ paths:
             schema:
               type: object
               required:
-                - StackName
-                - LogicalResourceId
+              - StackName
+              - LogicalResourceId
               properties:
                 StackName:
                   type: string
                 LogicalResourceId:
                   type: string
+            examples:
+              DetectstackresourcedriftRequestExample:
+                summary: Default detectStackResourceDrift request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  LogicalResourceId: '500123'
       responses:
         '200':
           description: Resource drift detection result returned.
@@ -1059,6 +1487,25 @@ paths:
                     properties:
                       StackResourceDrift:
                         $ref: '#/components/schemas/StackResourceDrift'
+              examples:
+                Detectstackresourcedrift200Example:
+                  summary: Default detectStackResourceDrift 200 response
+                  x-microcks-default: true
+                  value:
+                    DetectStackResourceDriftResult:
+                      StackResourceDrift:
+                        StackId: '500123'
+                        LogicalResourceId: '500123'
+                        PhysicalResourceId: '500123'
+                        PhysicalResourceIdContext:
+                        - {}
+                        ResourceType: example_value
+                        ExpectedProperties: example_value
+                        ActualProperties: example_value
+                        PropertyDifferences:
+                        - {}
+                        StackResourceDriftStatus: IN_SYNC
+                        Timestamp: '2026-01-15T10:30:00Z'
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -1066,18 +1513,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=CreateChangeSet:
     post:
       operationId: createChangeSet
-      summary: Create a change set to preview stack changes
+      summary: Create a Change Set to Preview Stack Changes
       description: >-
         Creates a list of changes that will be applied to a stack so that you
         can review the changes before executing them. Change sets allow you to
         see how your changes might impact running resources before implementing them.
       tags:
-        - Change Sets
+      - Change Sets
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -1085,8 +1535,8 @@ paths:
             schema:
               type: object
               required:
-                - StackName
-                - ChangeSetName
+              - StackName
+              - ChangeSetName
               properties:
                 StackName:
                   type: string
@@ -1110,9 +1560,9 @@ paths:
                   items:
                     type: string
                     enum:
-                      - CAPABILITY_IAM
-                      - CAPABILITY_NAMED_IAM
-                      - CAPABILITY_AUTO_EXPAND
+                    - CAPABILITY_IAM
+                    - CAPABILITY_NAMED_IAM
+                    - CAPABILITY_AUTO_EXPAND
                 ResourceTypes:
                   type: array
                   items:
@@ -1137,9 +1587,9 @@ paths:
                   type: string
                   description: The type of change set operation.
                   enum:
-                    - CREATE
-                    - UPDATE
-                    - IMPORT
+                  - CREATE
+                  - UPDATE
+                  - IMPORT
                 Description:
                   type: string
                   description: A description for the change set.
@@ -1151,6 +1601,40 @@ paths:
                 ClientToken:
                   type: string
                   maxLength: 128
+            examples:
+              CreatechangesetRequestExample:
+                summary: Default createChangeSet request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  ChangeSetName: example_value
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
+                  UsePreviousTemplate: true
+                  Parameters:
+                  - ParameterKey: example_value
+                    ParameterValue: example_value
+                    UsePreviousValue: true
+                    ResolvedValue: example_value
+                  Capabilities:
+                  - CAPABILITY_IAM
+                  ResourceTypes:
+                  - example_value
+                  RoleARN: example_value
+                  RollbackConfiguration:
+                    RollbackTriggers:
+                    - {}
+                    MonitoringTimeInMinutes: 10
+                  NotificationARNs:
+                  - example_value
+                  Tags:
+                  - Key: example_value
+                    Value: example_value
+                  ChangeSetType: CREATE
+                  Description: A sample description.
+                  IncludeNestedStacks: true
+                  ImportExistingResources: true
+                  ClientToken: example_value
       responses:
         '200':
           description: Change set creation initiated.
@@ -1167,22 +1651,33 @@ paths:
                         description: The ARN of the change set.
                       StackId:
                         type: string
+              examples:
+                Createchangeset200Example:
+                  summary: Default createChangeSet 200 response
+                  x-microcks-default: true
+                  value:
+                    CreateChangeSetResult:
+                      Id: abc123
+                      StackId: '500123'
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DescribeChangeSet:
     post:
       operationId: describeChangeSet
-      summary: Describe a change set
+      summary: Describe a Change Set
       description: >-
         Returns the inputs and a list of changes that CloudFormation will make
         if you execute the change set.
       tags:
-        - Change Sets
+      - Change Sets
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -1190,7 +1685,7 @@ paths:
             schema:
               type: object
               required:
-                - ChangeSetName
+              - ChangeSetName
               properties:
                 ChangeSetName:
                   type: string
@@ -1202,6 +1697,15 @@ paths:
                   maxLength: 1024
                 IncludePropertyValues:
                   type: boolean
+            examples:
+              DescribechangesetRequestExample:
+                summary: Default describeChangeSet request
+                x-microcks-default: true
+                value:
+                  ChangeSetName: example_value
+                  StackName: example_value
+                  NextToken: example_value
+                  IncludePropertyValues: true
       responses:
         '200':
           description: Change set details returned.
@@ -1209,6 +1713,40 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/ChangeSetDetail'
+              examples:
+                Describechangeset200Example:
+                  summary: Default describeChangeSet 200 response
+                  x-microcks-default: true
+                  value:
+                    ChangeSetName: example_value
+                    ChangeSetId: '500123'
+                    StackId: '500123'
+                    StackName: example_value
+                    Description: A sample description.
+                    Parameters:
+                    - ParameterKey: example_value
+                      ParameterValue: example_value
+                      UsePreviousValue: true
+                      ResolvedValue: example_value
+                    CreationTime: '2026-01-15T10:30:00Z'
+                    ExecutionStatus: example_value
+                    Status: example_value
+                    StatusReason: example_value
+                    NotificationARNs:
+                    - example_value
+                    RollbackConfiguration:
+                      RollbackTriggers:
+                      - {}
+                      MonitoringTimeInMinutes: 10
+                    Capabilities:
+                    - example_value
+                    Tags:
+                    - Key: example_value
+                      Value: example_value
+                    Changes:
+                    - Type: Resource
+                    IncludeNestedStacks: true
+                    NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -1216,18 +1754,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=ExecuteChangeSet:
     post:
       operationId: executeChangeSet
-      summary: Execute a change set
+      summary: Execute a Change Set
       description: >-
         Updates a stack using the input information provided when the specified
         change set was created. After the call successfully completes,
         CloudFormation starts updating the stack.
       tags:
-        - Change Sets
+      - Change Sets
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -1235,7 +1776,7 @@ paths:
             schema:
               type: object
               required:
-                - ChangeSetName
+              - ChangeSetName
               properties:
                 ChangeSetName:
                   type: string
@@ -1248,6 +1789,16 @@ paths:
                   type: boolean
                 RetainExceptOnCreate:
                   type: boolean
+            examples:
+              ExecutechangesetRequestExample:
+                summary: Default executeChangeSet request
+                x-microcks-default: true
+                value:
+                  ChangeSetName: example_value
+                  StackName: example_value
+                  ClientRequestToken: example_value
+                  DisableRollback: true
+                  RetainExceptOnCreate: true
       responses:
         '200':
           description: Change set execution initiated.
@@ -1260,18 +1811,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DeleteChangeSet:
     post:
       operationId: deleteChangeSet
-      summary: Delete a change set
+      summary: Delete a Change Set
       description: >-
         Deletes the specified change set. Deleting change sets ensures that no
         one executes the wrong change set. Only change sets in CREATE_COMPLETE
         or FAILED status can be deleted.
       tags:
-        - Change Sets
+      - Change Sets
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -1279,12 +1833,19 @@ paths:
             schema:
               type: object
               required:
-                - ChangeSetName
+              - ChangeSetName
               properties:
                 ChangeSetName:
                   type: string
                 StackName:
                   type: string
+            examples:
+              DeletechangesetRequestExample:
+                summary: Default deleteChangeSet request
+                x-microcks-default: true
+                value:
+                  ChangeSetName: example_value
+                  StackName: example_value
       responses:
         '200':
           description: Change set deleted successfully.
@@ -1297,18 +1858,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=ListChangeSets:
     post:
       operationId: listChangeSets
-      summary: List all change sets for a stack
+      summary: List All Change Sets for a Stack
       description: >-
         Returns the ID and status of each active change set for a stack. For
         example, CloudFormation lists change sets that are in the
         CREATE_IN_PROGRESS or CREATE_COMPLETE status.
       tags:
-        - Change Sets
+      - Change Sets
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -1316,13 +1880,20 @@ paths:
             schema:
               type: object
               required:
-                - StackName
+              - StackName
               properties:
                 StackName:
                   type: string
                 NextToken:
                   type: string
                   maxLength: 1024
+            examples:
+              ListchangesetsRequestExample:
+                summary: Default listChangeSets request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  NextToken: example_value
       responses:
         '200':
           description: Change set summaries returned.
@@ -1340,22 +1911,46 @@ paths:
                           $ref: '#/components/schemas/ChangeSetSummary'
                       NextToken:
                         type: string
+              examples:
+                Listchangesets200Example:
+                  summary: Default listChangeSets 200 response
+                  x-microcks-default: true
+                  value:
+                    ListChangeSetsResult:
+                      Summaries:
+                      - StackId: '500123'
+                        StackName: example_value
+                        ChangeSetId: '500123'
+                        ChangeSetName: example_value
+                        ExecutionStatus: UNAVAILABLE
+                        Status: CREATE_PENDING
+                        StatusReason: example_value
+                        CreationTime: '2026-01-15T10:30:00Z'
+                        Description: A sample description.
+                        IncludeNestedStacks: true
+                        ImportExistingResources: true
+                        ParentChangeSetId: '500123'
+                        RootChangeSetId: '500123'
+                      NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=GetTemplate:
     post:
       operationId: getTemplate
-      summary: Retrieve a stack template
+      summary: Retrieve a Stack Template
       description: >-
         Returns the template body for a specified stack. You can get the
         template for running or deleted stacks.
       tags:
-        - Templates
+      - Templates
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -1372,8 +1967,16 @@ paths:
                     The stage of the template to return. Original returns
                     the template before transforms; Processed returns after.
                   enum:
-                    - Original
-                    - Processed
+                  - Original
+                  - Processed
+            examples:
+              GettemplateRequestExample:
+                summary: Default getTemplate request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  ChangeSetName: example_value
+                  TemplateStage: Original
       responses:
         '200':
           description: Template body returned.
@@ -1391,6 +1994,15 @@ paths:
                         type: array
                         items:
                           type: string
+              examples:
+                Gettemplate200Example:
+                  summary: Default getTemplate 200 response
+                  x-microcks-default: true
+                  value:
+                    GetTemplateResult:
+                      TemplateBody: example_value
+                      StagesAvailable:
+                      - example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -1398,17 +2010,20 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=GetTemplateSummary:
     post:
       operationId: getTemplateSummary
-      summary: Get summary information about a template
+      summary: Get Summary Information About a Template
       description: >-
         Returns information about a new or existing template including parameter
         declarations, a list of resources, and capabilities required.
       tags:
-        - Templates
+      - Templates
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -1424,6 +2039,15 @@ paths:
                   type: string
                 StackSetName:
                   type: string
+            examples:
+              GettemplatesummaryRequestExample:
+                summary: Default getTemplateSummary request
+                x-microcks-default: true
+                value:
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
+                  StackName: example_value
+                  StackSetName: example_value
       responses:
         '200':
           description: Template summary returned.
@@ -1459,23 +2083,49 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/ParameterDeclaration'
+              examples:
+                Gettemplatesummary200Example:
+                  summary: Default getTemplateSummary 200 response
+                  x-microcks-default: true
+                  value:
+                    GetTemplateSummaryResult:
+                      Description: A sample description.
+                      Capabilities:
+                      - example_value
+                      CapabilitiesReason: example_value
+                      ResourceTypes:
+                      - example_value
+                      Version: example_value
+                      Metadata: example_value
+                      DeclaredTransforms:
+                      - example_value
+                      Parameters:
+                      - ParameterKey: example_value
+                        DefaultValue: example_value
+                        ParameterType: example_value
+                        NoEcho: true
+                        Description: A sample description.
+                        ParameterConstraints: {}
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=ValidateTemplate:
     post:
       operationId: validateTemplate
-      summary: Validate a CloudFormation template
+      summary: Validate a Cloudformation Template
       description: >-
         Validates a specified template. CloudFormation checks whether the
         template is valid JSON or YAML, whether all required values are present,
         and whether all references are valid.
       tags:
-        - Templates
+      - Templates
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -1489,6 +2139,13 @@ paths:
                   type: string
                   description: Location of template file in Amazon S3.
                   format: uri
+            examples:
+              ValidatetemplateRequestExample:
+                summary: Default validateTemplate request
+                x-microcks-default: true
+                value:
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
       responses:
         '200':
           description: Template validation result returned.
@@ -1516,22 +2173,44 @@ paths:
                         type: array
                         items:
                           type: string
+              examples:
+                Validatetemplate200Example:
+                  summary: Default validateTemplate 200 response
+                  x-microcks-default: true
+                  value:
+                    ValidateTemplateResult:
+                      Description: A sample description.
+                      Capabilities:
+                      - example_value
+                      CapabilitiesReason: example_value
+                      Parameters:
+                      - ParameterKey: example_value
+                        DefaultValue: example_value
+                        ParameterType: example_value
+                        NoEcho: true
+                        Description: A sample description.
+                        ParameterConstraints: {}
+                      DeclaredTransforms:
+                      - example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=GetStackPolicy:
     post:
       operationId: getStackPolicy
-      summary: Retrieve a stack policy
+      summary: Retrieve a Stack Policy
       description: >-
         Returns the stack policy for a specified stack. If a stack does not have
         a policy, a null value is returned.
       tags:
-        - Stack Policies
+      - Stack Policies
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -1539,10 +2218,16 @@ paths:
             schema:
               type: object
               required:
-                - StackName
+              - StackName
               properties:
                 StackName:
                   type: string
+            examples:
+              GetstackpolicyRequestExample:
+                summary: Default getStackPolicy request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
       responses:
         '200':
           description: Stack policy returned.
@@ -1556,22 +2241,32 @@ paths:
                     properties:
                       StackPolicyBody:
                         type: string
+              examples:
+                Getstackpolicy200Example:
+                  summary: Default getStackPolicy 200 response
+                  x-microcks-default: true
+                  value:
+                    GetStackPolicyResult:
+                      StackPolicyBody: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=SetStackPolicy:
     post:
       operationId: setStackPolicy
-      summary: Set a stack policy
+      summary: Set a Stack Policy
       description: >-
         Sets a stack policy for a specified stack. A stack policy controls
         whether changes to stack resources are allowed during updates.
       tags:
-        - Stack Policies
+      - Stack Policies
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -1579,7 +2274,7 @@ paths:
             schema:
               type: object
               required:
-                - StackName
+              - StackName
               properties:
                 StackName:
                   type: string
@@ -1590,6 +2285,14 @@ paths:
                   type: string
                   description: Location of the stack policy in S3.
                   format: uri
+            examples:
+              SetstackpolicyRequestExample:
+                summary: Default setStackPolicy request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  StackPolicyBody: example_value
+                  StackPolicyURL: https://www.example.com
       responses:
         '200':
           description: Stack policy set successfully.
@@ -1600,16 +2303,19 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=ListExports:
     post:
       operationId: listExports
-      summary: List stack exports
+      summary: List Stack Exports
       description: >-
         Lists all exported output values in the account and Region.
       tags:
-        - Exports
+      - Exports
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -1619,6 +2325,12 @@ paths:
                 NextToken:
                   type: string
                   maxLength: 1024
+            examples:
+              ListexportsRequestExample:
+                summary: Default listExports request
+                x-microcks-default: true
+                value:
+                  NextToken: example_value
       responses:
         '200':
           description: Exports returned successfully.
@@ -1636,22 +2348,36 @@ paths:
                           $ref: '#/components/schemas/Export'
                       NextToken:
                         type: string
+              examples:
+                Listexports200Example:
+                  summary: Default listExports 200 response
+                  x-microcks-default: true
+                  value:
+                    ListExportsResult:
+                      Exports:
+                      - ExportingStackId: '500123'
+                        Name: Example Title
+                        Value: example_value
+                      NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=ListImports:
     post:
       operationId: listImports
-      summary: List stacks that import an exported value
+      summary: List Stacks That Import an Exported Value
       description: >-
         Lists all stacks that import an exported output value. To find the
         exports, use ListExports.
       tags:
-        - Exports
+      - Exports
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -1659,7 +2385,7 @@ paths:
             schema:
               type: object
               required:
-                - ExportName
+              - ExportName
               properties:
                 ExportName:
                   type: string
@@ -1667,6 +2393,13 @@ paths:
                 NextToken:
                   type: string
                   maxLength: 1024
+            examples:
+              ListimportsRequestExample:
+                summary: Default listImports request
+                x-microcks-default: true
+                value:
+                  ExportName: example_value
+                  NextToken: example_value
       responses:
         '200':
           description: Importing stacks returned.
@@ -1684,23 +2417,35 @@ paths:
                           type: string
                       NextToken:
                         type: string
+              examples:
+                Listimports200Example:
+                  summary: Default listImports 200 response
+                  x-microcks-default: true
+                  value:
+                    ListImportsResult:
+                      Imports:
+                      - example_value
+                      NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=CreateStackSet:
     post:
       operationId: createStackSet
-      summary: Create a stack set
+      summary: Create a Stack Set
       description: >-
         Creates a stack set with the specified name and template. A stack set
         lets you create stacks in AWS accounts across regions by using a single
         CloudFormation template.
       tags:
-        - Stack Sets
+      - Stack Sets
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -1708,7 +2453,7 @@ paths:
             schema:
               type: object
               required:
-                - StackSetName
+              - StackSetName
               properties:
                 StackSetName:
                   type: string
@@ -1730,9 +2475,9 @@ paths:
                   items:
                     type: string
                     enum:
-                      - CAPABILITY_IAM
-                      - CAPABILITY_NAMED_IAM
-                      - CAPABILITY_AUTO_EXPAND
+                    - CAPABILITY_IAM
+                    - CAPABILITY_NAMED_IAM
+                    - CAPABILITY_AUTO_EXPAND
                 Tags:
                   type: array
                   items:
@@ -1749,16 +2494,40 @@ paths:
                 PermissionModel:
                   type: string
                   enum:
-                    - SERVICE_MANAGED
-                    - SELF_MANAGED
+                  - SERVICE_MANAGED
+                  - SELF_MANAGED
                 CallAs:
                   type: string
                   enum:
-                    - SELF
-                    - DELEGATED_ADMIN
+                  - SELF
+                  - DELEGATED_ADMIN
                 ClientRequestToken:
                   type: string
                   maxLength: 128
+            examples:
+              CreatestacksetRequestExample:
+                summary: Default createStackSet request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  Description: A sample description.
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
+                  Parameters:
+                  - ParameterKey: example_value
+                    ParameterValue: example_value
+                    UsePreviousValue: true
+                    ResolvedValue: example_value
+                  Capabilities:
+                  - CAPABILITY_IAM
+                  Tags:
+                  - Key: example_value
+                    Value: example_value
+                  AdministrationRoleARN: example_value
+                  ExecutionRoleName: example_value
+                  PermissionModel: SERVICE_MANAGED
+                  CallAs: SELF
+                  ClientRequestToken: example_value
       responses:
         '200':
           description: Stack set created.
@@ -1772,6 +2541,13 @@ paths:
                     properties:
                       StackSetId:
                         type: string
+              examples:
+                Createstackset200Example:
+                  summary: Default createStackSet 200 response
+                  x-microcks-default: true
+                  value:
+                    CreateStackSetResult:
+                      StackSetId: '500123'
         '400':
           $ref: '#/components/responses/ValidationError'
         '409':
@@ -1779,16 +2555,19 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DescribeStackSet:
     post:
       operationId: describeStackSet
-      summary: Describe a stack set
+      summary: Describe a Stack Set
       description: >-
         Returns the description of the specified stack set.
       tags:
-        - Stack Sets
+      - Stack Sets
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -1796,15 +2575,22 @@ paths:
             schema:
               type: object
               required:
-                - StackSetName
+              - StackSetName
               properties:
                 StackSetName:
                   type: string
                 CallAs:
                   type: string
                   enum:
-                    - SELF
-                    - DELEGATED_ADMIN
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              DescribestacksetRequestExample:
+                summary: Default describeStackSet request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  CallAs: SELF
       responses:
         '200':
           description: Stack set details returned.
@@ -1818,22 +2604,47 @@ paths:
                     properties:
                       StackSet:
                         $ref: '#/components/schemas/StackSet'
+              examples:
+                Describestackset200Example:
+                  summary: Default describeStackSet 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackSetResult:
+                      StackSet:
+                        StackSetName: example_value
+                        StackSetId: '500123'
+                        Description: A sample description.
+                        Status: ACTIVE
+                        TemplateBody: example_value
+                        Parameters:
+                        - {}
+                        Capabilities:
+                        - {}
+                        Tags:
+                        - {}
+                        StackSetARN: example_value
+                        AdministrationRoleARN: example_value
+                        ExecutionRoleName: example_value
+                        PermissionModel: SERVICE_MANAGED
         '404':
           $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=UpdateStackSet:
     post:
       operationId: updateStackSet
-      summary: Update a stack set
+      summary: Update a Stack Set
       description: >-
         Updates the stack set, and associated stack instances in the specified
         accounts and regions.
       tags:
-        - Stack Sets
+      - Stack Sets
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -1841,7 +2652,7 @@ paths:
             schema:
               type: object
               required:
-                - StackSetName
+              - StackSetName
               properties:
                 StackSetName:
                   type: string
@@ -1879,8 +2690,8 @@ paths:
                 PermissionModel:
                   type: string
                   enum:
-                    - SERVICE_MANAGED
-                    - SELF_MANAGED
+                  - SERVICE_MANAGED
+                  - SELF_MANAGED
                 Accounts:
                   type: array
                   items:
@@ -1892,11 +2703,48 @@ paths:
                 CallAs:
                   type: string
                   enum:
-                    - SELF
-                    - DELEGATED_ADMIN
+                  - SELF
+                  - DELEGATED_ADMIN
                 OperationId:
                   type: string
                   maxLength: 128
+            examples:
+              UpdatestacksetRequestExample:
+                summary: Default updateStackSet request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  Description: A sample description.
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
+                  UsePreviousTemplate: true
+                  Parameters:
+                  - ParameterKey: example_value
+                    ParameterValue: example_value
+                    UsePreviousValue: true
+                    ResolvedValue: example_value
+                  Capabilities:
+                  - example_value
+                  Tags:
+                  - Key: example_value
+                    Value: example_value
+                  OperationPreferences:
+                    RegionConcurrencyType: SEQUENTIAL
+                    RegionOrder:
+                    - example_value
+                    FailureToleranceCount: 10
+                    FailureTolerancePercentage: 10
+                    MaxConcurrentCount: 10
+                    MaxConcurrentPercentage: 10
+                  AdministrationRoleARN: example_value
+                  ExecutionRoleName: example_value
+                  PermissionModel: SERVICE_MANAGED
+                  Accounts:
+                  - example_value
+                  Regions:
+                  - example_value
+                  CallAs: SELF
+                  OperationId: '500123'
       responses:
         '200':
           description: Stack set update initiated.
@@ -1910,6 +2758,13 @@ paths:
                     properties:
                       OperationId:
                         type: string
+              examples:
+                Updatestackset200Example:
+                  summary: Default updateStackSet 200 response
+                  x-microcks-default: true
+                  value:
+                    UpdateStackSetResult:
+                      OperationId: '500123'
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -1917,17 +2772,20 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DeleteStackSet:
     post:
       operationId: deleteStackSet
-      summary: Delete a stack set
+      summary: Delete a Stack Set
       description: >-
         Deletes a stack set. Before you can delete a stack set, all its member
         stack instances must be deleted.
       tags:
-        - Stack Sets
+      - Stack Sets
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -1935,15 +2793,22 @@ paths:
             schema:
               type: object
               required:
-                - StackSetName
+              - StackSetName
               properties:
                 StackSetName:
                   type: string
                 CallAs:
                   type: string
                   enum:
-                    - SELF
-                    - DELEGATED_ADMIN
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              DeletestacksetRequestExample:
+                summary: Default deleteStackSet request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  CallAs: SELF
       responses:
         '200':
           description: Stack set deleted.
@@ -1956,16 +2821,19 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=ListStackSets:
     post:
       operationId: listStackSets
-      summary: List all stack sets
+      summary: List All Stack Sets
       description: >-
         Returns summary information about stack sets in the caller's account.
       tags:
-        - Stack Sets
+      - Stack Sets
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -1982,13 +2850,22 @@ paths:
                 Status:
                   type: string
                   enum:
-                    - ACTIVE
-                    - DELETED
+                  - ACTIVE
+                  - DELETED
                 CallAs:
                   type: string
                   enum:
-                    - SELF
-                    - DELEGATED_ADMIN
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              ListstacksetsRequestExample:
+                summary: Default listStackSets request
+                x-microcks-default: true
+                value:
+                  NextToken: example_value
+                  MaxResults: 10
+                  Status: ACTIVE
+                  CallAs: SELF
       responses:
         '200':
           description: Stack set summaries returned.
@@ -2006,22 +2883,40 @@ paths:
                           $ref: '#/components/schemas/StackSetSummary'
                       NextToken:
                         type: string
+              examples:
+                Liststacksets200Example:
+                  summary: Default listStackSets 200 response
+                  x-microcks-default: true
+                  value:
+                    ListStackSetsResult:
+                      Summaries:
+                      - StackSetName: example_value
+                        StackSetId: '500123'
+                        Description: A sample description.
+                        Status: ACTIVE
+                        PermissionModel: SERVICE_MANAGED
+                        DriftStatus: DRIFTED
+                        LastDriftCheckTimestamp: '2026-01-15T10:30:00Z'
+                      NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=CreateStackInstances:
     post:
       operationId: createStackInstances
-      summary: Create stack instances in accounts and regions
+      summary: Create Stack Instances in Accounts and Regions
       description: >-
         Creates stack instances for the specified accounts in the specified
         regions. A stack instance refers to a stack in a specific account and region.
       tags:
-        - Stack Instances
+      - Stack Instances
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -2029,8 +2924,8 @@ paths:
             schema:
               type: object
               required:
-                - StackSetName
-                - Regions
+              - StackSetName
+              - Regions
               properties:
                 StackSetName:
                   type: string
@@ -2054,8 +2949,33 @@ paths:
                 CallAs:
                   type: string
                   enum:
-                    - SELF
-                    - DELEGATED_ADMIN
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              CreatestackinstancesRequestExample:
+                summary: Default createStackInstances request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  Accounts:
+                  - example_value
+                  Regions:
+                  - example_value
+                  ParameterOverrides:
+                  - ParameterKey: example_value
+                    ParameterValue: example_value
+                    UsePreviousValue: true
+                    ResolvedValue: example_value
+                  OperationPreferences:
+                    RegionConcurrencyType: SEQUENTIAL
+                    RegionOrder:
+                    - example_value
+                    FailureToleranceCount: 10
+                    FailureTolerancePercentage: 10
+                    MaxConcurrentCount: 10
+                    MaxConcurrentPercentage: 10
+                  OperationId: '500123'
+                  CallAs: SELF
       responses:
         '200':
           description: Stack instances creation initiated.
@@ -2069,6 +2989,13 @@ paths:
                     properties:
                       OperationId:
                         type: string
+              examples:
+                Createstackinstances200Example:
+                  summary: Default createStackInstances 200 response
+                  x-microcks-default: true
+                  value:
+                    CreateStackInstancesResult:
+                      OperationId: '500123'
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -2076,17 +3003,20 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DescribeStackInstance:
     post:
       operationId: describeStackInstance
-      summary: Describe a stack instance
+      summary: Describe a Stack Instance
       description: >-
         Returns the stack instance associated with the specified stack set,
         account, and region.
       tags:
-        - Stack Instances
+      - Stack Instances
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -2094,9 +3024,9 @@ paths:
             schema:
               type: object
               required:
-                - StackSetName
-                - StackInstanceAccount
-                - StackInstanceRegion
+              - StackSetName
+              - StackInstanceAccount
+              - StackInstanceRegion
               properties:
                 StackSetName:
                   type: string
@@ -2107,8 +3037,17 @@ paths:
                 CallAs:
                   type: string
                   enum:
-                    - SELF
-                    - DELEGATED_ADMIN
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              DescribestackinstanceRequestExample:
+                summary: Default describeStackInstance request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  StackInstanceAccount: example_value
+                  StackInstanceRegion: example_value
+                  CallAs: SELF
       responses:
         '200':
           description: Stack instance details returned.
@@ -2122,22 +3061,44 @@ paths:
                     properties:
                       StackInstance:
                         $ref: '#/components/schemas/StackInstance'
+              examples:
+                Describestackinstance200Example:
+                  summary: Default describeStackInstance 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackInstanceResult:
+                      StackInstance:
+                        StackSetId: '500123'
+                        Region: example_value
+                        Account: example_value
+                        StackId: '500123'
+                        ParameterOverrides:
+                        - {}
+                        Status: CURRENT
+                        StackInstanceStatus:
+                          DetailedStatus: PENDING
+                        StatusReason: example_value
+                        DriftStatus: DRIFTED
+                        LastDriftCheckTimestamp: '2026-01-15T10:30:00Z'
         '404':
           $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=ListStackInstances:
     post:
       operationId: listStackInstances
-      summary: List stack instances in a stack set
+      summary: List Stack Instances in a Stack Set
       description: >-
         Returns summary information about stack instances associated with the
         specified stack set.
       tags:
-        - Stack Instances
+      - Stack Instances
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -2145,7 +3106,7 @@ paths:
             schema:
               type: object
               required:
-                - StackSetName
+              - StackSetName
               properties:
                 StackSetName:
                   type: string
@@ -2163,8 +3124,19 @@ paths:
                 CallAs:
                   type: string
                   enum:
-                    - SELF
-                    - DELEGATED_ADMIN
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              ListstackinstancesRequestExample:
+                summary: Default listStackInstances request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  NextToken: example_value
+                  MaxResults: 10
+                  StackInstanceAccount: example_value
+                  StackInstanceRegion: example_value
+                  CallAs: SELF
       responses:
         '200':
           description: Stack instance summaries returned.
@@ -2182,21 +3154,40 @@ paths:
                           $ref: '#/components/schemas/StackInstanceSummary'
                       NextToken:
                         type: string
+              examples:
+                Liststackinstances200Example:
+                  summary: Default listStackInstances 200 response
+                  x-microcks-default: true
+                  value:
+                    ListStackInstancesResult:
+                      Summaries:
+                      - StackSetId: '500123'
+                        Region: example_value
+                        Account: example_value
+                        StackId: '500123'
+                        Status: CURRENT
+                        StatusReason: example_value
+                        DriftStatus: DRIFTED
+                        LastDriftCheckTimestamp: '2026-01-15T10:30:00Z'
+                      NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DeleteStackInstances:
     post:
       operationId: deleteStackInstances
-      summary: Delete stack instances from a stack set
+      summary: Delete Stack Instances From a Stack Set
       description: >-
         Deletes stack instances for the specified accounts in the specified regions.
       tags:
-        - Stack Instances
+      - Stack Instances
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -2204,9 +3195,9 @@ paths:
             schema:
               type: object
               required:
-                - StackSetName
-                - Regions
-                - RetainStacks
+              - StackSetName
+              - Regions
+              - RetainStacks
               properties:
                 StackSetName:
                   type: string
@@ -2229,8 +3220,29 @@ paths:
                 CallAs:
                   type: string
                   enum:
-                    - SELF
-                    - DELEGATED_ADMIN
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              DeletestackinstancesRequestExample:
+                summary: Default deleteStackInstances request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  Accounts:
+                  - example_value
+                  Regions:
+                  - example_value
+                  RetainStacks: true
+                  OperationPreferences:
+                    RegionConcurrencyType: SEQUENTIAL
+                    RegionOrder:
+                    - example_value
+                    FailureToleranceCount: 10
+                    FailureTolerancePercentage: 10
+                    MaxConcurrentCount: 10
+                    MaxConcurrentPercentage: 10
+                  OperationId: '500123'
+                  CallAs: SELF
       responses:
         '200':
           description: Stack instance deletion initiated.
@@ -2244,6 +3256,13 @@ paths:
                     properties:
                       OperationId:
                         type: string
+              examples:
+                Deletestackinstances200Example:
+                  summary: Default deleteStackInstances 200 response
+                  x-microcks-default: true
+                  value:
+                    DeleteStackInstancesResult:
+                      OperationId: '500123'
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -2251,17 +3270,20 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=ListTypes:
     post:
       operationId: listTypes
-      summary: List available extension types in the registry
+      summary: List Available Extension Types in the Registry
       description: >-
         Returns summary information about extension types registered in the
         CloudFormation Registry.
       tags:
-        - Registry
+      - Registry
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -2271,30 +3293,30 @@ paths:
                 Visibility:
                   type: string
                   enum:
-                    - PUBLIC
-                    - PRIVATE
+                  - PUBLIC
+                  - PRIVATE
                 ProvisioningType:
                   type: string
                   enum:
-                    - NON_PROVISIONABLE
-                    - IMMUTABLE
-                    - FULLY_MUTABLE
+                  - NON_PROVISIONABLE
+                  - IMMUTABLE
+                  - FULLY_MUTABLE
                 Type:
                   type: string
                   enum:
-                    - RESOURCE
-                    - MODULE
-                    - HOOK
+                  - RESOURCE
+                  - MODULE
+                  - HOOK
                 Filters:
                   type: object
                   properties:
                     Category:
                       type: string
                       enum:
-                        - REGISTERED
-                        - ACTIVATED
-                        - THIRD_PARTY
-                        - AWS_TYPES
+                      - REGISTERED
+                      - ACTIVATED
+                      - THIRD_PARTY
+                      - AWS_TYPES
                     PublisherId:
                       type: string
                     TypeNamePrefix:
@@ -2306,6 +3328,20 @@ paths:
                   type: integer
                   minimum: 1
                   maximum: 100
+            examples:
+              ListtypesRequestExample:
+                summary: Default listTypes request
+                x-microcks-default: true
+                value:
+                  Visibility: PUBLIC
+                  ProvisioningType: NON_PROVISIONABLE
+                  Type: RESOURCE
+                  Filters:
+                    Category: REGISTERED
+                    PublisherId: '500123'
+                    TypeNamePrefix: example_value
+                  NextToken: example_value
+                  MaxResults: 10
       responses:
         '200':
           description: Type summaries returned.
@@ -2323,22 +3359,45 @@ paths:
                           $ref: '#/components/schemas/TypeSummary'
                       NextToken:
                         type: string
+              examples:
+                Listtypes200Example:
+                  summary: Default listTypes 200 response
+                  x-microcks-default: true
+                  value:
+                    ListTypesResult:
+                      TypeSummaries:
+                      - Type: RESOURCE
+                        TypeName: example_value
+                        TypeArn: example_value
+                        DefaultVersionId: '500123'
+                        Description: A sample description.
+                        LastUpdated: '2026-01-15T10:30:00Z'
+                        PublisherId: '500123'
+                        PublisherName: example_value
+                        IsActivated: true
+                        OriginalTypeName: example_value
+                        PublicVersionNumber: example_value
+                        LatestPublicVersion: example_value
+                      NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DescribeType:
     post:
       operationId: describeType
-      summary: Describe an extension type in the registry
+      summary: Describe an Extension Type in the Registry
       description: >-
         Returns detailed information about an extension type registered in the
         CloudFormation Registry.
       tags:
-        - Registry
+      - Registry
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -2348,9 +3407,9 @@ paths:
                 Type:
                   type: string
                   enum:
-                    - RESOURCE
-                    - MODULE
-                    - HOOK
+                  - RESOURCE
+                  - MODULE
+                  - HOOK
                 TypeName:
                   type: string
                 Arn:
@@ -2361,6 +3420,17 @@ paths:
                   type: string
                 PublicVersionNumber:
                   type: string
+            examples:
+              DescribetypeRequestExample:
+                summary: Default describeType request
+                x-microcks-default: true
+                value:
+                  Type: RESOURCE
+                  TypeName: example_value
+                  Arn: example_value
+                  VersionId: '500123'
+                  PublisherId: '500123'
+                  PublicVersionNumber: example_value
       responses:
         '200':
           description: Type details returned.
@@ -2396,11 +3466,31 @@ paths:
                       LastUpdated:
                         type: string
                         format: date-time
+              examples:
+                Describetype200Example:
+                  summary: Default describeType 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeTypeResult:
+                      Arn: example_value
+                      Type: example_value
+                      TypeName: example_value
+                      Description: A sample description.
+                      Schema: example_value
+                      ProvisioningType: example_value
+                      Visibility: example_value
+                      DefaultVersionId: '500123'
+                      IsDefaultVersion: true
+                      TimeCreated: '2026-01-15T10:30:00Z'
+                      LastUpdated: '2026-01-15T10:30:00Z'
         '404':
           $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     AWS_Signature_V4:
@@ -2458,230 +3548,272 @@ components:
               type: string
             Message:
               type: string
+          example: example_value
         RequestId:
           type: string
 
+          example: '500123'
     Stack:
       type: object
       required:
-        - StackName
-        - CreationTime
-        - StackStatus
+      - StackName
+      - CreationTime
+      - StackStatus
       properties:
         StackId:
           type: string
           description: Unique identifier of the stack.
+          example: '500123'
         StackName:
           type: string
           description: The name associated with the stack.
+          example: example_value
         ChangeSetId:
           type: string
           description: The unique ID of the change set.
+          example: '500123'
         Description:
           type: string
           description: A user-defined description associated with the stack.
+          example: A sample description.
         CreationTime:
           type: string
           format: date-time
           description: The time the stack was created.
+          example: '2026-01-15T10:30:00Z'
         DeletionTime:
           type: string
           format: date-time
           description: The time the stack was deleted.
+          example: '2026-01-15T10:30:00Z'
         LastUpdatedTime:
           type: string
           format: date-time
           description: The time the stack was last updated.
+          example: '2026-01-15T10:30:00Z'
         StackStatus:
           $ref: '#/components/schemas/StackStatus'
         StackStatusReason:
           type: string
           description: Explanation for the current stack status.
+          example: example_value
         DisableRollback:
           type: boolean
           description: Whether rollback on stack creation failures is disabled.
+          example: true
         NotificationARNs:
           type: array
           description: Amazon SNS topic ARNs for stack event notifications.
           items:
             type: string
           maxItems: 5
+          example: []
         TimeoutInMinutes:
           type: integer
           description: Time allowed for stack creation before failure.
+          example: 10
         Capabilities:
           type: array
           description: The capabilities allowed in the stack.
           items:
             type: string
             enum:
-              - CAPABILITY_IAM
-              - CAPABILITY_NAMED_IAM
-              - CAPABILITY_AUTO_EXPAND
+            - CAPABILITY_IAM
+            - CAPABILITY_NAMED_IAM
+            - CAPABILITY_AUTO_EXPAND
+          example: []
         Outputs:
           type: array
           description: A list of output structures.
           items:
             $ref: '#/components/schemas/Output'
+          example: []
         RoleARN:
           type: string
           description: The IAM role ARN used by CloudFormation.
           minLength: 20
           maxLength: 2048
+          example: example_value
         Tags:
           type: array
           description: Tags associated with the stack.
           items:
             $ref: '#/components/schemas/Tag'
           maxItems: 50
+          example: []
         EnableTerminationProtection:
           type: boolean
           description: Whether termination protection is enabled.
+          example: true
         Parameters:
           type: array
           description: A list of parameter structures.
           items:
             $ref: '#/components/schemas/Parameter'
+          example: []
         RollbackConfiguration:
           $ref: '#/components/schemas/RollbackConfiguration'
         ParentId:
           type: string
           description: For nested stacks, the stack ID of the direct parent.
+          example: '500123'
         RootId:
           type: string
           description: For nested stacks, the stack ID of the top-level stack.
+          example: '500123'
         DriftInformation:
           $ref: '#/components/schemas/StackDriftInformation'
         DeletionMode:
           type: string
           enum:
-            - STANDARD
-            - FORCE_DELETE_STACK
+          - STANDARD
+          - FORCE_DELETE_STACK
+          example: STANDARD
         DetailedStatus:
           type: string
           enum:
-            - CONFIGURATION_COMPLETE
-            - VALIDATION_FAILED
+          - CONFIGURATION_COMPLETE
+          - VALIDATION_FAILED
+          example: CONFIGURATION_COMPLETE
         RetainExceptOnCreate:
           type: boolean
 
+          example: true
     StackStatus:
       type: string
       enum:
-        - CREATE_IN_PROGRESS
-        - CREATE_FAILED
-        - CREATE_COMPLETE
-        - ROLLBACK_IN_PROGRESS
-        - ROLLBACK_FAILED
-        - ROLLBACK_COMPLETE
-        - DELETE_IN_PROGRESS
-        - DELETE_FAILED
-        - DELETE_COMPLETE
-        - UPDATE_IN_PROGRESS
-        - UPDATE_COMPLETE_CLEANUP_IN_PROGRESS
-        - UPDATE_COMPLETE
-        - UPDATE_FAILED
-        - UPDATE_ROLLBACK_IN_PROGRESS
-        - UPDATE_ROLLBACK_FAILED
-        - UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS
-        - UPDATE_ROLLBACK_COMPLETE
-        - REVIEW_IN_PROGRESS
-        - IMPORT_IN_PROGRESS
-        - IMPORT_COMPLETE
-        - IMPORT_ROLLBACK_IN_PROGRESS
-        - IMPORT_ROLLBACK_FAILED
-        - IMPORT_ROLLBACK_COMPLETE
+      - CREATE_IN_PROGRESS
+      - CREATE_FAILED
+      - CREATE_COMPLETE
+      - ROLLBACK_IN_PROGRESS
+      - ROLLBACK_FAILED
+      - ROLLBACK_COMPLETE
+      - DELETE_IN_PROGRESS
+      - DELETE_FAILED
+      - DELETE_COMPLETE
+      - UPDATE_IN_PROGRESS
+      - UPDATE_COMPLETE_CLEANUP_IN_PROGRESS
+      - UPDATE_COMPLETE
+      - UPDATE_FAILED
+      - UPDATE_ROLLBACK_IN_PROGRESS
+      - UPDATE_ROLLBACK_FAILED
+      - UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS
+      - UPDATE_ROLLBACK_COMPLETE
+      - REVIEW_IN_PROGRESS
+      - IMPORT_IN_PROGRESS
+      - IMPORT_COMPLETE
+      - IMPORT_ROLLBACK_IN_PROGRESS
+      - IMPORT_ROLLBACK_FAILED
+      - IMPORT_ROLLBACK_COMPLETE
 
     StackSummary:
       type: object
       required:
-        - StackName
-        - CreationTime
-        - StackStatus
+      - StackName
+      - CreationTime
+      - StackStatus
       properties:
         StackId:
           type: string
+          example: '500123'
         StackName:
           type: string
+          example: example_value
         TemplateDescription:
           type: string
+          example: example_value
         CreationTime:
           type: string
           format: date-time
+          example: '2026-01-15T10:30:00Z'
         LastUpdatedTime:
           type: string
           format: date-time
+          example: '2026-01-15T10:30:00Z'
         DeletionTime:
           type: string
           format: date-time
+          example: '2026-01-15T10:30:00Z'
         StackStatus:
           $ref: '#/components/schemas/StackStatus'
         StackStatusReason:
           type: string
+          example: example_value
         ParentId:
           type: string
+          example: '500123'
         RootId:
           type: string
+          example: '500123'
         DriftInformation:
           $ref: '#/components/schemas/StackDriftInformation'
 
     StackResource:
       type: object
       required:
-        - LogicalResourceId
-        - ResourceType
-        - ResourceStatus
-        - Timestamp
+      - LogicalResourceId
+      - ResourceType
+      - ResourceStatus
+      - Timestamp
       properties:
         StackName:
           type: string
           description: The name of the stack.
+          example: example_value
         StackId:
           type: string
           description: Unique identifier of the stack.
+          example: '500123'
         LogicalResourceId:
           type: string
           description: The logical name of the resource specified in the template.
+          example: '500123'
         PhysicalResourceId:
           type: string
           description: The name or unique identifier of the physical resource.
+          example: '500123'
         ResourceType:
           type: string
           description: Type of AWS resource.
           minLength: 1
           maxLength: 256
+          example: example_value
         Timestamp:
           type: string
           format: date-time
           description: Time the status was updated.
+          example: '2026-01-15T10:30:00Z'
         ResourceStatus:
           type: string
           description: Current status of the resource.
           enum:
-            - CREATE_IN_PROGRESS
-            - CREATE_FAILED
-            - CREATE_COMPLETE
-            - DELETE_IN_PROGRESS
-            - DELETE_FAILED
-            - DELETE_COMPLETE
-            - UPDATE_IN_PROGRESS
-            - UPDATE_FAILED
-            - UPDATE_COMPLETE
-            - IMPORT_FAILED
-            - IMPORT_COMPLETE
-            - IMPORT_IN_PROGRESS
-            - IMPORT_ROLLBACK_IN_PROGRESS
-            - IMPORT_ROLLBACK_FAILED
-            - IMPORT_ROLLBACK_COMPLETE
-            - ROLLBACK_IN_PROGRESS
-            - ROLLBACK_COMPLETE
+          - CREATE_IN_PROGRESS
+          - CREATE_FAILED
+          - CREATE_COMPLETE
+          - DELETE_IN_PROGRESS
+          - DELETE_FAILED
+          - DELETE_COMPLETE
+          - UPDATE_IN_PROGRESS
+          - UPDATE_FAILED
+          - UPDATE_COMPLETE
+          - IMPORT_FAILED
+          - IMPORT_COMPLETE
+          - IMPORT_IN_PROGRESS
+          - IMPORT_ROLLBACK_IN_PROGRESS
+          - IMPORT_ROLLBACK_FAILED
+          - IMPORT_ROLLBACK_COMPLETE
+          - ROLLBACK_IN_PROGRESS
+          - ROLLBACK_COMPLETE
+          example: CREATE_IN_PROGRESS
         ResourceStatusReason:
           type: string
           description: Message associated with the resource status.
+          example: example_value
         Description:
           type: string
           description: User-defined description.
           maxLength: 1024
+          example: A sample description.
         DriftInformation:
           $ref: '#/components/schemas/StackResourceDriftInformation'
         ModuleInfo:
@@ -2690,24 +3822,30 @@ components:
     StackResourceSummary:
       type: object
       required:
-        - LogicalResourceId
-        - ResourceType
-        - ResourceStatus
-        - LastUpdatedTimestamp
+      - LogicalResourceId
+      - ResourceType
+      - ResourceStatus
+      - LastUpdatedTimestamp
       properties:
         LogicalResourceId:
           type: string
+          example: '500123'
         PhysicalResourceId:
           type: string
+          example: '500123'
         ResourceType:
           type: string
+          example: example_value
         LastUpdatedTimestamp:
           type: string
           format: date-time
+          example: '2026-01-15T10:30:00Z'
         ResourceStatus:
           type: string
+          example: example_value
         ResourceStatusReason:
           type: string
+          example: example_value
         DriftInformation:
           $ref: '#/components/schemas/StackResourceDriftInformation'
         ModuleInfo:
@@ -2716,18 +3854,21 @@ components:
     StackResourceDrift:
       type: object
       required:
-        - StackId
-        - LogicalResourceId
-        - ResourceType
-        - StackResourceDriftStatus
-        - Timestamp
+      - StackId
+      - LogicalResourceId
+      - ResourceType
+      - StackResourceDriftStatus
+      - Timestamp
       properties:
         StackId:
           type: string
+          example: '500123'
         LogicalResourceId:
           type: string
+          example: '500123'
         PhysicalResourceId:
           type: string
+          example: '500123'
         PhysicalResourceIdContext:
           type: array
           items:
@@ -2737,231 +3878,292 @@ components:
                 type: string
               Value:
                 type: string
+          example: []
         ResourceType:
           type: string
+          example: example_value
         ExpectedProperties:
           type: string
           description: A JSON string of the expected property values as defined in the template.
+          example: example_value
         ActualProperties:
           type: string
           description: A JSON string of the actual property values of the resource.
+          example: example_value
         PropertyDifferences:
           type: array
           items:
             $ref: '#/components/schemas/PropertyDifference'
+          example: []
         StackResourceDriftStatus:
           type: string
           enum:
-            - IN_SYNC
-            - MODIFIED
-            - DELETED
-            - NOT_CHECKED
+          - IN_SYNC
+          - MODIFIED
+          - DELETED
+          - NOT_CHECKED
+          example: IN_SYNC
         Timestamp:
           type: string
           format: date-time
 
+          example: '2026-01-15T10:30:00Z'
     PropertyDifference:
       type: object
       required:
-        - PropertyPath
-        - ExpectedValue
-        - ActualValue
-        - DifferenceType
+      - PropertyPath
+      - ExpectedValue
+      - ActualValue
+      - DifferenceType
       properties:
         PropertyPath:
           type: string
+          example: example_value
         ExpectedValue:
           type: string
+          example: example_value
         ActualValue:
           type: string
+          example: example_value
         DifferenceType:
           type: string
           enum:
-            - ADD
-            - REMOVE
-            - NOT_EQUAL
+          - ADD
+          - REMOVE
+          - NOT_EQUAL
 
+          example: ADD
     StackDriftInformation:
       type: object
       required:
-        - StackDriftStatus
+      - StackDriftStatus
       properties:
         StackDriftStatus:
           type: string
           enum:
-            - DRIFTED
-            - IN_SYNC
-            - UNKNOWN
-            - NOT_CHECKED
+          - DRIFTED
+          - IN_SYNC
+          - UNKNOWN
+          - NOT_CHECKED
+          example: DRIFTED
         LastCheckTimestamp:
           type: string
           format: date-time
 
+          example: '2026-01-15T10:30:00Z'
     StackResourceDriftInformation:
       type: object
       required:
-        - StackResourceDriftStatus
+      - StackResourceDriftStatus
       properties:
         StackResourceDriftStatus:
           type: string
           enum:
-            - IN_SYNC
-            - MODIFIED
-            - DELETED
-            - NOT_CHECKED
+          - IN_SYNC
+          - MODIFIED
+          - DELETED
+          - NOT_CHECKED
+          example: IN_SYNC
         LastCheckTimestamp:
           type: string
           format: date-time
 
+          example: '2026-01-15T10:30:00Z'
     StackEvent:
       type: object
       required:
-        - StackId
-        - EventId
-        - StackName
-        - Timestamp
+      - StackId
+      - EventId
+      - StackName
+      - Timestamp
       properties:
         StackId:
           type: string
+          example: '500123'
         EventId:
           type: string
+          example: '500123'
         StackName:
           type: string
+          example: example_value
         LogicalResourceId:
           type: string
+          example: '500123'
         PhysicalResourceId:
           type: string
+          example: '500123'
         ResourceType:
           type: string
+          example: example_value
         Timestamp:
           type: string
           format: date-time
+          example: '2026-01-15T10:30:00Z'
         ResourceStatus:
           type: string
+          example: example_value
         ResourceStatusReason:
           type: string
+          example: example_value
         ResourceProperties:
           type: string
+          example: example_value
         ClientRequestToken:
           type: string
+          example: example_value
         HookType:
           type: string
+          example: example_value
         HookStatus:
           type: string
+          example: example_value
         HookStatusReason:
           type: string
+          example: example_value
         HookInvocationPoint:
           type: string
+          example: example_value
         HookFailureMode:
           type: string
 
+          example: example_value
     ChangeSetSummary:
       type: object
       properties:
         StackId:
           type: string
           description: The ID of the stack with which the change set is associated.
+          example: '500123'
         StackName:
           type: string
+          example: example_value
         ChangeSetId:
           type: string
           description: The ARN of the change set.
+          example: '500123'
         ChangeSetName:
           type: string
           maxLength: 128
+          example: example_value
         ExecutionStatus:
           type: string
           enum:
-            - UNAVAILABLE
-            - AVAILABLE
-            - EXECUTE_IN_PROGRESS
-            - EXECUTE_COMPLETE
-            - EXECUTE_FAILED
-            - OBSOLETE
+          - UNAVAILABLE
+          - AVAILABLE
+          - EXECUTE_IN_PROGRESS
+          - EXECUTE_COMPLETE
+          - EXECUTE_FAILED
+          - OBSOLETE
+          example: UNAVAILABLE
         Status:
           type: string
           enum:
-            - CREATE_PENDING
-            - CREATE_IN_PROGRESS
-            - CREATE_COMPLETE
-            - DELETE_PENDING
-            - DELETE_IN_PROGRESS
-            - DELETE_COMPLETE
-            - DELETE_FAILED
-            - FAILED
+          - CREATE_PENDING
+          - CREATE_IN_PROGRESS
+          - CREATE_COMPLETE
+          - DELETE_PENDING
+          - DELETE_IN_PROGRESS
+          - DELETE_COMPLETE
+          - DELETE_FAILED
+          - FAILED
+          example: CREATE_PENDING
         StatusReason:
           type: string
+          example: example_value
         CreationTime:
           type: string
           format: date-time
+          example: '2026-01-15T10:30:00Z'
         Description:
           type: string
           maxLength: 1024
+          example: A sample description.
         IncludeNestedStacks:
           type: boolean
+          example: true
         ImportExistingResources:
           type: boolean
+          example: true
         ParentChangeSetId:
           type: string
+          example: '500123'
         RootChangeSetId:
           type: string
 
+          example: '500123'
     ChangeSetDetail:
       type: object
       properties:
         ChangeSetName:
           type: string
+          example: example_value
         ChangeSetId:
           type: string
+          example: '500123'
         StackId:
           type: string
+          example: '500123'
         StackName:
           type: string
+          example: example_value
         Description:
           type: string
+          example: A sample description.
         Parameters:
           type: array
           items:
             $ref: '#/components/schemas/Parameter'
+          example: []
         CreationTime:
           type: string
           format: date-time
+          example: '2026-01-15T10:30:00Z'
         ExecutionStatus:
           type: string
+          example: example_value
         Status:
           type: string
+          example: example_value
         StatusReason:
           type: string
+          example: example_value
         NotificationARNs:
           type: array
           items:
             type: string
+          example: []
         RollbackConfiguration:
           $ref: '#/components/schemas/RollbackConfiguration'
         Capabilities:
           type: array
           items:
             type: string
+          example: []
         Tags:
           type: array
           items:
             $ref: '#/components/schemas/Tag'
+          example: []
         Changes:
           type: array
           items:
             $ref: '#/components/schemas/Change'
+          example: []
         IncludeNestedStacks:
           type: boolean
+          example: true
         NextToken:
           type: string
 
+          example: example_value
     Change:
       type: object
       properties:
         Type:
           type: string
           enum:
-            - Resource
+          - Resource
+          example: Resource
         ResourceChange:
           $ref: '#/components/schemas/ResourceChange'
 
@@ -2971,32 +4173,39 @@ components:
         Action:
           type: string
           enum:
-            - Add
-            - Modify
-            - Remove
-            - Import
-            - Dynamic
+          - Add
+          - Modify
+          - Remove
+          - Import
+          - Dynamic
+          example: Add
         LogicalResourceId:
           type: string
+          example: '500123'
         PhysicalResourceId:
           type: string
+          example: '500123'
         ResourceType:
           type: string
+          example: example_value
         Replacement:
           type: string
           enum:
-            - 'True'
-            - 'False'
-            - Conditional
+          - 'True'
+          - 'False'
+          - Conditional
+          example: 'True'
         Scope:
           type: array
           items:
             type: string
+          example: []
         Details:
           type: array
           items:
             $ref: '#/components/schemas/ResourceChangeDetail'
 
+          example: []
     ResourceChangeDetail:
       type: object
       properties:
@@ -3010,54 +4219,67 @@ components:
             RequiresRecreation:
               type: string
               enum:
-                - Never
-                - Conditionally
-                - Always
+              - Never
+              - Conditionally
+              - Always
+          example: example_value
         Evaluation:
           type: string
           enum:
-            - Static
-            - Dynamic
+          - Static
+          - Dynamic
+          example: Static
         ChangeSource:
           type: string
           enum:
-            - ResourceReference
-            - ParameterReference
-            - ResourceAttribute
-            - DirectModification
-            - Automatic
+          - ResourceReference
+          - ParameterReference
+          - ResourceAttribute
+          - DirectModification
+          - Automatic
+          example: ResourceReference
         CausingEntity:
           type: string
 
+          example: example_value
     Parameter:
       type: object
       properties:
         ParameterKey:
           type: string
           description: The key associated with the parameter.
+          example: example_value
         ParameterValue:
           type: string
           description: The input value associated with the parameter.
+          example: example_value
         UsePreviousValue:
           type: boolean
           description: Use the existing parameter value during stack updates.
+          example: true
         ResolvedValue:
           type: string
           description: The value that resolves to for SSM parameter types.
 
+          example: example_value
     ParameterDeclaration:
       type: object
       properties:
         ParameterKey:
           type: string
+          example: example_value
         DefaultValue:
           type: string
+          example: example_value
         ParameterType:
           type: string
+          example: example_value
         NoEcho:
           type: boolean
+          example: true
         Description:
           type: string
+          example: A sample description.
         ParameterConstraints:
           type: object
           properties:
@@ -3066,39 +4288,46 @@ components:
               items:
                 type: string
 
+          example: example_value
     Output:
       type: object
       properties:
         OutputKey:
           type: string
           description: The key associated with the output.
+          example: example_value
         OutputValue:
           type: string
           description: The value associated with the output.
+          example: example_value
         Description:
           type: string
           description: User-defined description.
+          example: A sample description.
         ExportName:
           type: string
           description: The name of the export associated with the output.
 
+          example: example_value
     Tag:
       type: object
       required:
-        - Key
-        - Value
+      - Key
+      - Value
       properties:
         Key:
           type: string
           description: Tag key.
           minLength: 1
           maxLength: 128
+          example: example_value
         Value:
           type: string
           description: Tag value.
           minLength: 0
           maxLength: 256
 
+          example: example_value
     RollbackConfiguration:
       type: object
       properties:
@@ -3108,38 +4337,45 @@ components:
           items:
             $ref: '#/components/schemas/RollbackTrigger'
           maxItems: 5
+          example: []
         MonitoringTimeInMinutes:
           type: integer
           description: The amount of time to monitor after stack deployment.
           minimum: 0
           maximum: 180
 
+          example: 10
     RollbackTrigger:
       type: object
       required:
-        - Arn
-        - Type
+      - Arn
+      - Type
       properties:
         Arn:
           type: string
           description: The Amazon Resource Name (ARN) of the rollback trigger.
+          example: example_value
         Type:
           type: string
           description: The resource type of the rollback trigger.
 
+          example: example_value
     Export:
       type: object
       properties:
         ExportingStackId:
           type: string
           description: The stack that contains the exported output value.
+          example: '500123'
         Name:
           type: string
           description: The name of the exported output value.
+          example: Example Title
         Value:
           type: string
           description: The value of the exported output.
 
+          example: example_value
     ModuleInfo:
       type: object
       properties:
@@ -3148,213 +4384,270 @@ components:
           description: >-
             A concatenated list of the module type hierarchy. For modules within
             other modules the format is Module1::Module2.
+          example: example_value
         LogicalIdHierarchy:
           type: string
           description: >-
             A concatenated list of the logical IDs of the module.
 
+          example: example_value
     StackSet:
       type: object
       properties:
         StackSetName:
           type: string
+          example: example_value
         StackSetId:
           type: string
+          example: '500123'
         Description:
           type: string
+          example: A sample description.
         Status:
           type: string
           enum:
-            - ACTIVE
-            - DELETED
+          - ACTIVE
+          - DELETED
+          example: ACTIVE
         TemplateBody:
           type: string
+          example: example_value
         Parameters:
           type: array
           items:
             $ref: '#/components/schemas/Parameter'
+          example: []
         Capabilities:
           type: array
           items:
             type: string
+          example: []
         Tags:
           type: array
           items:
             $ref: '#/components/schemas/Tag'
+          example: []
         StackSetARN:
           type: string
+          example: example_value
         AdministrationRoleARN:
           type: string
+          example: example_value
         ExecutionRoleName:
           type: string
+          example: example_value
         PermissionModel:
           type: string
           enum:
-            - SERVICE_MANAGED
-            - SELF_MANAGED
+          - SERVICE_MANAGED
+          - SELF_MANAGED
 
+          example: SERVICE_MANAGED
     StackSetSummary:
       type: object
       properties:
         StackSetName:
           type: string
+          example: example_value
         StackSetId:
           type: string
+          example: '500123'
         Description:
           type: string
+          example: A sample description.
         Status:
           type: string
           enum:
-            - ACTIVE
-            - DELETED
+          - ACTIVE
+          - DELETED
+          example: ACTIVE
         PermissionModel:
           type: string
           enum:
-            - SERVICE_MANAGED
-            - SELF_MANAGED
+          - SERVICE_MANAGED
+          - SELF_MANAGED
+          example: SERVICE_MANAGED
         DriftStatus:
           type: string
           enum:
-            - DRIFTED
-            - IN_SYNC
-            - NOT_CHECKED
+          - DRIFTED
+          - IN_SYNC
+          - NOT_CHECKED
+          example: DRIFTED
         LastDriftCheckTimestamp:
           type: string
           format: date-time
 
+          example: '2026-01-15T10:30:00Z'
     StackSetOperationPreferences:
       type: object
       properties:
         RegionConcurrencyType:
           type: string
           enum:
-            - SEQUENTIAL
-            - PARALLEL
+          - SEQUENTIAL
+          - PARALLEL
+          example: SEQUENTIAL
         RegionOrder:
           type: array
           items:
             type: string
+          example: []
         FailureToleranceCount:
           type: integer
           minimum: 0
+          example: 10
         FailureTolerancePercentage:
           type: integer
           minimum: 0
           maximum: 100
+          example: 10
         MaxConcurrentCount:
           type: integer
           minimum: 1
+          example: 10
         MaxConcurrentPercentage:
           type: integer
           minimum: 1
           maximum: 100
 
+          example: 10
     StackInstance:
       type: object
       properties:
         StackSetId:
           type: string
+          example: '500123'
         Region:
           type: string
+          example: example_value
         Account:
           type: string
+          example: example_value
         StackId:
           type: string
+          example: '500123'
         ParameterOverrides:
           type: array
           items:
             $ref: '#/components/schemas/Parameter'
+          example: []
         Status:
           type: string
           enum:
-            - CURRENT
-            - OUTDATED
-            - INOPERABLE
+          - CURRENT
+          - OUTDATED
+          - INOPERABLE
+          example: CURRENT
         StackInstanceStatus:
           type: object
           properties:
             DetailedStatus:
               type: string
               enum:
-                - PENDING
-                - RUNNING
-                - SUCCEEDED
-                - FAILED
-                - CANCELLED
-                - INOPERABLE
-                - SKIPPED_SUSPENDED_ACCOUNT
+              - PENDING
+              - RUNNING
+              - SUCCEEDED
+              - FAILED
+              - CANCELLED
+              - INOPERABLE
+              - SKIPPED_SUSPENDED_ACCOUNT
+          example: example_value
         StatusReason:
           type: string
+          example: example_value
         DriftStatus:
           type: string
           enum:
-            - DRIFTED
-            - IN_SYNC
-            - UNKNOWN
-            - NOT_CHECKED
+          - DRIFTED
+          - IN_SYNC
+          - UNKNOWN
+          - NOT_CHECKED
+          example: DRIFTED
         LastDriftCheckTimestamp:
           type: string
           format: date-time
 
+          example: '2026-01-15T10:30:00Z'
     StackInstanceSummary:
       type: object
       properties:
         StackSetId:
           type: string
+          example: '500123'
         Region:
           type: string
+          example: example_value
         Account:
           type: string
+          example: example_value
         StackId:
           type: string
+          example: '500123'
         Status:
           type: string
           enum:
-            - CURRENT
-            - OUTDATED
-            - INOPERABLE
+          - CURRENT
+          - OUTDATED
+          - INOPERABLE
+          example: CURRENT
         StatusReason:
           type: string
+          example: example_value
         DriftStatus:
           type: string
           enum:
-            - DRIFTED
-            - IN_SYNC
-            - UNKNOWN
-            - NOT_CHECKED
+          - DRIFTED
+          - IN_SYNC
+          - UNKNOWN
+          - NOT_CHECKED
+          example: DRIFTED
         LastDriftCheckTimestamp:
           type: string
           format: date-time
 
+          example: '2026-01-15T10:30:00Z'
     TypeSummary:
       type: object
       properties:
         Type:
           type: string
           enum:
-            - RESOURCE
-            - MODULE
-            - HOOK
+          - RESOURCE
+          - MODULE
+          - HOOK
+          example: RESOURCE
         TypeName:
           type: string
+          example: example_value
         TypeArn:
           type: string
+          example: example_value
         DefaultVersionId:
           type: string
+          example: '500123'
         Description:
           type: string
+          example: A sample description.
         LastUpdated:
           type: string
           format: date-time
+          example: '2026-01-15T10:30:00Z'
         PublisherId:
           type: string
+          example: '500123'
         PublisherName:
           type: string
+          example: example_value
         IsActivated:
           type: boolean
+          example: true
         OriginalTypeName:
           type: string
+          example: example_value
         PublicVersionNumber:
           type: string
+          example: example_value
         LatestPublicVersion:
           type: string
+          example: example_value

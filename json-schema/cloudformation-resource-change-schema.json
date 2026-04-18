@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResourceChange",
+  "type": "object",
+  "properties": {
+    "Action": {
+      "type": "string"
+    },
+    "LogicalResourceId": {
+      "type": "string"
+    },
+    "PhysicalResourceId": {
+      "type": "string"
+    },
+    "ResourceType": {
+      "type": "string"
+    },
+    "Replacement": {
+      "type": "string"
+    },
+    "Scope": {
+      "type": "array"
+    },
+    "Details": {
+      "type": "array"
+    }
+  }
+}

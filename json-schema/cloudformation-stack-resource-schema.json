@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StackResource",
+  "type": "object",
+  "properties": {
+    "StackName": {
+      "type": "string",
+      "description": "The name of the stack."
+    },
+    "StackId": {
+      "type": "string",
+      "description": "Unique identifier of the stack."
+    },
+    "LogicalResourceId": {
+      "type": "string",
+      "description": "The logical name of the resource specified in the template."
+    },
+    "PhysicalResourceId": {
+      "type": "string",
+      "description": "The name or unique identifier of the physical resource."
+    },
+    "ResourceType": {
+      "type": "string",
+      "description": "Type of AWS resource."
+    },
+    "Timestamp": {
+      "type": "string",
+      "description": "Time the status was updated."
+    },
+    "ResourceStatus": {
+      "type": "string",
+      "description": "Current status of the resource."
+    },
+    "ResourceStatusReason": {
+      "type": "string",
+      "description": "Message associated with the resource status."
+    },
+    "Description": {
+      "type": "string",
+      "description": "User-defined description."
+    }
+  }
+}

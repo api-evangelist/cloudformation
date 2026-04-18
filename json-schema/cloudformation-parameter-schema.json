@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Parameter",
+  "type": "object",
+  "properties": {
+    "ParameterKey": {
+      "type": "string",
+      "description": "The key associated with the parameter."
+    },
+    "ParameterValue": {
+      "type": "string",
+      "description": "The input value associated with the parameter."
+    },
+    "UsePreviousValue": {
+      "type": "boolean",
+      "description": "Use the existing parameter value during stack updates."
+    },
+    "ResolvedValue": {
+      "type": "string",
+      "description": "The value that resolves to for SSM parameter types."
+    }
+  }
+}

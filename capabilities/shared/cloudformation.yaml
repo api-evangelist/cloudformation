@@ -1,0 +1,623 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "AWS CloudFormation API"
+  description: "AWS CloudFormation API for creating, updating, and deleting stacks, managing change sets, templates, stack sets, drift detection, and registry types."
+  tags:
+    - AWS
+    - CloudFormation
+    - Infrastructure As Code
+    - Stacks
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      AWS_ACCESS_KEY_ID: AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: AWS_SECRET_ACCESS_KEY
+
+capability:
+  consumes:
+    - type: http
+      namespace: cloudformation
+      baseUri: https://cloudformation.{region}.amazonaws.com
+      description: "AWS CloudFormation API for infrastructure as code stack management."
+      authentication:
+        type: apikey
+        key: Authorization
+        value: "{{AWS_ACCESS_KEY_ID}}"
+        placement: header
+      resources:
+        - name: stacks
+          path: /
+          description: "Stack lifecycle management operations."
+          operations:
+            - name: create-stack
+              method: POST
+              description: "Creates a stack as specified in the template."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (CreateStack)"
+                - name: StackName
+                  in: query
+                  type: string
+                  required: true
+                  description: "The name of the stack"
+                - name: TemplateBody
+                  in: query
+                  type: string
+                  required: false
+                  description: "Template body JSON/YAML"
+                - name: TemplateURL
+                  in: query
+                  type: string
+                  required: false
+                  description: "S3 URL to template"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: update-stack
+              method: POST
+              description: "Updates a stack as specified in the template."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (UpdateStack)"
+                - name: StackName
+                  in: query
+                  type: string
+                  required: true
+                  description: "The name of the stack"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: delete-stack
+              method: POST
+              description: "Deletes a specified stack."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (DeleteStack)"
+                - name: StackName
+                  in: query
+                  type: string
+                  required: true
+                  description: "The name of the stack"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: describe-stacks
+              method: POST
+              description: "Returns description of specified stacks."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (DescribeStacks)"
+                - name: StackName
+                  in: query
+                  type: string
+                  required: false
+                  description: "Stack name or ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: list-stacks
+              method: POST
+              description: "Returns summary information for stacks."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (ListStacks)"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: describe-stack-events
+              method: POST
+              description: "Returns all stack-related events for a specified stack."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (DescribeStackEvents)"
+                - name: StackName
+                  in: query
+                  type: string
+                  required: true
+                  description: "Stack name or ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: describe-stack-resources
+              method: POST
+              description: "Returns AWS resource descriptions for a stack."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (DescribeStackResources)"
+                - name: StackName
+                  in: query
+                  type: string
+                  required: true
+                  description: "Stack name or ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: list-stack-resources
+              method: POST
+              description: "Returns descriptions of resources in a stack."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (ListStackResources)"
+                - name: StackName
+                  in: query
+                  type: string
+                  required: true
+                  description: "Stack name or ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: detect-stack-drift
+              method: POST
+              description: "Detects configuration drift for a stack."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (DetectStackDrift)"
+                - name: StackName
+                  in: query
+                  type: string
+                  required: true
+                  description: "Stack name or ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: create-change-set
+              method: POST
+              description: "Creates a list of changes for a stack."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (CreateChangeSet)"
+                - name: StackName
+                  in: query
+                  type: string
+                  required: true
+                  description: "Stack name or ID"
+                - name: ChangeSetName
+                  in: query
+                  type: string
+                  required: true
+                  description: "Change set name"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: describe-change-set
+              method: POST
+              description: "Returns information about a change set."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (DescribeChangeSet)"
+                - name: ChangeSetName
+                  in: query
+                  type: string
+                  required: true
+                  description: "Change set name or ID"
+                - name: StackName
+                  in: query
+                  type: string
+                  required: false
+                  description: "Stack name"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: execute-change-set
+              method: POST
+              description: "Executes a change set."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (ExecuteChangeSet)"
+                - name: ChangeSetName
+                  in: query
+                  type: string
+                  required: true
+                  description: "Change set name or ID"
+                - name: StackName
+                  in: query
+                  type: string
+                  required: false
+                  description: "Stack name"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: validate-template
+              method: POST
+              description: "Validates a specified template."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (ValidateTemplate)"
+                - name: TemplateBody
+                  in: query
+                  type: string
+                  required: false
+                  description: "Template body"
+                - name: TemplateURL
+                  in: query
+                  type: string
+                  required: false
+                  description: "Template URL"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: get-template
+              method: POST
+              description: "Returns the template body for a stack."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (GetTemplate)"
+                - name: StackName
+                  in: query
+                  type: string
+                  required: true
+                  description: "Stack name or ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: list-exports
+              method: POST
+              description: "Lists stack exports."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (ListExports)"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: create-stack-set
+              method: POST
+              description: "Creates a stack set."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (CreateStackSet)"
+                - name: StackSetName
+                  in: query
+                  type: string
+                  required: true
+                  description: "Stack set name"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: list-stack-sets
+              method: POST
+              description: "Returns summary information about stack sets."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (ListStackSets)"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: list-types
+              method: POST
+              description: "Returns summary information about extension types."
+              inputParameters:
+                - name: Action
+                  in: query
+                  type: string
+                  required: true
+                  description: "API action (ListTypes)"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: cloudformation-api
+      resources:
+        - path: /v1/stacks
+          name: stacks
+          description: "Stack operations"
+          operations:
+            - method: GET
+              name: list-stacks
+              description: "List all stacks"
+              call: "cloudformation.list-stacks"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-stack
+              description: "Create a stack"
+              call: "cloudformation.create-stack"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/stacks/{stackName}
+          name: stack
+          description: "Single stack"
+          operations:
+            - method: GET
+              name: describe-stack
+              description: "Describe a stack"
+              call: "cloudformation.describe-stacks"
+              with:
+                StackName: "rest.stackName"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-stack
+              description: "Delete a stack"
+              call: "cloudformation.delete-stack"
+              with:
+                StackName: "rest.stackName"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: cloudformation-mcp
+      transport: http
+      tools:
+        - name: create-stack
+          description: "Create a CloudFormation stack"
+          hints:
+            readOnly: false
+          call: "cloudformation.create-stack"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: describe-stacks
+          description: "Describe CloudFormation stacks"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "cloudformation.describe-stacks"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-stacks
+          description: "List all stacks"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "cloudformation.list-stacks"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: update-stack
+          description: "Update a stack"
+          hints:
+            readOnly: false
+            idempotent: true
+          call: "cloudformation.update-stack"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: delete-stack
+          description: "Delete a stack"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "cloudformation.delete-stack"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: detect-stack-drift
+          description: "Detect drift on a stack"
+          hints:
+            readOnly: true
+          call: "cloudformation.detect-stack-drift"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: create-change-set
+          description: "Create a change set for a stack"
+          hints:
+            readOnly: false
+          call: "cloudformation.create-change-set"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: describe-change-set
+          description: "Describe a change set"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "cloudformation.describe-change-set"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: execute-change-set
+          description: "Execute a change set"
+          hints:
+            readOnly: false
+          call: "cloudformation.execute-change-set"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: validate-template
+          description: "Validate a CloudFormation template"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "cloudformation.validate-template"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-template
+          description: "Get the template body for a stack"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "cloudformation.get-template"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: describe-stack-events
+          description: "Get stack events"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "cloudformation.describe-stack-events"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: describe-stack-resources
+          description: "Describe stack resources"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "cloudformation.describe-stack-resources"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-stack-resources
+          description: "List resources in a stack"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "cloudformation.list-stack-resources"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-exports
+          description: "List stack exports"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "cloudformation.list-exports"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-stack-sets
+          description: "List stack sets"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "cloudformation.list-stack-sets"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-types
+          description: "List extension types in the registry"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "cloudformation.list-types"
+          outputParameters:
+            - type: object
+              mapping: "$."

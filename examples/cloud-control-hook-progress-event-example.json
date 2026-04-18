@@ -1,0 +1,10 @@
+{
+  "HookTypeName": "example_value",
+  "HookTypeVersionId": "500123",
+  "HookTypeArn": "example_value",
+  "InvocationPoint": "example_value",
+  "HookStatus": "example_value",
+  "HookEventTime": 42.5,
+  "HookStatusMessage": "example_value",
+  "FailureMode": "example_value"
+}

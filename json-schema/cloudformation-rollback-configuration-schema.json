@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RollbackConfiguration",
+  "type": "object",
+  "properties": {
+    "RollbackTriggers": {
+      "type": "array",
+      "description": "The triggers to monitor during stack creation or update."
+    },
+    "MonitoringTimeInMinutes": {
+      "type": "integer",
+      "description": "The amount of time to monitor after stack deployment."
+    }
+  }
+}

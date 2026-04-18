@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Output",
+  "type": "object",
+  "properties": {
+    "OutputKey": {
+      "type": "string"
+    },
+    "OutputValue": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "ExportName": {
+      "type": "string"
+    }
+  }
+}

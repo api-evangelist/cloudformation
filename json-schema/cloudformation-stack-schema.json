@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stack",
+  "type": "object",
+  "properties": {
+    "StackId": {
+      "type": "string",
+      "description": "Unique identifier of the stack."
+    },
+    "StackName": {
+      "type": "string",
+      "description": "The name associated with the stack."
+    },
+    "ChangeSetId": {
+      "type": "string",
+      "description": "The unique ID of the change set."
+    },
+    "Description": {
+      "type": "string",
+      "description": "A user-defined description associated with the stack."
+    },
+    "CreationTime": {
+      "type": "string",
+      "description": "The time the stack was created."
+    },
+    "DeletionTime": {
+      "type": "string",
+      "description": "The time the stack was deleted."
+    },
+    "LastUpdatedTime": {
+      "type": "string",
+      "description": "The time the stack was last updated."
+    },
+    "StackStatusReason": {
+      "type": "string",
+      "description": "Explanation for the current stack status."
+    },
+    "DisableRollback": {
+      "type": "boolean",
+      "description": "Whether rollback on stack creation failures is disabled."
+    },
+    "NotificationARNs": {
+      "type": "array",
+      "description": "Amazon SNS topic ARNs for stack event notifications."
+    },
+    "TimeoutInMinutes": {
+      "type": "integer",
+      "description": "Time allowed for stack creation before failure."
+    },
+    "Capabilities": {
+      "type": "array",
+      "description": "The capabilities allowed in the stack."
+    },
+    "Outputs": {
+      "type": "array",
+      "description": "A list of output structures."
+    },
+    "RoleARN": {
+      "type": "string",
+      "description": "The IAM role ARN used by CloudFormation."
+    },
+    "Tags": {
+      "type": "array",
+      "description": "Tags associated with the stack."
+    },
+    "EnableTerminationProtection": {
+      "type": "boolean",
+      "description": "Whether termination protection is enabled."
+    },
+    "Parameters": {
+      "type": "array",
+      "description": "A list of parameter structures."
+    },
+    "ParentId": {
+      "type": "string",
+      "description": "For nested stacks, the stack ID of the direct parent."
+    },
+    "RootId": {
+      "type": "string",
+      "description": "For nested stacks, the stack ID of the top-level stack."
+    },
+    "DeletionMode": {
+      "type": "string"
+    },
+    "DetailedStatus": {
+      "type": "string"
+    },
+    "RetainExceptOnCreate": {
+      "type": "boolean"
+    }
+  }
+}

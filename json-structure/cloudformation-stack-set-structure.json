@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "StackSet",
+  "type": "object",
+  "properties": {
+    "StackSetName": {
+      "type": "string"
+    },
+    "StackSetId": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "Status": {
+      "type": "string"
+    },
+    "TemplateBody": {
+      "type": "string"
+    },
+    "Parameters": {
+      "type": "array"
+    },
+    "Capabilities": {
+      "type": "array"
+    },
+    "Tags": {
+      "type": "array"
+    },
+    "StackSetARN": {
+      "type": "string"
+    },
+    "AdministrationRoleARN": {
+      "type": "string"
+    },
+    "ExecutionRoleName": {
+      "type": "string"
+    },
+    "PermissionModel": {
+      "type": "string"
+    }
+  }
+}

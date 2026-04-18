@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StackResourceDrift",
+  "type": "object",
+  "properties": {
+    "StackId": {
+      "type": "string"
+    },
+    "LogicalResourceId": {
+      "type": "string"
+    },
+    "PhysicalResourceId": {
+      "type": "string"
+    },
+    "PhysicalResourceIdContext": {
+      "type": "array"
+    },
+    "ResourceType": {
+      "type": "string"
+    },
+    "ExpectedProperties": {
+      "type": "string",
+      "description": "A JSON string of the expected property values as defined in the template."
+    },
+    "ActualProperties": {
+      "type": "string",
+      "description": "A JSON string of the actual property values of the resource."
+    },
+    "PropertyDifferences": {
+      "type": "array"
+    },
+    "StackResourceDriftStatus": {
+      "type": "string"
+    },
+    "Timestamp": {
+      "type": "string"
+    }
+  }
+}

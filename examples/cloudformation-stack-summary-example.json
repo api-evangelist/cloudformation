@@ -1,0 +1,11 @@
+{
+  "StackId": "500123",
+  "StackName": "example_value",
+  "TemplateDescription": "example_value",
+  "CreationTime": "example_value",
+  "LastUpdatedTime": "example_value",
+  "DeletionTime": "example_value",
+  "StackStatusReason": "example_value",
+  "ParentId": "500123",
+  "RootId": "500123"
+}

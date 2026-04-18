@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResourceDescription",
+  "type": "object",
+  "description": "Represents information about a provisioned resource.",
+  "properties": {
+    "Identifier": {
+      "type": "string",
+      "description": "The primary identifier for the resource."
+    },
+    "Properties": {
+      "type": "string",
+      "description": "A JSON string representing the current resource property values. The properties returned depend on the resource type schema."
+    }
+  }
+}

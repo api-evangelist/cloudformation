@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PropertyDifference",
+  "type": "object",
+  "properties": {
+    "PropertyPath": {
+      "type": "string"
+    },
+    "ExpectedValue": {
+      "type": "string"
+    },
+    "ActualValue": {
+      "type": "string"
+    },
+    "DifferenceType": {
+      "type": "string"
+    }
+  }
+}

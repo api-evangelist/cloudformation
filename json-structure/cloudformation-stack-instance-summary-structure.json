@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "StackInstanceSummary",
+  "type": "object",
+  "properties": {
+    "StackSetId": {
+      "type": "string"
+    },
+    "Region": {
+      "type": "string"
+    },
+    "Account": {
+      "type": "string"
+    },
+    "StackId": {
+      "type": "string"
+    },
+    "Status": {
+      "type": "string"
+    },
+    "StatusReason": {
+      "type": "string"
+    },
+    "DriftStatus": {
+      "type": "string"
+    },
+    "LastDriftCheckTimestamp": {
+      "type": "string"
+    }
+  }
+}

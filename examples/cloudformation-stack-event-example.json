@@ -1,0 +1,18 @@
+{
+  "StackId": "500123",
+  "EventId": "500123",
+  "StackName": "example_value",
+  "LogicalResourceId": "500123",
+  "PhysicalResourceId": "500123",
+  "ResourceType": "example_value",
+  "Timestamp": "example_value",
+  "ResourceStatus": "example_value",
+  "ResourceStatusReason": "example_value",
+  "ResourceProperties": "example_value",
+  "ClientRequestToken": "example_value",
+  "HookType": "example_value",
+  "HookStatus": "example_value",
+  "HookStatusReason": "example_value",
+  "HookInvocationPoint": "example_value",
+  "HookFailureMode": "example_value"
+}

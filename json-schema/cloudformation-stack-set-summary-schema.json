@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StackSetSummary",
+  "type": "object",
+  "properties": {
+    "StackSetName": {
+      "type": "string"
+    },
+    "StackSetId": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "Status": {
+      "type": "string"
+    },
+    "PermissionModel": {
+      "type": "string"
+    },
+    "DriftStatus": {
+      "type": "string"
+    },
+    "LastDriftCheckTimestamp": {
+      "type": "string"
+    }
+  }
+}

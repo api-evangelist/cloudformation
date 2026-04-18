@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "StackSummary",
+  "type": "object",
+  "properties": {
+    "StackId": {
+      "type": "string"
+    },
+    "StackName": {
+      "type": "string"
+    },
+    "TemplateDescription": {
+      "type": "string"
+    },
+    "CreationTime": {
+      "type": "string"
+    },
+    "LastUpdatedTime": {
+      "type": "string"
+    },
+    "DeletionTime": {
+      "type": "string"
+    },
+    "StackStatusReason": {
+      "type": "string"
+    },
+    "ParentId": {
+      "type": "string"
+    },
+    "RootId": {
+      "type": "string"
+    }
+  }
+}

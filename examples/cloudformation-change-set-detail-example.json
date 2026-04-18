@@ -1,0 +1,18 @@
+{
+  "ChangeSetName": "example_value",
+  "ChangeSetId": "500123",
+  "StackId": "500123",
+  "StackName": "example_value",
+  "Description": "A sample description.",
+  "Parameters": [],
+  "CreationTime": "example_value",
+  "ExecutionStatus": "example_value",
+  "Status": "example_value",
+  "StatusReason": "example_value",
+  "NotificationARNs": [],
+  "Capabilities": [],
+  "Tags": [],
+  "Changes": [],
+  "IncludeNestedStacks": true,
+  "NextToken": "example_value"
+}

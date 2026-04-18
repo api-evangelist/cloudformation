@@ -1,0 +1,10 @@
+{
+  "StackSetId": "500123",
+  "Region": "example_value",
+  "Account": "example_value",
+  "StackId": "500123",
+  "Status": "example_value",
+  "StatusReason": "example_value",
+  "DriftStatus": "example_value",
+  "LastDriftCheckTimestamp": "example_value"
+}

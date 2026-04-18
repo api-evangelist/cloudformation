@@ -1,0 +1,8 @@
+{
+  "ParameterKey": "example_value",
+  "DefaultValue": "example_value",
+  "ParameterType": "example_value",
+  "NoEcho": true,
+  "Description": "A sample description.",
+  "ParameterConstraints": "example_value"
+}

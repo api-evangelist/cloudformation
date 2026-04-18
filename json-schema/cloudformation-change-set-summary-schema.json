@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ChangeSetSummary",
+  "type": "object",
+  "properties": {
+    "StackId": {
+      "type": "string",
+      "description": "The ID of the stack with which the change set is associated."
+    },
+    "StackName": {
+      "type": "string"
+    },
+    "ChangeSetId": {
+      "type": "string",
+      "description": "The ARN of the change set."
+    },
+    "ChangeSetName": {
+      "type": "string"
+    },
+    "ExecutionStatus": {
+      "type": "string"
+    },
+    "Status": {
+      "type": "string"
+    },
+    "StatusReason": {
+      "type": "string"
+    },
+    "CreationTime": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "IncludeNestedStacks": {
+      "type": "boolean"
+    },
+    "ImportExistingResources": {
+      "type": "boolean"
+    },
+    "ParentChangeSetId": {
+      "type": "string"
+    },
+    "RootChangeSetId": {
+      "type": "string"
+    }
+  }
+}

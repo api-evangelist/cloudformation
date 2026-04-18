@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "StackResource",
+  "type": "object",
+  "properties": {
+    "StackName": {
+      "type": "string"
+    },
+    "StackId": {
+      "type": "string"
+    },
+    "LogicalResourceId": {
+      "type": "string"
+    },
+    "PhysicalResourceId": {
+      "type": "string"
+    },
+    "ResourceType": {
+      "type": "string"
+    },
+    "Timestamp": {
+      "type": "string"
+    },
+    "ResourceStatus": {
+      "type": "string"
+    },
+    "ResourceStatusReason": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    }
+  }
+}

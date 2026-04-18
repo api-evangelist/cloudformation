@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "ChangeSetSummary",
+  "type": "object",
+  "properties": {
+    "StackId": {
+      "type": "string"
+    },
+    "StackName": {
+      "type": "string"
+    },
+    "ChangeSetId": {
+      "type": "string"
+    },
+    "ChangeSetName": {
+      "type": "string"
+    },
+    "ExecutionStatus": {
+      "type": "string"
+    },
+    "Status": {
+      "type": "string"
+    },
+    "StatusReason": {
+      "type": "string"
+    },
+    "CreationTime": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "IncludeNestedStacks": {
+      "type": "boolean"
+    },
+    "ImportExistingResources": {
+      "type": "boolean"
+    },
+    "ParentChangeSetId": {
+      "type": "string"
+    },
+    "RootChangeSetId": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "StackSetId": "500123",
+  "Region": "example_value",
+  "Account": "example_value",
+  "StackId": "500123",
+  "ParameterOverrides": [],
+  "Status": "example_value",
+  "StackInstanceStatus": "example_value",
+  "StatusReason": "example_value",
+  "DriftStatus": "example_value",
+  "LastDriftCheckTimestamp": "example_value"
+}

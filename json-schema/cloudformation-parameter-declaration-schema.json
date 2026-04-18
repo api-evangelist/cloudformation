@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ParameterDeclaration",
+  "type": "object",
+  "properties": {
+    "ParameterKey": {
+      "type": "string"
+    },
+    "DefaultValue": {
+      "type": "string"
+    },
+    "ParameterType": {
+      "type": "string"
+    },
+    "NoEcho": {
+      "type": "boolean"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "ParameterConstraints": {
+      "type": "object"
+    }
+  }
+}

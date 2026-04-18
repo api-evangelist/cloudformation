@@ -1,0 +1,20 @@
+name: cloudformation API Vocabulary
+provider: cloudformation
+created: '2026-04-18'
+modified: '2026-04-18'
+operations: 49
+schemas: 34
+tags:
+- Change Sets
+- Exports
+- Registry
+- Request Status
+- Resources
+- Stack Drift
+- Stack Events
+- Stack Instances
+- Stack Policies
+- Stack Resources
+- Stack Sets
+- Stacks
+- Templates

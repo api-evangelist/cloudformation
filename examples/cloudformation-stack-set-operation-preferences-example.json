@@ -1,0 +1,8 @@
+{
+  "RegionConcurrencyType": "example_value",
+  "RegionOrder": [],
+  "FailureToleranceCount": 10,
+  "FailureTolerancePercentage": 10,
+  "MaxConcurrentCount": 10,
+  "MaxConcurrentPercentage": 10
+}

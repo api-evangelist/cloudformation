@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StackSetOperationPreferences",
+  "type": "object",
+  "properties": {
+    "RegionConcurrencyType": {
+      "type": "string"
+    },
+    "RegionOrder": {
+      "type": "array"
+    },
+    "FailureToleranceCount": {
+      "type": "integer"
+    },
+    "FailureTolerancePercentage": {
+      "type": "integer"
+    },
+    "MaxConcurrentCount": {
+      "type": "integer"
+    },
+    "MaxConcurrentPercentage": {
+      "type": "integer"
+    }
+  }
+}

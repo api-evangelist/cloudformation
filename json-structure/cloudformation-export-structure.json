@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Export",
+  "type": "object",
+  "properties": {
+    "ExportingStackId": {
+      "type": "string"
+    },
+    "Name": {
+      "type": "string"
+    },
+    "Value": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Parameter",
+  "type": "object",
+  "properties": {
+    "ParameterKey": {
+      "type": "string"
+    },
+    "ParameterValue": {
+      "type": "string"
+    },
+    "UsePreviousValue": {
+      "type": "boolean"
+    },
+    "ResolvedValue": {
+      "type": "string"
+    }
+  }
+}

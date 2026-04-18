@@ -1,0 +1,13 @@
+{
+  "TypeName": "example_value",
+  "Identifier": "example_value",
+  "RequestToken": "example_value",
+  "HooksRequestToken": "example_value",
+  "Operation": "example_value",
+  "OperationStatus": "example_value",
+  "EventTime": 42.5,
+  "ResourceModel": "example_value",
+  "StatusMessage": "example_value",
+  "ErrorCode": "example_value",
+  "RetryAfter": 42.5
+}

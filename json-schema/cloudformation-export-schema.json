@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Export",
+  "type": "object",
+  "properties": {
+    "ExportingStackId": {
+      "type": "string",
+      "description": "The stack that contains the exported output value."
+    },
+    "Name": {
+      "type": "string",
+      "description": "The name of the exported output value."
+    },
+    "Value": {
+      "type": "string",
+      "description": "The value of the exported output."
+    }
+  }
+}

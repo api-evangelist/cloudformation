@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "ProgressEvent",
+  "type": "object",
+  "properties": {
+    "TypeName": {
+      "type": "string"
+    },
+    "Identifier": {
+      "type": "string"
+    },
+    "RequestToken": {
+      "type": "string"
+    },
+    "HooksRequestToken": {
+      "type": "string"
+    },
+    "Operation": {
+      "type": "string"
+    },
+    "OperationStatus": {
+      "type": "string"
+    },
+    "EventTime": {
+      "type": "number"
+    },
+    "ResourceModel": {
+      "type": "string"
+    },
+    "StatusMessage": {
+      "type": "string"
+    },
+    "ErrorCode": {
+      "type": "string"
+    },
+    "RetryAfter": {
+      "type": "number"
+    }
+  }
+}

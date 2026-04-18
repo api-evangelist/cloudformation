@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StackEvent",
+  "type": "object",
+  "properties": {
+    "StackId": {
+      "type": "string"
+    },
+    "EventId": {
+      "type": "string"
+    },
+    "StackName": {
+      "type": "string"
+    },
+    "LogicalResourceId": {
+      "type": "string"
+    },
+    "PhysicalResourceId": {
+      "type": "string"
+    },
+    "ResourceType": {
+      "type": "string"
+    },
+    "Timestamp": {
+      "type": "string"
+    },
+    "ResourceStatus": {
+      "type": "string"
+    },
+    "ResourceStatusReason": {
+      "type": "string"
+    },
+    "ResourceProperties": {
+      "type": "string"
+    },
+    "ClientRequestToken": {
+      "type": "string"
+    },
+    "HookType": {
+      "type": "string"
+    },
+    "HookStatus": {
+      "type": "string"
+    },
+    "HookStatusReason": {
+      "type": "string"
+    },
+    "HookInvocationPoint": {
+      "type": "string"
+    },
+    "HookFailureMode": {
+      "type": "string"
+    }
+  }
+}

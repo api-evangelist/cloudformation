@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "StackDriftInformation",
+  "type": "object",
+  "properties": {
+    "StackDriftStatus": {
+      "type": "string"
+    },
+    "LastCheckTimestamp": {
+      "type": "string"
+    }
+  }
+}

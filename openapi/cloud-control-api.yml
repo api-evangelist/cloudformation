@@ -18,39 +18,39 @@ info:
   x-logo:
     url: https://aws.amazon.com/cloudformation/logo.png
 servers:
-  - url: https://cloudcontrolapi.{region}.amazonaws.com
-    description: AWS Cloud Control API Regional Endpoint
-    variables:
-      region:
-        default: us-east-1
-        description: AWS region
-        enum:
-          - us-east-1
-          - us-east-2
-          - us-west-1
-          - us-west-2
-          - eu-west-1
-          - eu-west-2
-          - eu-central-1
-          - ap-southeast-1
-          - ap-southeast-2
-          - ap-northeast-1
+- url: https://cloudcontrolapi.{region}.amazonaws.com
+  description: AWS Cloud Control API Regional Endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-central-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
 security:
-  - AWS_Signature_V4: []
+- AWS_Signature_V4: []
 tags:
-  - name: Resources
-    description: >-
-      CRUDL operations for creating, reading, updating, deleting, and listing
-      cloud resources through a uniform interface.
-  - name: Request Status
-    description: >-
-      Operations for tracking the status of asynchronous resource operations and
-      cancelling in-progress requests.
+- name: Resources
+  description: >-
+    CRUDL operations for creating, reading, updating, deleting, and listing
+    cloud resources through a uniform interface.
+- name: Request Status
+  description: >-
+    Operations for tracking the status of asynchronous resource operations and
+    cancelling in-progress requests.
 paths:
   /?Action=CreateResource:
     post:
       operationId: createResource
-      summary: Create a new cloud resource
+      summary: Create a New Cloud Resource
       description: >-
         Creates the specified resource. For more information, see Creating a
         resource in the CloudFormation User Guide. After you have initiated a
@@ -58,9 +58,9 @@ paths:
         by calling GetResourceRequestStatus using the RequestToken of the
         ProgressEvent returned by CreateResource.
       tags:
-        - Resources
+      - Resources
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -68,8 +68,8 @@ paths:
             schema:
               type: object
               required:
-                - TypeName
-                - DesiredState
+              - TypeName
+              - DesiredState
               properties:
                 TypeName:
                   type: string
@@ -110,6 +110,16 @@ paths:
                   minLength: 1
                   maxLength: 128
                   pattern: '[-A-Za-z0-9+/=]+'
+            examples:
+              CreateresourceRequestExample:
+                summary: Default createResource request
+                x-microcks-default: true
+                value:
+                  TypeName: example_value
+                  DesiredState: example_value
+                  TypeVersionId: '500123'
+                  RoleArn: example_value
+                  ClientToken: example_value
       responses:
         '200':
           description: Resource creation initiated successfully.
@@ -120,6 +130,23 @@ paths:
                 properties:
                   ProgressEvent:
                     $ref: '#/components/schemas/ProgressEvent'
+              examples:
+                Createresource200Example:
+                  summary: Default createResource 200 response
+                  x-microcks-default: true
+                  value:
+                    ProgressEvent:
+                      TypeName: example_value
+                      Identifier: example_value
+                      RequestToken: example_value
+                      HooksRequestToken: example_value
+                      Operation: CREATE
+                      OperationStatus: PENDING
+                      EventTime: 42.5
+                      ResourceModel: example_value
+                      StatusMessage: example_value
+                      ErrorCode: NotUpdatable
+                      RetryAfter: 42.5
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -131,18 +158,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=GetResource:
     post:
       operationId: getResource
-      summary: Read a cloud resource
+      summary: Read a Cloud Resource
       description: >-
         Returns information about the current state of the specified resource.
         For details, see Reading a resource's current state in the
         CloudFormation User Guide.
       tags:
-        - Resources
+      - Resources
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -150,8 +180,8 @@ paths:
             schema:
               type: object
               required:
-                - TypeName
-                - Identifier
+              - TypeName
+              - Identifier
               properties:
                 TypeName:
                   type: string
@@ -180,6 +210,15 @@ paths:
                   minLength: 20
                   maxLength: 2048
                   pattern: 'arn:.+:iam::[0-9]{12}:role/.+'
+            examples:
+              GetresourceRequestExample:
+                summary: Default getResource request
+                x-microcks-default: true
+                value:
+                  TypeName: example_value
+                  Identifier: example_value
+                  TypeVersionId: '500123'
+                  RoleArn: example_value
       responses:
         '200':
           description: Resource details returned successfully.
@@ -193,6 +232,15 @@ paths:
                     description: The name of the resource type.
                   ResourceDescription:
                     $ref: '#/components/schemas/ResourceDescription'
+              examples:
+                Getresource200Example:
+                  summary: Default getResource 200 response
+                  x-microcks-default: true
+                  value:
+                    TypeName: example_value
+                    ResourceDescription:
+                      Identifier: example_value
+                      Properties: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -202,10 +250,13 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=UpdateResource:
     post:
       operationId: updateResource
-      summary: Update an existing cloud resource
+      summary: Update an Existing Cloud Resource
       description: >-
         Updates the specified property values of the resource. You specify your
         resource property updates as a JSON patch document. After you have
@@ -213,9 +264,9 @@ paths:
         calling GetResourceRequestStatus using the RequestToken of the
         ProgressEvent returned by UpdateResource.
       tags:
-        - Resources
+      - Resources
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -223,9 +274,9 @@ paths:
             schema:
               type: object
               required:
-                - TypeName
-                - Identifier
-                - PatchDocument
+              - TypeName
+              - Identifier
+              - PatchDocument
               properties:
                 TypeName:
                   type: string
@@ -265,6 +316,17 @@ paths:
                   minLength: 1
                   maxLength: 128
                   pattern: '[-A-Za-z0-9+/=]+'
+            examples:
+              UpdateresourceRequestExample:
+                summary: Default updateResource request
+                x-microcks-default: true
+                value:
+                  TypeName: example_value
+                  Identifier: example_value
+                  PatchDocument: example_value
+                  TypeVersionId: '500123'
+                  RoleArn: example_value
+                  ClientToken: example_value
       responses:
         '200':
           description: Resource update initiated successfully.
@@ -275,6 +337,23 @@ paths:
                 properties:
                   ProgressEvent:
                     $ref: '#/components/schemas/ProgressEvent'
+              examples:
+                Updateresource200Example:
+                  summary: Default updateResource 200 response
+                  x-microcks-default: true
+                  value:
+                    ProgressEvent:
+                      TypeName: example_value
+                      Identifier: example_value
+                      RequestToken: example_value
+                      HooksRequestToken: example_value
+                      Operation: CREATE
+                      OperationStatus: PENDING
+                      EventTime: 42.5
+                      ResourceModel: example_value
+                      StatusMessage: example_value
+                      ErrorCode: NotUpdatable
+                      RetryAfter: 42.5
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -286,19 +365,22 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=DeleteResource:
     post:
       operationId: deleteResource
-      summary: Delete a cloud resource
+      summary: Delete a Cloud Resource
       description: >-
         Deletes the specified resource. After you have initiated a resource
         deletion request, you can monitor the progress by calling
         GetResourceRequestStatus using the RequestToken of the ProgressEvent
         returned by DeleteResource.
       tags:
-        - Resources
+      - Resources
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -306,8 +388,8 @@ paths:
             schema:
               type: object
               required:
-                - TypeName
-                - Identifier
+              - TypeName
+              - Identifier
               properties:
                 TypeName:
                   type: string
@@ -338,6 +420,16 @@ paths:
                   minLength: 1
                   maxLength: 128
                   pattern: '[-A-Za-z0-9+/=]+'
+            examples:
+              DeleteresourceRequestExample:
+                summary: Default deleteResource request
+                x-microcks-default: true
+                value:
+                  TypeName: example_value
+                  Identifier: example_value
+                  TypeVersionId: '500123'
+                  RoleArn: example_value
+                  ClientToken: example_value
       responses:
         '200':
           description: Resource deletion initiated successfully.
@@ -348,6 +440,23 @@ paths:
                 properties:
                   ProgressEvent:
                     $ref: '#/components/schemas/ProgressEvent'
+              examples:
+                Deleteresource200Example:
+                  summary: Default deleteResource 200 response
+                  x-microcks-default: true
+                  value:
+                    ProgressEvent:
+                      TypeName: example_value
+                      Identifier: example_value
+                      RequestToken: example_value
+                      HooksRequestToken: example_value
+                      Operation: CREATE
+                      OperationStatus: PENDING
+                      EventTime: 42.5
+                      ResourceModel: example_value
+                      StatusMessage: example_value
+                      ErrorCode: NotUpdatable
+                      RetryAfter: 42.5
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -359,18 +468,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=ListResources:
     post:
       operationId: listResources
-      summary: List resources of a specified type
+      summary: List Resources of a Specified Type
       description: >-
         Returns information about the specified resources. For more information,
         see Discovering resources in the CloudFormation User Guide. You can use
         this operation to discover resources that are available in your account.
       tags:
-        - Resources
+      - Resources
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -378,7 +490,7 @@ paths:
             schema:
               type: object
               required:
-                - TypeName
+              - TypeName
               properties:
                 TypeName:
                   type: string
@@ -415,6 +527,17 @@ paths:
                   description: >-
                     The resource model to use to select the resources to return.
                     Used for filtering by secondary identifiers.
+            examples:
+              ListresourcesRequestExample:
+                summary: Default listResources request
+                x-microcks-default: true
+                value:
+                  TypeName: example_value
+                  TypeVersionId: '500123'
+                  RoleArn: example_value
+                  NextToken: example_value
+                  MaxResults: 10
+                  ResourceModel: example_value
       responses:
         '200':
           description: Resource list returned successfully.
@@ -431,6 +554,16 @@ paths:
                       $ref: '#/components/schemas/ResourceDescription'
                   NextToken:
                     type: string
+              examples:
+                Listresources200Example:
+                  summary: Default listResources 200 response
+                  x-microcks-default: true
+                  value:
+                    TypeName: example_value
+                    ResourceDescriptions:
+                    - Identifier: example_value
+                      Properties: example_value
+                    NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -440,18 +573,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=GetResourceRequestStatus:
     post:
       operationId: getResourceRequestStatus
-      summary: Get the status of a resource operation request
+      summary: Get the Status of a Resource Operation Request
       description: >-
         Returns the current status of a resource operation request. For more
         information, see Managing resource operation requests in the
         CloudFormation User Guide.
       tags:
-        - Request Status
+      - Request Status
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -459,7 +595,7 @@ paths:
             schema:
               type: object
               required:
-                - RequestToken
+              - RequestToken
               properties:
                 RequestToken:
                   type: string
@@ -469,6 +605,12 @@ paths:
                   minLength: 1
                   maxLength: 128
                   pattern: '[-A-Za-z0-9+/=]+'
+            examples:
+              GetresourcerequeststatusRequestExample:
+                summary: Default getResourceRequestStatus request
+                x-microcks-default: true
+                value:
+                  RequestToken: example_value
       responses:
         '200':
           description: Request status returned successfully.
@@ -483,6 +625,32 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/HookProgressEvent'
+              examples:
+                Getresourcerequeststatus200Example:
+                  summary: Default getResourceRequestStatus 200 response
+                  x-microcks-default: true
+                  value:
+                    ProgressEvent:
+                      TypeName: example_value
+                      Identifier: example_value
+                      RequestToken: example_value
+                      HooksRequestToken: example_value
+                      Operation: CREATE
+                      OperationStatus: PENDING
+                      EventTime: 42.5
+                      ResourceModel: example_value
+                      StatusMessage: example_value
+                      ErrorCode: NotUpdatable
+                      RetryAfter: 42.5
+                    HooksProgressEvent:
+                    - HookTypeName: example_value
+                      HookTypeVersionId: '500123'
+                      HookTypeArn: example_value
+                      InvocationPoint: PRE_PROVISION
+                      HookStatus: HOOK_IN_PROGRESS
+                      HookEventTime: 42.5
+                      HookStatusMessage: example_value
+                      FailureMode: FAIL
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -492,18 +660,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=ListResourceRequests:
     post:
       operationId: listResourceRequests
-      summary: List resource operation requests
+      summary: List Resource Operation Requests
       description: >-
         Returns existing resource operation requests. This includes requests of
         all statuses. For more information, see Managing resource operation
         requests in the CloudFormation User Guide.
       tags:
-        - Request Status
+      - Request Status
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         content:
           application/json:
@@ -530,21 +701,33 @@ paths:
                       items:
                         type: string
                         enum:
-                          - CREATE
-                          - DELETE
-                          - UPDATE
+                        - CREATE
+                        - DELETE
+                        - UPDATE
                     OperationStatuses:
                       type: array
                       description: The operation statuses to include in the filter.
                       items:
                         type: string
                         enum:
-                          - PENDING
-                          - IN_PROGRESS
-                          - SUCCESS
-                          - FAILED
-                          - CANCEL_IN_PROGRESS
-                          - CANCEL_COMPLETE
+                        - PENDING
+                        - IN_PROGRESS
+                        - SUCCESS
+                        - FAILED
+                        - CANCEL_IN_PROGRESS
+                        - CANCEL_COMPLETE
+            examples:
+              ListresourcerequestsRequestExample:
+                summary: Default listResourceRequests request
+                x-microcks-default: true
+                value:
+                  MaxResults: 10
+                  NextToken: example_value
+                  ResourceRequestStatusFilter:
+                    Operations:
+                    - CREATE
+                    OperationStatuses:
+                    - PENDING
       responses:
         '200':
           description: Resource requests returned successfully.
@@ -559,6 +742,24 @@ paths:
                       $ref: '#/components/schemas/ProgressEvent'
                   NextToken:
                     type: string
+              examples:
+                Listresourcerequests200Example:
+                  summary: Default listResourceRequests 200 response
+                  x-microcks-default: true
+                  value:
+                    ResourceRequestStatusSummaries:
+                    - TypeName: example_value
+                      Identifier: example_value
+                      RequestToken: example_value
+                      HooksRequestToken: example_value
+                      Operation: CREATE
+                      OperationStatus: PENDING
+                      EventTime: 42.5
+                      ResourceModel: example_value
+                      StatusMessage: example_value
+                      ErrorCode: NotUpdatable
+                      RetryAfter: 42.5
+                    NextToken: example_value
         '400':
           $ref: '#/components/responses/ValidationError'
         '429':
@@ -566,19 +767,22 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /?Action=CancelResourceRequest:
     post:
       operationId: cancelResourceRequest
-      summary: Cancel an in-progress resource operation request
+      summary: Cancel an In-progress Resource Operation Request
       description: >-
         Cancels the specified resource operation request. For more information,
         see Canceling resource operation requests in the CloudFormation User
         Guide. Only resource operations with a status of PENDING or IN_PROGRESS
         can be cancelled.
       tags:
-        - Request Status
+      - Request Status
       parameters:
-        - $ref: '#/components/parameters/VersionParam'
+      - $ref: '#/components/parameters/VersionParam'
       requestBody:
         required: true
         content:
@@ -586,7 +790,7 @@ paths:
             schema:
               type: object
               required:
-                - RequestToken
+              - RequestToken
               properties:
                 RequestToken:
                   type: string
@@ -594,6 +798,12 @@ paths:
                   minLength: 1
                   maxLength: 128
                   pattern: '[-A-Za-z0-9+/=]+'
+            examples:
+              CancelresourcerequestRequestExample:
+                summary: Default cancelResourceRequest request
+                x-microcks-default: true
+                value:
+                  RequestToken: example_value
       responses:
         '200':
           description: Request cancellation initiated successfully.
@@ -604,6 +814,23 @@ paths:
                 properties:
                   ProgressEvent:
                     $ref: '#/components/schemas/ProgressEvent'
+              examples:
+                Cancelresourcerequest200Example:
+                  summary: Default cancelResourceRequest 200 response
+                  x-microcks-default: true
+                  value:
+                    ProgressEvent:
+                      TypeName: example_value
+                      Identifier: example_value
+                      RequestToken: example_value
+                      HooksRequestToken: example_value
+                      Operation: CREATE
+                      OperationStatus: PENDING
+                      EventTime: 42.5
+                      ResourceModel: example_value
+                      StatusMessage: example_value
+                      ErrorCode: NotUpdatable
+                      RetryAfter: 42.5
         '400':
           $ref: '#/components/responses/ValidationError'
         '404':
@@ -617,6 +844,9 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     AWS_Signature_V4:
@@ -687,10 +917,12 @@ components:
         Message:
           type: string
           description: The error message.
+          example: example_value
         Code:
           type: string
           description: The error code.
 
+          example: example_value
     ProgressEvent:
       type: object
       description: >-
@@ -699,71 +931,82 @@ components:
         TypeName:
           type: string
           description: The resource type name.
+          example: example_value
         Identifier:
           type: string
           description: The primary identifier for the resource.
+          example: example_value
         RequestToken:
           type: string
           description: >-
             The unique token representing this resource operation request. Use
             this token with GetResourceRequestStatus to check operation progress.
+          example: example_value
         HooksRequestToken:
           type: string
           description: The unique token for hooks processing.
+          example: example_value
         Operation:
           type: string
           description: The resource operation type.
           enum:
-            - CREATE
-            - DELETE
-            - UPDATE
+          - CREATE
+          - DELETE
+          - UPDATE
+          example: CREATE
         OperationStatus:
           type: string
           description: The current status of the resource operation request.
           enum:
-            - PENDING
-            - IN_PROGRESS
-            - SUCCESS
-            - FAILED
-            - CANCEL_IN_PROGRESS
-            - CANCEL_COMPLETE
+          - PENDING
+          - IN_PROGRESS
+          - SUCCESS
+          - FAILED
+          - CANCEL_IN_PROGRESS
+          - CANCEL_COMPLETE
+          example: PENDING
         EventTime:
           type: number
           description: When the resource operation request was initiated (Unix timestamp).
+          example: 42.5
         ResourceModel:
           type: string
           description: A JSON string representing the resource model.
+          example: example_value
         StatusMessage:
           type: string
           description: A message explaining the current status.
+          example: example_value
         ErrorCode:
           type: string
           description: >-
             The error code if the operation failed.
           enum:
-            - NotUpdatable
-            - InvalidRequest
-            - AccessDenied
-            - InvalidCredentials
-            - AlreadyExists
-            - NotFound
-            - ResourceConflict
-            - Throttling
-            - ServiceLimitExceeded
-            - NotStabilized
-            - GeneralServiceException
-            - ServiceInternalError
-            - NetworkFailure
-            - InternalFailure
-            - InvalidTypeConfiguration
-            - HandlerInternalFailure
-            - NonCompliant
-            - Unknown
-            - UnsupportedTarget
+          - NotUpdatable
+          - InvalidRequest
+          - AccessDenied
+          - InvalidCredentials
+          - AlreadyExists
+          - NotFound
+          - ResourceConflict
+          - Throttling
+          - ServiceLimitExceeded
+          - NotStabilized
+          - GeneralServiceException
+          - ServiceInternalError
+          - NetworkFailure
+          - InternalFailure
+          - InvalidTypeConfiguration
+          - HandlerInternalFailure
+          - NonCompliant
+          - Unknown
+          - UnsupportedTarget
+          example: NotUpdatable
         RetryAfter:
           type: number
           description: When to retry the operation (Unix timestamp).
 
+          example: 42.5
     HookProgressEvent:
       type: object
       description: Represents the progress of a hook invocation.
@@ -771,38 +1014,46 @@ components:
         HookTypeName:
           type: string
           description: The type name of the hook.
+          example: example_value
         HookTypeVersionId:
           type: string
           description: The version of the hook type.
+          example: '500123'
         HookTypeArn:
           type: string
           description: The ARN of the hook type.
+          example: example_value
         InvocationPoint:
           type: string
           description: The point in the provisioning workflow where the hook runs.
           enum:
-            - PRE_PROVISION
+          - PRE_PROVISION
+          example: PRE_PROVISION
         HookStatus:
           type: string
           description: The status of the hook invocation.
           enum:
-            - HOOK_IN_PROGRESS
-            - HOOK_COMPLETE_SUCCEEDED
-            - HOOK_COMPLETE_FAILED
-            - HOOK_FAILED
+          - HOOK_IN_PROGRESS
+          - HOOK_COMPLETE_SUCCEEDED
+          - HOOK_COMPLETE_FAILED
+          - HOOK_FAILED
+          example: HOOK_IN_PROGRESS
         HookEventTime:
           type: number
           description: The time the hook event occurred.
+          example: 42.5
         HookStatusMessage:
           type: string
           description: A message about the hook status.
+          example: example_value
         FailureMode:
           type: string
           description: How the hook failure should affect the overall operation.
           enum:
-            - FAIL
-            - WARN
+          - FAIL
+          - WARN
 
+          example: FAIL
     ResourceDescription:
       type: object
       description: Represents information about a provisioned resource.
@@ -810,8 +1061,10 @@ components:
         Identifier:
           type: string
           description: The primary identifier for the resource.
+          example: example_value
         Properties:
           type: string
           description: >-
             A JSON string representing the current resource property values.
             The properties returned depend on the resource type schema.
+          example: example_value

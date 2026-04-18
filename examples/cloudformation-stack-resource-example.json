@@ -1,0 +1,11 @@
+{
+  "StackName": "example_value",
+  "StackId": "500123",
+  "LogicalResourceId": "500123",
+  "PhysicalResourceId": "500123",
+  "ResourceType": "example_value",
+  "Timestamp": "example_value",
+  "ResourceStatus": "example_value",
+  "ResourceStatusReason": "example_value",
+  "Description": "A sample description."
+}

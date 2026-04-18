@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "ResourceDescription",
+  "type": "object",
+  "properties": {
+    "Identifier": {
+      "type": "string"
+    },
+    "Properties": {
+      "type": "string"
+    }
+  }
+}

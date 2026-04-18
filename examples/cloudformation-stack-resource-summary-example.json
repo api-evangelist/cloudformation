@@ -1,0 +1,8 @@
+{
+  "LogicalResourceId": "500123",
+  "PhysicalResourceId": "500123",
+  "ResourceType": "example_value",
+  "LastUpdatedTimestamp": "example_value",
+  "ResourceStatus": "example_value",
+  "ResourceStatusReason": "example_value"
+}

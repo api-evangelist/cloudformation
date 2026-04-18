@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Tag",
+  "type": "object",
+  "properties": {
+    "Key": {
+      "type": "string",
+      "description": "Tag key."
+    },
+    "Value": {
+      "type": "string",
+      "description": "Tag value."
+    }
+  }
+}

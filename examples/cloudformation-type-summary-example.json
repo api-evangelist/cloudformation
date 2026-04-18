@@ -1,0 +1,14 @@
+{
+  "Type": "example_value",
+  "TypeName": "example_value",
+  "TypeArn": "example_value",
+  "DefaultVersionId": "500123",
+  "Description": "A sample description.",
+  "LastUpdated": "example_value",
+  "PublisherId": "500123",
+  "PublisherName": "example_value",
+  "IsActivated": true,
+  "OriginalTypeName": "example_value",
+  "PublicVersionNumber": "example_value",
+  "LatestPublicVersion": "example_value"
+}

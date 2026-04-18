@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResourceChangeDetail",
+  "type": "object",
+  "properties": {
+    "Target": {
+      "type": "object"
+    },
+    "Evaluation": {
+      "type": "string"
+    },
+    "ChangeSource": {
+      "type": "string"
+    },
+    "CausingEntity": {
+      "type": "string"
+    }
+  }
+}

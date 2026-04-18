@@ -1,0 +1,15 @@
+{
+  "StackId": "500123",
+  "StackName": "example_value",
+  "ChangeSetId": "500123",
+  "ChangeSetName": "example_value",
+  "ExecutionStatus": "example_value",
+  "Status": "example_value",
+  "StatusReason": "example_value",
+  "CreationTime": "example_value",
+  "Description": "A sample description.",
+  "IncludeNestedStacks": true,
+  "ImportExistingResources": true,
+  "ParentChangeSetId": "500123",
+  "RootChangeSetId": "500123"
+}

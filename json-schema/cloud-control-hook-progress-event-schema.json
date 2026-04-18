@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HookProgressEvent",
+  "type": "object",
+  "description": "Represents the progress of a hook invocation.",
+  "properties": {
+    "HookTypeName": {
+      "type": "string",
+      "description": "The type name of the hook."
+    },
+    "HookTypeVersionId": {
+      "type": "string",
+      "description": "The version of the hook type."
+    },
+    "HookTypeArn": {
+      "type": "string",
+      "description": "The ARN of the hook type."
+    },
+    "InvocationPoint": {
+      "type": "string",
+      "description": "The point in the provisioning workflow where the hook runs."
+    },
+    "HookStatus": {
+      "type": "string",
+      "description": "The status of the hook invocation."
+    },
+    "HookEventTime": {
+      "type": "number",
+      "description": "The time the hook event occurred."
+    },
+    "HookStatusMessage": {
+      "type": "string",
+      "description": "A message about the hook status."
+    },
+    "FailureMode": {
+      "type": "string",
+      "description": "How the hook failure should affect the overall operation."
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProgressEvent",
+  "type": "object",
+  "description": "Represents the current status of a resource operation request.",
+  "properties": {
+    "TypeName": {
+      "type": "string",
+      "description": "The resource type name."
+    },
+    "Identifier": {
+      "type": "string",
+      "description": "The primary identifier for the resource."
+    },
+    "RequestToken": {
+      "type": "string",
+      "description": "The unique token representing this resource operation request. Use this token with GetResourceRequestStatus to check operation progress."
+    },
+    "HooksRequestToken": {
+      "type": "string",
+      "description": "The unique token for hooks processing."
+    },
+    "Operation": {
+      "type": "string",
+      "description": "The resource operation type."
+    },
+    "OperationStatus": {
+      "type": "string",
+      "description": "The current status of the resource operation request."
+    },
+    "EventTime": {
+      "type": "number",
+      "description": "When the resource operation request was initiated (Unix timestamp)."
+    },
+    "ResourceModel": {
+      "type": "string",
+      "description": "A JSON string representing the resource model."
+    },
+    "StatusMessage": {
+      "type": "string",
+      "description": "A message explaining the current status."
+    },
+    "ErrorCode": {
+      "type": "string",
+      "description": "The error code if the operation failed."
+    },
+    "RetryAfter": {
+      "type": "number",
+      "description": "When to retry the operation (Unix timestamp)."
+    }
+  }
+}

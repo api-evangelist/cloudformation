@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TypeSummary",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string"
+    },
+    "TypeName": {
+      "type": "string"
+    },
+    "TypeArn": {
+      "type": "string"
+    },
+    "DefaultVersionId": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "LastUpdated": {
+      "type": "string"
+    },
+    "PublisherId": {
+      "type": "string"
+    },
+    "PublisherName": {
+      "type": "string"
+    },
+    "IsActivated": {
+      "type": "boolean"
+    },
+    "OriginalTypeName": {
+      "type": "string"
+    },
+    "PublicVersionNumber": {
+      "type": "string"
+    },
+    "LatestPublicVersion": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RollbackTrigger",
+  "type": "object",
+  "properties": {
+    "Arn": {
+      "type": "string",
+      "description": "The Amazon Resource Name (ARN) of the rollback trigger."
+    },
+    "Type": {
+      "type": "string",
+      "description": "The resource type of the rollback trigger."
+    }
+  }
+}
