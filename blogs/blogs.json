@@ -1,0 +1,13 @@
+{
+  "repo": "cloudformation",
+  "feeds": [
+    {
+      "source": "https://aws.amazon.com/blogs/devops/category/management-tools/aws-cloudformation/",
+      "feed_url": "https://aws.amazon.com/blogs/devops/category/management-tools/aws-cloudformation/feed/",
+      "saved": 10,
+      "title": "AWS CloudFormation \u2013 AWS DevOps & Developer Productivity Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:25:18Z"
+}
