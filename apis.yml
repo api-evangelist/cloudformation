@@ -5,7 +5,7 @@ description: >-
   and the Cloud Control API.
 image: https://aws.amazon.com/cloudformation/logo.png
 created: '2024'
-modified: '2026-04-18'
+modified: '2026-05-19'
 url: https://docs.aws.amazon.com/cloudformation/
 specificationVersion: '0.19'
 tags:
@@ -224,6 +224,9 @@ common:
   - type: Capabilities
     url: capabilities/shared/cloud-control.yaml
     title: Cloud Control Shared Capability
+  - name: MCP Server
+    url: https://aws.amazon.com/blogs/devops/introducing-the-aws-infrastructure-as-code-mcp-server-ai-powered-cdk-and-cloudformation-assistance/
+    type: MCPServer
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
