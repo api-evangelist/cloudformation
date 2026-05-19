@@ -1,0 +1,166 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: AWS Cloud Control API — Request Status
+  description: 'AWS Cloud Control API — Request Status. 3 operations. Lead operation: Cancel an In-progress Resource Operation
+    Request. Self-contained Naftiko capability covering one Cloudformation business surface.'
+  tags:
+  - Cloudformation
+  - Request Status
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CLOUDFORMATION_API_KEY: CLOUDFORMATION_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cloud-control-request-status
+    baseUri: https://cloudcontrolapi.{region}.amazonaws.com
+    description: AWS Cloud Control API — Request Status business capability. Self-contained, no shared references.
+    resources:
+    - name: ?Action=CancelResourceRequest
+      path: /?Action=CancelResourceRequest
+      operations:
+      - name: cancelresourcerequest
+        method: POST
+        description: Cancel an In-progress Resource Operation Request
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=GetResourceRequestStatus
+      path: /?Action=GetResourceRequestStatus
+      operations:
+      - name: getresourcerequeststatus
+        method: POST
+        description: Get the Status of a Resource Operation Request
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=ListResourceRequests
+      path: /?Action=ListResourceRequests
+      operations:
+      - name: listresourcerequests
+        method: POST
+        description: List Resource Operation Requests
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.CLOUDFORMATION_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: cloud-control-request-status-rest
+    port: 8080
+    description: REST adapter for AWS Cloud Control API — Request Status. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/action-cancelresourcerequest
+      name: action-cancelresourcerequest
+      description: REST surface for ?Action=CancelResourceRequest.
+      operations:
+      - method: POST
+        name: cancelresourcerequest
+        description: Cancel an In-progress Resource Operation Request
+        call: cloud-control-request-status.cancelresourcerequest
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-getresourcerequeststatus
+      name: action-getresourcerequeststatus
+      description: REST surface for ?Action=GetResourceRequestStatus.
+      operations:
+      - method: POST
+        name: getresourcerequeststatus
+        description: Get the Status of a Resource Operation Request
+        call: cloud-control-request-status.getresourcerequeststatus
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-listresourcerequests
+      name: action-listresourcerequests
+      description: REST surface for ?Action=ListResourceRequests.
+      operations:
+      - method: POST
+        name: listresourcerequests
+        description: List Resource Operation Requests
+        call: cloud-control-request-status.listresourcerequests
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cloud-control-request-status-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for AWS Cloud Control API — Request Status. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: cancel-progress-resource-operation-request
+      description: Cancel an In-progress Resource Operation Request
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloud-control-request-status.cancelresourcerequest
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-status-resource-operation-request
+      description: Get the Status of a Resource Operation Request
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: cloud-control-request-status.getresourcerequeststatus
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-resource-operation-requests
+      description: List Resource Operation Requests
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: cloud-control-request-status.listresourcerequests
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,418 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: AWS CloudFormation API — Stacks
+  description: 'AWS CloudFormation API — Stacks. 9 operations. Lead operation: Cancel a Stack Update in Progress. Self-contained
+    Naftiko capability covering one Cloudformation business surface.'
+  tags:
+  - Cloudformation
+  - Stacks
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CLOUDFORMATION_API_KEY: CLOUDFORMATION_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cloudformation-stacks
+    baseUri: https://cloudformation.{region}.amazonaws.com
+    description: AWS CloudFormation API — Stacks business capability. Self-contained, no shared references.
+    resources:
+    - name: ?Action=CancelUpdateStack
+      path: /?Action=CancelUpdateStack
+      operations:
+      - name: cancelupdatestack
+        method: POST
+        description: Cancel a Stack Update in Progress
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=ContinueUpdateRollback
+      path: /?Action=ContinueUpdateRollback
+      operations:
+      - name: continueupdaterollback
+        method: POST
+        description: Continue Rolling Back a Failed Stack Update
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=CreateStack
+      path: /?Action=CreateStack
+      operations:
+      - name: createstack
+        method: POST
+        description: Create a New Stack
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=DeleteStack
+      path: /?Action=DeleteStack
+      operations:
+      - name: deletestack
+        method: POST
+        description: Delete an Existing Stack
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=DescribeStacks
+      path: /?Action=DescribeStacks
+      operations:
+      - name: describestacks
+        method: POST
+        description: Describe One or More Stacks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: ?Action=ListStacks
+      path: /?Action=ListStacks
+      operations:
+      - name: liststacks
+        method: POST
+        description: List All Stacks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: ?Action=RollbackStack
+      path: /?Action=RollbackStack
+      operations:
+      - name: rollbackstack
+        method: POST
+        description: Rollback a Stack to a Previous Stable State
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=UpdateStack
+      path: /?Action=UpdateStack
+      operations:
+      - name: updatestack
+        method: POST
+        description: Update an Existing Stack
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=UpdateTerminationProtection
+      path: /?Action=UpdateTerminationProtection
+      operations:
+      - name: updateterminationprotection
+        method: POST
+        description: Enable or Disable Termination Protection on a Stack
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.CLOUDFORMATION_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: cloudformation-stacks-rest
+    port: 8080
+    description: REST adapter for AWS CloudFormation API — Stacks. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/action-cancelupdatestack
+      name: action-cancelupdatestack
+      description: REST surface for ?Action=CancelUpdateStack.
+      operations:
+      - method: POST
+        name: cancelupdatestack
+        description: Cancel a Stack Update in Progress
+        call: cloudformation-stacks.cancelupdatestack
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-continueupdaterollback
+      name: action-continueupdaterollback
+      description: REST surface for ?Action=ContinueUpdateRollback.
+      operations:
+      - method: POST
+        name: continueupdaterollback
+        description: Continue Rolling Back a Failed Stack Update
+        call: cloudformation-stacks.continueupdaterollback
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-createstack
+      name: action-createstack
+      description: REST surface for ?Action=CreateStack.
+      operations:
+      - method: POST
+        name: createstack
+        description: Create a New Stack
+        call: cloudformation-stacks.createstack
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-deletestack
+      name: action-deletestack
+      description: REST surface for ?Action=DeleteStack.
+      operations:
+      - method: POST
+        name: deletestack
+        description: Delete an Existing Stack
+        call: cloudformation-stacks.deletestack
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-describestacks
+      name: action-describestacks
+      description: REST surface for ?Action=DescribeStacks.
+      operations:
+      - method: POST
+        name: describestacks
+        description: Describe One or More Stacks
+        call: cloudformation-stacks.describestacks
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-liststacks
+      name: action-liststacks
+      description: REST surface for ?Action=ListStacks.
+      operations:
+      - method: POST
+        name: liststacks
+        description: List All Stacks
+        call: cloudformation-stacks.liststacks
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-rollbackstack
+      name: action-rollbackstack
+      description: REST surface for ?Action=RollbackStack.
+      operations:
+      - method: POST
+        name: rollbackstack
+        description: Rollback a Stack to a Previous Stable State
+        call: cloudformation-stacks.rollbackstack
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-updatestack
+      name: action-updatestack
+      description: REST surface for ?Action=UpdateStack.
+      operations:
+      - method: POST
+        name: updatestack
+        description: Update an Existing Stack
+        call: cloudformation-stacks.updatestack
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-updateterminationprotection
+      name: action-updateterminationprotection
+      description: REST surface for ?Action=UpdateTerminationProtection.
+      operations:
+      - method: POST
+        name: updateterminationprotection
+        description: Enable or Disable Termination Protection on a Stack
+        call: cloudformation-stacks.updateterminationprotection
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cloudformation-stacks-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for AWS CloudFormation API — Stacks. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: cancel-stack-update-progress
+      description: Cancel a Stack Update in Progress
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloudformation-stacks.cancelupdatestack
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: continue-rolling-back-failed-stack
+      description: Continue Rolling Back a Failed Stack Update
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloudformation-stacks.continueupdaterollback
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-stack
+      description: Create a New Stack
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloudformation-stacks.createstack
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-existing-stack
+      description: Delete an Existing Stack
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloudformation-stacks.deletestack
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: describe-one-more-stacks
+      description: Describe One or More Stacks
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloudformation-stacks.describestacks
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-stacks
+      description: List All Stacks
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: cloudformation-stacks.liststacks
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rollback-stack-previous-stable-state
+      description: Rollback a Stack to a Previous Stable State
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloudformation-stacks.rollbackstack
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-existing-stack
+      description: Update an Existing Stack
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloudformation-stacks.updatestack
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: enable-disable-termination-protection-stack
+      description: Enable or Disable Termination Protection on a Stack
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloudformation-stacks.updateterminationprotection
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

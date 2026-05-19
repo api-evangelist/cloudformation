@@ -1,0 +1,250 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: AWS CloudFormation API — Change Sets
+  description: 'AWS CloudFormation API — Change Sets. 5 operations. Lead operation: Create a Change Set to Preview Stack Changes.
+    Self-contained Naftiko capability covering one Cloudformation business surface.'
+  tags:
+  - Cloudformation
+  - Change Sets
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CLOUDFORMATION_API_KEY: CLOUDFORMATION_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cloudformation-change-sets
+    baseUri: https://cloudformation.{region}.amazonaws.com
+    description: AWS CloudFormation API — Change Sets business capability. Self-contained, no shared references.
+    resources:
+    - name: ?Action=CreateChangeSet
+      path: /?Action=CreateChangeSet
+      operations:
+      - name: createchangeset
+        method: POST
+        description: Create a Change Set to Preview Stack Changes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=DeleteChangeSet
+      path: /?Action=DeleteChangeSet
+      operations:
+      - name: deletechangeset
+        method: POST
+        description: Delete a Change Set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=DescribeChangeSet
+      path: /?Action=DescribeChangeSet
+      operations:
+      - name: describechangeset
+        method: POST
+        description: Describe a Change Set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=ExecuteChangeSet
+      path: /?Action=ExecuteChangeSet
+      operations:
+      - name: executechangeset
+        method: POST
+        description: Execute a Change Set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=ListChangeSets
+      path: /?Action=ListChangeSets
+      operations:
+      - name: listchangesets
+        method: POST
+        description: List All Change Sets for a Stack
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.CLOUDFORMATION_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: cloudformation-change-sets-rest
+    port: 8080
+    description: REST adapter for AWS CloudFormation API — Change Sets. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/action-createchangeset
+      name: action-createchangeset
+      description: REST surface for ?Action=CreateChangeSet.
+      operations:
+      - method: POST
+        name: createchangeset
+        description: Create a Change Set to Preview Stack Changes
+        call: cloudformation-change-sets.createchangeset
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-deletechangeset
+      name: action-deletechangeset
+      description: REST surface for ?Action=DeleteChangeSet.
+      operations:
+      - method: POST
+        name: deletechangeset
+        description: Delete a Change Set
+        call: cloudformation-change-sets.deletechangeset
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-describechangeset
+      name: action-describechangeset
+      description: REST surface for ?Action=DescribeChangeSet.
+      operations:
+      - method: POST
+        name: describechangeset
+        description: Describe a Change Set
+        call: cloudformation-change-sets.describechangeset
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-executechangeset
+      name: action-executechangeset
+      description: REST surface for ?Action=ExecuteChangeSet.
+      operations:
+      - method: POST
+        name: executechangeset
+        description: Execute a Change Set
+        call: cloudformation-change-sets.executechangeset
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-listchangesets
+      name: action-listchangesets
+      description: REST surface for ?Action=ListChangeSets.
+      operations:
+      - method: POST
+        name: listchangesets
+        description: List All Change Sets for a Stack
+        call: cloudformation-change-sets.listchangesets
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cloudformation-change-sets-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for AWS CloudFormation API — Change Sets. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: create-change-set-preview-stack
+      description: Create a Change Set to Preview Stack Changes
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloudformation-change-sets.createchangeset
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-change-set
+      description: Delete a Change Set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloudformation-change-sets.deletechangeset
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: describe-change-set
+      description: Describe a Change Set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloudformation-change-sets.describechangeset
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: execute-change-set
+      description: Execute a Change Set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloudformation-change-sets.executechangeset
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-change-sets-stack
+      description: List All Change Sets for a Stack
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: cloudformation-change-sets.listchangesets
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

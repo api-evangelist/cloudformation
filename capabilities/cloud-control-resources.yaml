@@ -1,0 +1,250 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: AWS Cloud Control API — Resources
+  description: 'AWS Cloud Control API — Resources. 5 operations. Lead operation: Create a New Cloud Resource. Self-contained
+    Naftiko capability covering one Cloudformation business surface.'
+  tags:
+  - Cloudformation
+  - Resources
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CLOUDFORMATION_API_KEY: CLOUDFORMATION_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cloud-control-resources
+    baseUri: https://cloudcontrolapi.{region}.amazonaws.com
+    description: AWS Cloud Control API — Resources business capability. Self-contained, no shared references.
+    resources:
+    - name: ?Action=CreateResource
+      path: /?Action=CreateResource
+      operations:
+      - name: createresource
+        method: POST
+        description: Create a New Cloud Resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=DeleteResource
+      path: /?Action=DeleteResource
+      operations:
+      - name: deleteresource
+        method: POST
+        description: Delete a Cloud Resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=GetResource
+      path: /?Action=GetResource
+      operations:
+      - name: getresource
+        method: POST
+        description: Read a Cloud Resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=ListResources
+      path: /?Action=ListResources
+      operations:
+      - name: listresources
+        method: POST
+        description: List Resources of a Specified Type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ?Action=UpdateResource
+      path: /?Action=UpdateResource
+      operations:
+      - name: updateresource
+        method: POST
+        description: Update an Existing Cloud Resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.CLOUDFORMATION_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: cloud-control-resources-rest
+    port: 8080
+    description: REST adapter for AWS Cloud Control API — Resources. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/action-createresource
+      name: action-createresource
+      description: REST surface for ?Action=CreateResource.
+      operations:
+      - method: POST
+        name: createresource
+        description: Create a New Cloud Resource
+        call: cloud-control-resources.createresource
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-deleteresource
+      name: action-deleteresource
+      description: REST surface for ?Action=DeleteResource.
+      operations:
+      - method: POST
+        name: deleteresource
+        description: Delete a Cloud Resource
+        call: cloud-control-resources.deleteresource
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-getresource
+      name: action-getresource
+      description: REST surface for ?Action=GetResource.
+      operations:
+      - method: POST
+        name: getresource
+        description: Read a Cloud Resource
+        call: cloud-control-resources.getresource
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-listresources
+      name: action-listresources
+      description: REST surface for ?Action=ListResources.
+      operations:
+      - method: POST
+        name: listresources
+        description: List Resources of a Specified Type
+        call: cloud-control-resources.listresources
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/action-updateresource
+      name: action-updateresource
+      description: REST surface for ?Action=UpdateResource.
+      operations:
+      - method: POST
+        name: updateresource
+        description: Update an Existing Cloud Resource
+        call: cloud-control-resources.updateresource
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cloud-control-resources-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for AWS Cloud Control API — Resources. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: create-new-cloud-resource
+      description: Create a New Cloud Resource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloud-control-resources.createresource
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-cloud-resource
+      description: Delete a Cloud Resource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloud-control-resources.deleteresource
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: read-cloud-resource
+      description: Read a Cloud Resource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloud-control-resources.getresource
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-resources-specified-type
+      description: List Resources of a Specified Type
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: cloud-control-resources.listresources
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-existing-cloud-resource
+      description: Update an Existing Cloud Resource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloud-control-resources.updateresource
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
