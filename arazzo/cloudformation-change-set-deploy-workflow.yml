@@ -1,0 +1,143 @@
+arazzo: 1.0.1
+info:
+  title: CloudFormation Create and Execute a Change Set
+  summary: Create a change set, poll until CREATE_COMPLETE, execute it, then wait for the stack update to finish.
+  description: >-
+    Change sets let you preview how a template change will affect a running
+    stack before committing it. This workflow creates a change set against an
+    existing stack, polls DescribeChangeSet until the change set reaches
+    CREATE_COMPLETE (branching to a failure end if creation fails), executes the
+    change set, and then polls DescribeStacks until the resulting stack update
+    settles into UPDATE_COMPLETE. Every step spells out its request inline using
+    the AWS query protocol so the flow can be read and executed without opening
+    the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: cloudformationApi
+  url: ../openapi/cloudformation-api.yml
+  type: openapi
+workflows:
+- workflowId: change-set-deploy
+  summary: Preview a stack change via a change set and execute it to completion.
+  description: >-
+    Creates a change set, waits for it to be created, executes it, and waits for
+    the stack to reach UPDATE_COMPLETE.
+  inputs:
+    type: object
+    required:
+    - stackName
+    - changeSetName
+    - templateBody
+    properties:
+      stackName:
+        type: string
+        description: The name or unique ID of the existing stack to change.
+      changeSetName:
+        type: string
+        description: The name to assign to the change set.
+      templateBody:
+        type: string
+        description: The updated CloudFormation template body for the change set.
+      capability:
+        type: string
+        description: An optional capability to acknowledge (e.g. CAPABILITY_IAM).
+  steps:
+  - stepId: createChangeSet
+    description: >-
+      Create a change set describing how the supplied template differs from the
+      stack's current template.
+    operationId: createChangeSet
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+        ChangeSetName: $inputs.changeSetName
+        TemplateBody: $inputs.templateBody
+        ChangeSetType: UPDATE
+        Capabilities:
+        - $inputs.capability
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      changeSetId: $response.body#/CreateChangeSetResult/Id
+      stackId: $response.body#/CreateChangeSetResult/StackId
+  - stepId: pollChangeSet
+    description: >-
+      Poll DescribeChangeSet until the change set finishes computing. Branch to
+      execution on CREATE_COMPLETE or to a failure end when creation fails.
+    operationId: describeChangeSet
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        ChangeSetName: $inputs.changeSetName
+        StackName: $inputs.stackName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      changeSetStatus: $response.body#/Status
+      statusReason: $response.body#/StatusReason
+      changes: $response.body#/Changes
+    onSuccess:
+    - name: changeSetReady
+      type: goto
+      stepId: executeChangeSet
+      criteria:
+      - context: $response.body
+        condition: $.Status == "CREATE_COMPLETE"
+        type: jsonpath
+    - name: changeSetFailed
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.Status == "FAILED"
+        type: jsonpath
+    - name: stillComputing
+      type: goto
+      stepId: pollChangeSet
+      criteria:
+      - context: $response.body
+        condition: $.Status in ["CREATE_PENDING","CREATE_IN_PROGRESS"]
+        type: jsonpath
+  - stepId: executeChangeSet
+    description: >-
+      Execute the created change set, which starts updating the stack with the
+      previewed changes.
+    operationId: executeChangeSet
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        ChangeSetName: $inputs.changeSetName
+        StackName: $inputs.stackName
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: pollStackUpdate
+    description: >-
+      Poll DescribeStacks until the stack update settles. End on UPDATE_COMPLETE
+      or on any update rollback terminal state.
+    operationId: describeStacks
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      stackStatus: $response.body#/DescribeStacksResult/Stacks/0/StackStatus
+    onSuccess:
+    - name: updateDone
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStacksResult.Stacks[0].StackStatus in ["UPDATE_COMPLETE","UPDATE_ROLLBACK_COMPLETE","UPDATE_ROLLBACK_FAILED"]
+        type: jsonpath
+    - name: stillUpdating
+      type: goto
+      stepId: pollStackUpdate
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStacksResult.Stacks[0].StackStatus in ["UPDATE_IN_PROGRESS","UPDATE_COMPLETE_CLEANUP_IN_PROGRESS","UPDATE_ROLLBACK_IN_PROGRESS"]
+        type: jsonpath
+  outputs:
+    changeSetId: $steps.createChangeSet.outputs.changeSetId
+    changes: $steps.pollChangeSet.outputs.changes
+    finalStatus: $steps.pollStackUpdate.outputs.stackStatus

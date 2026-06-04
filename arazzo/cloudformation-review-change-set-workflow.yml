@@ -1,0 +1,116 @@
+arazzo: 1.0.1
+info:
+  title: CloudFormation Review and Clean Up a Change Set
+  summary: Create a change set, poll until it is computed, then branch — delete it when it contains no changes, otherwise keep it for review.
+  description: >-
+    A dry-run review flow that avoids leaving empty change sets behind. The
+    workflow creates a change set, polls DescribeChangeSet until it finishes
+    computing, and then branches on the result: when CloudFormation reports the
+    change set failed because it contained no changes, the workflow deletes the
+    useless change set; when real changes are present, it ends and leaves the
+    change set in place for a human to review and execute. Every step spells out
+    its request inline using the AWS query protocol so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: cloudformationApi
+  url: ../openapi/cloudformation-api.yml
+  type: openapi
+workflows:
+- workflowId: review-change-set
+  summary: Create a change set for review and clean it up when it is empty.
+  description: >-
+    Creates a change set, waits for it to compute, and deletes it if it contains
+    no changes; otherwise leaves it in place for review.
+  inputs:
+    type: object
+    required:
+    - stackName
+    - changeSetName
+    - templateBody
+    properties:
+      stackName:
+        type: string
+        description: The name or unique ID of the existing stack to review changes for.
+      changeSetName:
+        type: string
+        description: The name to assign to the change set.
+      templateBody:
+        type: string
+        description: The candidate CloudFormation template body to diff against the stack.
+      capability:
+        type: string
+        description: An optional capability to acknowledge (e.g. CAPABILITY_IAM).
+  steps:
+  - stepId: createChangeSet
+    description: >-
+      Create a change set diffing the candidate template against the stack's
+      current template.
+    operationId: createChangeSet
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+        ChangeSetName: $inputs.changeSetName
+        TemplateBody: $inputs.templateBody
+        ChangeSetType: UPDATE
+        Capabilities:
+        - $inputs.capability
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      changeSetId: $response.body#/CreateChangeSetResult/Id
+  - stepId: pollChangeSet
+    description: >-
+      Poll DescribeChangeSet until it finishes computing. Branch to cleanup when
+      it failed (typically because there were no changes), or end with the
+      change set intact when real changes are present.
+    operationId: describeChangeSet
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        ChangeSetName: $inputs.changeSetName
+        StackName: $inputs.stackName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      changeSetStatus: $response.body#/Status
+      statusReason: $response.body#/StatusReason
+      changes: $response.body#/Changes
+    onSuccess:
+    - name: hasChanges
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.Status == "CREATE_COMPLETE"
+        type: jsonpath
+    - name: noChanges
+      type: goto
+      stepId: deleteEmptyChangeSet
+      criteria:
+      - context: $response.body
+        condition: $.Status == "FAILED"
+        type: jsonpath
+    - name: stillComputing
+      type: goto
+      stepId: pollChangeSet
+      criteria:
+      - context: $response.body
+        condition: $.Status in ["CREATE_PENDING","CREATE_IN_PROGRESS"]
+        type: jsonpath
+  - stepId: deleteEmptyChangeSet
+    description: >-
+      Delete the empty or failed change set so it does not linger and risk being
+      executed by mistake.
+    operationId: deleteChangeSet
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        ChangeSetName: $inputs.changeSetName
+        StackName: $inputs.stackName
+    successCriteria:
+    - condition: $statusCode == 200
+  outputs:
+    changeSetId: $steps.createChangeSet.outputs.changeSetId
+    changeSetStatus: $steps.pollChangeSet.outputs.changeSetStatus
+    changes: $steps.pollChangeSet.outputs.changes

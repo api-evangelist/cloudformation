@@ -1,0 +1,115 @@
+arazzo: 1.0.1
+info:
+  title: CloudFormation Safe Stack Update
+  summary: Summarize a template, update the stack, poll until UPDATE_COMPLETE, then pull the stack events.
+  description: >-
+    A direct (non-change-set) stack update with guardrails. The workflow first
+    asks GetTemplateSummary to surface the capabilities and parameters the
+    template requires, then calls UpdateStack, polls DescribeStacks until the
+    update settles into UPDATE_COMPLETE (branching to an event review on
+    rollback), and finally pulls the recent stack events so the caller can audit
+    exactly what happened during the update. Every step spells out its request
+    inline using the AWS query protocol so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: cloudformationApi
+  url: ../openapi/cloudformation-api.yml
+  type: openapi
+workflows:
+- workflowId: safe-stack-update
+  summary: Summarize, apply, and audit an in-place CloudFormation stack update.
+  description: >-
+    Inspects the template summary, updates the stack, waits for the update to
+    finish, and retrieves the stack events for auditing.
+  inputs:
+    type: object
+    required:
+    - stackName
+    - templateBody
+    properties:
+      stackName:
+        type: string
+        description: The name or unique ID of the stack to update.
+      templateBody:
+        type: string
+        description: The updated CloudFormation template body to apply.
+      capability:
+        type: string
+        description: An optional capability to acknowledge (e.g. CAPABILITY_IAM).
+  steps:
+  - stepId: summarizeTemplate
+    description: >-
+      Get the template summary to surface required capabilities and declared
+      parameters before applying the update.
+    operationId: getTemplateSummary
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        TemplateBody: $inputs.templateBody
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      requiredCapabilities: $response.body#/GetTemplateSummaryResult/Capabilities
+      parameters: $response.body#/GetTemplateSummaryResult/Parameters
+  - stepId: updateStack
+    description: >-
+      Apply the updated template to the stack. After this call returns the stack
+      update has started and can be polled via DescribeStacks.
+    operationId: updateStack
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+        TemplateBody: $inputs.templateBody
+        Capabilities:
+        - $inputs.capability
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      stackId: $response.body#/UpdateStackResult/StackId
+  - stepId: pollStackUpdate
+    description: >-
+      Poll DescribeStacks until the update settles, then proceed to pull events
+      whether the update succeeded or rolled back.
+    operationId: describeStacks
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      stackStatus: $response.body#/DescribeStacksResult/Stacks/0/StackStatus
+    onSuccess:
+    - name: updateSettled
+      type: goto
+      stepId: pullEvents
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStacksResult.Stacks[0].StackStatus in ["UPDATE_COMPLETE","UPDATE_ROLLBACK_COMPLETE","UPDATE_ROLLBACK_FAILED"]
+        type: jsonpath
+    - name: stillUpdating
+      type: goto
+      stepId: pollStackUpdate
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStacksResult.Stacks[0].StackStatus in ["UPDATE_IN_PROGRESS","UPDATE_COMPLETE_CLEANUP_IN_PROGRESS","UPDATE_ROLLBACK_IN_PROGRESS"]
+        type: jsonpath
+  - stepId: pullEvents
+    description: >-
+      Retrieve the recent stack events in reverse chronological order so the
+      update can be audited resource by resource.
+    operationId: describeStackEvents
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      stackEvents: $response.body#/DescribeStackEventsResult/StackEvents
+  outputs:
+    stackId: $steps.updateStack.outputs.stackId
+    finalStatus: $steps.pollStackUpdate.outputs.stackStatus
+    stackEvents: $steps.pullEvents.outputs.stackEvents

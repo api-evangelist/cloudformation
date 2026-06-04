@@ -1,0 +1,122 @@
+arazzo: 1.0.1
+info:
+  title: CloudFormation Provision a Stack
+  summary: Validate a template, create a stack, poll until CREATE_COMPLETE, then list its resources.
+  description: >-
+    The canonical CloudFormation provisioning flow. The workflow first validates
+    the supplied template so obvious errors are caught before any resources are
+    touched, then creates the stack, polls DescribeStacks until the stack
+    reaches CREATE_COMPLETE (branching to a failure end if it lands in a
+    ROLLBACK or FAILED state), and finally enumerates the provisioned resources.
+    Every step spells out its request inline using the AWS query protocol
+    (application/x-www-form-urlencoded) so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: cloudformationApi
+  url: ../openapi/cloudformation-api.yml
+  type: openapi
+workflows:
+- workflowId: provision-stack
+  summary: Validate a template and provision a CloudFormation stack to completion.
+  description: >-
+    Validates the template body, creates the stack, waits for the stack to reach
+    CREATE_COMPLETE, and lists the resources CloudFormation provisioned.
+  inputs:
+    type: object
+    required:
+    - stackName
+    - templateBody
+    properties:
+      stackName:
+        type: string
+        description: The name to assign to the new stack. Unique within the region.
+      templateBody:
+        type: string
+        description: The CloudFormation template body (JSON or YAML) to provision.
+      capability:
+        type: string
+        description: An optional capability to acknowledge (e.g. CAPABILITY_IAM).
+  steps:
+  - stepId: validateTemplate
+    description: >-
+      Validate the template body before any resources are created so structural
+      or reference errors are surfaced up front.
+    operationId: validateTemplate
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        TemplateBody: $inputs.templateBody
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      capabilities: $response.body#/ValidateTemplateResult/Capabilities
+  - stepId: createStack
+    description: >-
+      Create the stack from the validated template. After this call returns the
+      stack creation has started and can be polled via DescribeStacks.
+    operationId: createStack
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+        TemplateBody: $inputs.templateBody
+        Capabilities:
+        - $inputs.capability
+        OnFailure: ROLLBACK
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      stackId: $response.body#/CreateStackResult/StackId
+  - stepId: pollStackStatus
+    description: >-
+      Poll DescribeStacks until the stack settles. Branch to listing resources
+      when CREATE_COMPLETE is reached, or to a failure end on a rollback or
+      failed terminal state.
+    operationId: describeStacks
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      stackStatus: $response.body#/DescribeStacksResult/Stacks/0/StackStatus
+      stackStatusReason: $response.body#/DescribeStacksResult/Stacks/0/StackStatusReason
+    onSuccess:
+    - name: stackReady
+      type: goto
+      stepId: listResources
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStacksResult.Stacks[0].StackStatus == "CREATE_COMPLETE"
+        type: jsonpath
+    - name: stackFailed
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStacksResult.Stacks[0].StackStatus in ["CREATE_FAILED","ROLLBACK_COMPLETE","ROLLBACK_FAILED","ROLLBACK_IN_PROGRESS"]
+        type: jsonpath
+    - name: stillCreating
+      type: goto
+      stepId: pollStackStatus
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStacksResult.Stacks[0].StackStatus == "CREATE_IN_PROGRESS"
+        type: jsonpath
+  - stepId: listResources
+    description: >-
+      List the resources CloudFormation provisioned for the completed stack.
+    operationId: listStackResources
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      resourceSummaries: $response.body#/ListStackResourcesResult/StackResourceSummaries
+  outputs:
+    stackId: $steps.createStack.outputs.stackId
+    finalStatus: $steps.pollStackStatus.outputs.stackStatus
+    resourceSummaries: $steps.listResources.outputs.resourceSummaries

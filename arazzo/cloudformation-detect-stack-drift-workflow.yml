@@ -1,0 +1,103 @@
+arazzo: 1.0.1
+info:
+  title: CloudFormation Detect Stack Drift
+  summary: Start drift detection, poll until detection completes, then list the drifted resources.
+  description: >-
+    Drift detection compares a stack's running configuration against its
+    expected template configuration. This workflow kicks off a stack-wide drift
+    detection, polls DescribeStackDriftDetectionStatus until detection reaches
+    DETECTION_COMPLETE (branching to a failure end on DETECTION_FAILED), and then
+    retrieves the per-resource drift information so callers can see exactly which
+    resources have drifted. Every step spells out its request inline using the
+    AWS query protocol so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: cloudformationApi
+  url: ../openapi/cloudformation-api.yml
+  type: openapi
+workflows:
+- workflowId: detect-stack-drift
+  summary: Run drift detection on a stack and report which resources drifted.
+  description: >-
+    Initiates drift detection, waits for the detection operation to complete,
+    and returns the drift status plus the list of drifted resources.
+  inputs:
+    type: object
+    required:
+    - stackName
+    properties:
+      stackName:
+        type: string
+        description: The name or unique ID of the stack to check for drift.
+  steps:
+  - stepId: startDriftDetection
+    description: >-
+      Start a stack-wide drift detection operation and capture the detection ID
+      used to monitor progress.
+    operationId: detectStackDrift
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      driftDetectionId: $response.body#/DetectStackDriftResult/StackDriftDetectionId
+  - stepId: pollDetectionStatus
+    description: >-
+      Poll DescribeStackDriftDetectionStatus until detection finishes. Branch to
+      listing drifts on DETECTION_COMPLETE or to a failure end on
+      DETECTION_FAILED.
+    operationId: describeStackDriftDetectionStatus
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackDriftDetectionId: $steps.startDriftDetection.outputs.driftDetectionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      detectionStatus: $response.body#/DescribeStackDriftDetectionStatusResult/DetectionStatus
+      stackDriftStatus: $response.body#/DescribeStackDriftDetectionStatusResult/StackDriftStatus
+      driftedResourceCount: $response.body#/DescribeStackDriftDetectionStatusResult/DriftedStackResourceCount
+    onSuccess:
+    - name: detectionComplete
+      type: goto
+      stepId: listResourceDrifts
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStackDriftDetectionStatusResult.DetectionStatus == "DETECTION_COMPLETE"
+        type: jsonpath
+    - name: detectionFailed
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStackDriftDetectionStatusResult.DetectionStatus == "DETECTION_FAILED"
+        type: jsonpath
+    - name: stillDetecting
+      type: goto
+      stepId: pollDetectionStatus
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStackDriftDetectionStatusResult.DetectionStatus == "DETECTION_IN_PROGRESS"
+        type: jsonpath
+  - stepId: listResourceDrifts
+    description: >-
+      Retrieve the per-resource drift details for the stack, filtered to the
+      resources that have actually drifted.
+    operationId: describeStackResourceDrifts
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+        StackResourceDriftStatusFilters:
+        - MODIFIED
+        - DELETED
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      resourceDrifts: $response.body#/DescribeStackResourceDriftsResult/StackResourceDrifts
+  outputs:
+    stackDriftStatus: $steps.pollDetectionStatus.outputs.stackDriftStatus
+    driftedResourceCount: $steps.pollDetectionStatus.outputs.driftedResourceCount
+    resourceDrifts: $steps.listResourceDrifts.outputs.resourceDrifts

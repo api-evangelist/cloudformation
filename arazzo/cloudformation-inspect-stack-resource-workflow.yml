@@ -1,0 +1,85 @@
+arazzo: 1.0.1
+info:
+  title: CloudFormation Inspect a Stack Resource
+  summary: Describe a single stack resource, then run targeted drift detection against just that resource.
+  description: >-
+    A focused, single-resource investigation flow. The workflow describes one
+    named resource in a stack to capture its physical ID, type, and current
+    status, then runs DetectStackResourceDrift against that same resource to
+    determine whether its live configuration has drifted from the template — and
+    branches on the resulting drift status. Every step spells out its request
+    inline using the AWS query protocol so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: cloudformationApi
+  url: ../openapi/cloudformation-api.yml
+  type: openapi
+workflows:
+- workflowId: inspect-stack-resource
+  summary: Describe a stack resource and check it for configuration drift.
+  description: >-
+    Reads a single resource's details from a stack and then detects whether that
+    resource has drifted from its expected configuration.
+  inputs:
+    type: object
+    required:
+    - stackName
+    - logicalResourceId
+    properties:
+      stackName:
+        type: string
+        description: The name or unique ID of the stack containing the resource.
+      logicalResourceId:
+        type: string
+        description: The logical name of the resource as declared in the template.
+  steps:
+  - stepId: describeResource
+    description: >-
+      Describe the named resource to capture its physical ID, type, and current
+      resource status.
+    operationId: describeStackResource
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+        LogicalResourceId: $inputs.logicalResourceId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      physicalResourceId: $response.body#/DescribeStackResourceResult/StackResourceDetail/PhysicalResourceId
+      resourceType: $response.body#/DescribeStackResourceResult/StackResourceDetail/ResourceType
+      resourceStatus: $response.body#/DescribeStackResourceResult/StackResourceDetail/ResourceStatus
+  - stepId: detectResourceDrift
+    description: >-
+      Detect whether the resource's live configuration differs from its expected
+      template configuration, branching on the resulting drift status.
+    operationId: detectStackResourceDrift
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+        LogicalResourceId: $inputs.logicalResourceId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      driftStatus: $response.body#/DetectStackResourceDriftResult/StackResourceDrift/StackResourceDriftStatus
+      propertyDifferences: $response.body#/DetectStackResourceDriftResult/StackResourceDrift/PropertyDifferences
+    onSuccess:
+    - name: resourceDrifted
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.DetectStackResourceDriftResult.StackResourceDrift.StackResourceDriftStatus in ["MODIFIED","DELETED"]
+        type: jsonpath
+    - name: resourceInSync
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.DetectStackResourceDriftResult.StackResourceDrift.StackResourceDriftStatus in ["IN_SYNC","NOT_CHECKED"]
+        type: jsonpath
+  outputs:
+    physicalResourceId: $steps.describeResource.outputs.physicalResourceId
+    resourceType: $steps.describeResource.outputs.resourceType
+    driftStatus: $steps.detectResourceDrift.outputs.driftStatus
+    propertyDifferences: $steps.detectResourceDrift.outputs.propertyDifferences

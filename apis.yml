@@ -96,6 +96,36 @@ apis:
     url: https://aws.amazon.com/contact-us/
     email: ''
 common:
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/cloudformation-audit-exports-workflow.yml
+    name: CloudFormation Audit Cross-Stack Exports
+    summary: List the account's stack exports, then list the stacks that import a named export.
+  - url: arazzo/cloudformation-change-set-deploy-workflow.yml
+    name: CloudFormation Create and Execute a Change Set
+    summary: Create a change set, poll until CREATE_COMPLETE, execute it, then wait for the stack update to finish.
+  - url: arazzo/cloudformation-deploy-stack-set-workflow.yml
+    name: CloudFormation Deploy a Stack Set
+    summary: Create a stack set, roll out an instance to an account and region, then poll the instance until CURRENT.
+  - url: arazzo/cloudformation-detect-stack-drift-workflow.yml
+    name: CloudFormation Detect Stack Drift
+    summary: Start drift detection, poll until detection completes, then list the drifted resources.
+  - url: arazzo/cloudformation-inspect-stack-resource-workflow.yml
+    name: CloudFormation Inspect a Stack Resource
+    summary: Describe a single stack resource, then run targeted drift detection against just that resource.
+  - url: arazzo/cloudformation-provision-stack-workflow.yml
+    name: CloudFormation Provision a Stack
+    summary: Validate a template, create a stack, poll until CREATE_COMPLETE, then list its resources.
+  - url: arazzo/cloudformation-review-change-set-workflow.yml
+    name: CloudFormation Review and Clean Up a Change Set
+    summary: "Create a change set, poll until it is computed, then branch \u2014 delete it when it contains no changes, otherwise keep it for review."
+  - url: arazzo/cloudformation-safe-stack-update-workflow.yml
+    name: CloudFormation Safe Stack Update
+    summary: Summarize a template, update the stack, poll until UPDATE_COMPLETE, then pull the stack events.
+  - url: arazzo/cloudformation-teardown-stack-workflow.yml
+    name: CloudFormation Tear Down a Stack
+    summary: Disable termination protection, delete the stack, then poll until DELETE_COMPLETE.
 - type: Portal
   url: https://aws.amazon.com/cloudformation/resources/
 - type: GettingStarted

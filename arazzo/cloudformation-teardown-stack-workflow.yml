@@ -1,0 +1,94 @@
+arazzo: 1.0.1
+info:
+  title: CloudFormation Tear Down a Stack
+  summary: Disable termination protection, delete the stack, then poll until DELETE_COMPLETE.
+  description: >-
+    Safely decommissions a stack. Because a stack with termination protection
+    enabled cannot be deleted, the workflow first disables termination
+    protection, then issues DeleteStack, and finally polls DescribeStacks until
+    the stack reaches DELETE_COMPLETE — branching to a failure end if deletion
+    fails. Every step spells out its request inline using the AWS query protocol
+    so the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: cloudformationApi
+  url: ../openapi/cloudformation-api.yml
+  type: openapi
+workflows:
+- workflowId: teardown-stack
+  summary: Disable termination protection and delete a stack to completion.
+  description: >-
+    Turns off termination protection, deletes the stack, and waits for the stack
+    to fully delete.
+  inputs:
+    type: object
+    required:
+    - stackName
+    properties:
+      stackName:
+        type: string
+        description: The name or unique ID of the stack to delete.
+  steps:
+  - stepId: disableProtection
+    description: >-
+      Disable termination protection so the subsequent DeleteStack call is not
+      rejected.
+    operationId: updateTerminationProtection
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+        EnableTerminationProtection: false
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      stackId: $response.body#/UpdateTerminationProtectionResult/StackId
+  - stepId: deleteStack
+    description: >-
+      Issue the stack deletion. After this call returns the stack deletion has
+      started and can be polled via DescribeStacks.
+    operationId: deleteStack
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+        DeletionMode: STANDARD
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: pollDeletion
+    description: >-
+      Poll DescribeStacks until the stack is gone. End on DELETE_COMPLETE or
+      branch to a failure end on DELETE_FAILED.
+    operationId: describeStacks
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackName: $inputs.stackName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      stackStatus: $response.body#/DescribeStacksResult/Stacks/0/StackStatus
+    onSuccess:
+    - name: deleteDone
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStacksResult.Stacks[0].StackStatus == "DELETE_COMPLETE"
+        type: jsonpath
+    - name: deleteFailed
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStacksResult.Stacks[0].StackStatus == "DELETE_FAILED"
+        type: jsonpath
+    - name: stillDeleting
+      type: goto
+      stepId: pollDeletion
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStacksResult.Stacks[0].StackStatus == "DELETE_IN_PROGRESS"
+        type: jsonpath
+  outputs:
+    stackId: $steps.disableProtection.outputs.stackId
+    finalStatus: $steps.pollDeletion.outputs.stackStatus

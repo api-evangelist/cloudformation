@@ -1,0 +1,72 @@
+arazzo: 1.0.1
+info:
+  title: CloudFormation Audit Cross-Stack Exports
+  summary: List the account's stack exports, then list the stacks that import a named export.
+  description: >-
+    Cross-stack references are built on exported output values. This workflow
+    lists every exported value in the account and region, then — for a named
+    export — lists which stacks import it, branching to an end when the export
+    is not consumed by any stack. It is the read-only dependency check you run
+    before deleting or renaming an export. Every step spells out its request
+    inline using the AWS query protocol so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: cloudformationApi
+  url: ../openapi/cloudformation-api.yml
+  type: openapi
+workflows:
+- workflowId: audit-exports
+  summary: Enumerate stack exports and find which stacks consume a given export.
+  description: >-
+    Lists all exported output values, then lists the stacks that import the
+    named export so its consumers are known before any change.
+  inputs:
+    type: object
+    required:
+    - exportName
+    properties:
+      exportName:
+        type: string
+        description: The name of the exported output value to check for consumers.
+  steps:
+  - stepId: listExports
+    description: >-
+      List every exported output value in the account and region.
+    operationId: listExports
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload: {}
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      exports: $response.body#/ListExportsResult/Exports
+  - stepId: listImports
+    description: >-
+      List the stacks that import the named export, branching to an end when no
+      stack consumes it.
+    operationId: listImports
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        ExportName: $inputs.exportName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      importingStacks: $response.body#/ListImportsResult/Imports
+    onSuccess:
+    - name: noConsumers
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.ListImportsResult.Imports.length == 0
+        type: jsonpath
+    - name: hasConsumers
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.ListImportsResult.Imports.length > 0
+        type: jsonpath
+  outputs:
+    exports: $steps.listExports.outputs.exports
+    importingStacks: $steps.listImports.outputs.importingStacks

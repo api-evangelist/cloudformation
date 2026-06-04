@@ -1,0 +1,122 @@
+arazzo: 1.0.1
+info:
+  title: CloudFormation Deploy a Stack Set
+  summary: Create a stack set, roll out an instance to an account and region, then poll the instance until CURRENT.
+  description: >-
+    Stack sets let a single template be provisioned across many accounts and
+    regions. This workflow creates a stack set from a template, creates a stack
+    instance in a target account and region, and then polls
+    DescribeStackInstance until the instance reaches the CURRENT status —
+    branching to a failure end if the instance lands in INOPERABLE. Every step
+    spells out its request inline using the AWS query protocol so the flow can be
+    read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: cloudformationApi
+  url: ../openapi/cloudformation-api.yml
+  type: openapi
+workflows:
+- workflowId: deploy-stack-set
+  summary: Create a stack set and roll out an instance to a target account and region.
+  description: >-
+    Creates a stack set, creates a stack instance in the supplied account and
+    region, and waits for that instance to reach CURRENT.
+  inputs:
+    type: object
+    required:
+    - stackSetName
+    - templateBody
+    - account
+    - region
+    properties:
+      stackSetName:
+        type: string
+        description: The name to assign to the new stack set.
+      templateBody:
+        type: string
+        description: The CloudFormation template body for the stack set.
+      account:
+        type: string
+        description: The target AWS account ID to create the stack instance in.
+      region:
+        type: string
+        description: The target AWS region to create the stack instance in.
+      capability:
+        type: string
+        description: An optional capability to acknowledge (e.g. CAPABILITY_IAM).
+  steps:
+  - stepId: createStackSet
+    description: >-
+      Create the stack set from the supplied template using the self-managed
+      permission model.
+    operationId: createStackSet
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackSetName: $inputs.stackSetName
+        TemplateBody: $inputs.templateBody
+        PermissionModel: SELF_MANAGED
+        Capabilities:
+        - $inputs.capability
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      stackSetId: $response.body#/CreateStackSetResult/StackSetId
+  - stepId: createInstance
+    description: >-
+      Create a stack instance for the stack set in the target account and
+      region, capturing the operation ID.
+    operationId: createStackInstances
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackSetName: $inputs.stackSetName
+        Accounts:
+        - $inputs.account
+        Regions:
+        - $inputs.region
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      operationId: $response.body#/CreateStackInstancesResult/OperationId
+  - stepId: pollInstance
+    description: >-
+      Poll DescribeStackInstance until the instance reaches CURRENT. Branch to a
+      failure end if the instance becomes INOPERABLE.
+    operationId: describeStackInstance
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        StackSetName: $inputs.stackSetName
+        StackInstanceAccount: $inputs.account
+        StackInstanceRegion: $inputs.region
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      instanceStatus: $response.body#/DescribeStackInstanceResult/StackInstance/Status
+      instanceStackId: $response.body#/DescribeStackInstanceResult/StackInstance/StackId
+    onSuccess:
+    - name: instanceReady
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStackInstanceResult.StackInstance.Status == "CURRENT"
+        type: jsonpath
+    - name: instanceInoperable
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStackInstanceResult.StackInstance.Status == "INOPERABLE"
+        type: jsonpath
+    - name: instancePending
+      type: goto
+      stepId: pollInstance
+      criteria:
+      - context: $response.body
+        condition: $.DescribeStackInstanceResult.StackInstance.Status == "OUTDATED"
+        type: jsonpath
+  outputs:
+    stackSetId: $steps.createStackSet.outputs.stackSetId
+    operationId: $steps.createInstance.outputs.operationId
+    instanceStatus: $steps.pollInstance.outputs.instanceStatus
+    instanceStackId: $steps.pollInstance.outputs.instanceStackId
