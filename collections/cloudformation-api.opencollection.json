@@ -1,0 +1,1870 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWS CloudFormation API",
+    "version": "2010-05-15"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stacks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a New Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=CreateStack",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                },
+                {
+                  "name": "Parameters",
+                  "value": ""
+                },
+                {
+                  "name": "DisableRollback",
+                  "value": ""
+                },
+                {
+                  "name": "RollbackConfiguration",
+                  "value": ""
+                },
+                {
+                  "name": "TimeoutInMinutes",
+                  "value": ""
+                },
+                {
+                  "name": "NotificationARNs",
+                  "value": ""
+                },
+                {
+                  "name": "Capabilities",
+                  "value": ""
+                },
+                {
+                  "name": "OnFailure",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyBody",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyURL",
+                  "value": ""
+                },
+                {
+                  "name": "Tags",
+                  "value": ""
+                },
+                {
+                  "name": "RoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "EnableTerminationProtection",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                },
+                {
+                  "name": "RetainExceptOnCreate",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates a stack as specified in the template. After the call completes successfully, the stack creation starts. You can check the status of the stack through the DescribeStacks operation."
+        },
+        {
+          "info": {
+            "name": "Update an Existing Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=UpdateStack",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                },
+                {
+                  "name": "UsePreviousTemplate",
+                  "value": ""
+                },
+                {
+                  "name": "Parameters",
+                  "value": ""
+                },
+                {
+                  "name": "Capabilities",
+                  "value": ""
+                },
+                {
+                  "name": "Tags",
+                  "value": ""
+                },
+                {
+                  "name": "RoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "RollbackConfiguration",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyBody",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyURL",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyDuringUpdateBody",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyDuringUpdateURL",
+                  "value": ""
+                },
+                {
+                  "name": "NotificationARNs",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                },
+                {
+                  "name": "DisableRollback",
+                  "value": ""
+                },
+                {
+                  "name": "RetainExceptOnCreate",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Updates a stack as specified in the template. After the call completes successfully, the stack update starts. You can check the status of the stack through the DescribeStacks operation."
+        },
+        {
+          "info": {
+            "name": "Delete an Existing Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DeleteStack",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "RetainResources",
+                  "value": ""
+                },
+                {
+                  "name": "RoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                },
+                {
+                  "name": "DeletionMode",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Deletes a specified stack. Once the call completes successfully, stack deletion starts. Deleted stacks do not show up in DescribeStacks calls by default."
+        },
+        {
+          "info": {
+            "name": "Describe One or More Stacks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DescribeStacks",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns the description for the specified stack. If no stack name was specified, then it returns descriptions for all stacks. Use ListStacks instead if you do not need full stack details for performance reasons."
+        },
+        {
+          "info": {
+            "name": "List All Stacks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=ListStacks",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "NextToken",
+                  "value": ""
+                },
+                {
+                  "name": "StackStatusFilter",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns summary information for all stacks. Deleted stacks are included for 90 days after deletion. You can filter by stack status."
+        },
+        {
+          "info": {
+            "name": "Cancel a Stack Update in Progress",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=CancelUpdateStack",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Cancels an update on the specified stack. If the call completes successfully, the stack rolls back the update and reverts to the previous stack configuration."
+        },
+        {
+          "info": {
+            "name": "Continue Rolling Back a Failed Stack Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=ContinueUpdateRollback",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "RoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "ResourcesToSkip",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "For a specified stack in UPDATE_ROLLBACK_FAILED state, continues rolling back to the previous stable state. A stack enters this state when a resource fails during the update rollback process."
+        },
+        {
+          "info": {
+            "name": "Rollback a Stack to a Previous Stable State",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=RollbackStack",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "RoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                },
+                {
+                  "name": "RetainExceptOnCreate",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Rolls back the specified stack to the last known stable state."
+        },
+        {
+          "info": {
+            "name": "Enable or Disable Termination Protection on a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=UpdateTerminationProtection",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "EnableTerminationProtection",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Updates termination protection for the specified stack. If a user attempts to delete a stack with termination protection enabled, the operation fails and the stack remains unchanged."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stack Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Events for a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DescribeStackEvents",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns all stack-related events for a specified stack in reverse chronological order."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stack Resources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Describe a Specific Resource in a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DescribeStackResource",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "LogicalResourceId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns a description of the specified resource in the specified stack."
+        },
+        {
+          "info": {
+            "name": "Describe All Resources in a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DescribeStackResources",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "LogicalResourceId",
+                  "value": ""
+                },
+                {
+                  "name": "PhysicalResourceId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns AWS resource descriptions for running or deleted stacks. You must specify a StackName or PhysicalResourceId."
+        },
+        {
+          "info": {
+            "name": "List Resources in a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=ListStackResources",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns descriptions of all resources of the specified stack."
+        },
+        {
+          "info": {
+            "name": "Send a Signal to a Resource in a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=SignalResource",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "LogicalResourceId",
+                  "value": ""
+                },
+                {
+                  "name": "UniqueId",
+                  "value": ""
+                },
+                {
+                  "name": "Status",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Sends a signal to the specified resource with a success or failure status. You can use the SignalResource operation in conjunction with a creation policy or update policy."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stack Drift",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Detect Configuration Drift on a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DetectStackDrift",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "LogicalResourceIds",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Detects whether a stack's actual configuration differs from its expected configuration as defined in the stack template. Returns a drift detection ID you can use to monitor the progress of the operation."
+        },
+        {
+          "info": {
+            "name": "Check Status of Drift Detection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DescribeStackDriftDetectionStatus",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackDriftDetectionId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns information about a stack drift detection operation. Provides the current status and results of the operation."
+        },
+        {
+          "info": {
+            "name": "Get Drift Information for Stack Resources",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DescribeStackResourceDrifts",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "StackResourceDriftStatusFilters",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                },
+                {
+                  "name": "MaxResults",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns drift information for the resources that have been checked for drift in the specified stack."
+        },
+        {
+          "info": {
+            "name": "Detect Drift on a Specific Resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DetectStackResourceDrift",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "LogicalResourceId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns information about whether a resource's actual configuration differs from its expected configuration."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Change Sets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Change Set to Preview Stack Changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=CreateChangeSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "ChangeSetName",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                },
+                {
+                  "name": "UsePreviousTemplate",
+                  "value": ""
+                },
+                {
+                  "name": "Parameters",
+                  "value": ""
+                },
+                {
+                  "name": "Capabilities",
+                  "value": ""
+                },
+                {
+                  "name": "ResourceTypes",
+                  "value": ""
+                },
+                {
+                  "name": "RoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "RollbackConfiguration",
+                  "value": ""
+                },
+                {
+                  "name": "NotificationARNs",
+                  "value": ""
+                },
+                {
+                  "name": "Tags",
+                  "value": ""
+                },
+                {
+                  "name": "ChangeSetType",
+                  "value": ""
+                },
+                {
+                  "name": "Description",
+                  "value": ""
+                },
+                {
+                  "name": "IncludeNestedStacks",
+                  "value": ""
+                },
+                {
+                  "name": "ImportExistingResources",
+                  "value": ""
+                },
+                {
+                  "name": "ClientToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates a list of changes that will be applied to a stack so that you can review the changes before executing them. Change sets allow you to see how your changes might impact running resources before implementing them."
+        },
+        {
+          "info": {
+            "name": "Describe a Change Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DescribeChangeSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "ChangeSetName",
+                  "value": ""
+                },
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                },
+                {
+                  "name": "IncludePropertyValues",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns the inputs and a list of changes that CloudFormation will make if you execute the change set."
+        },
+        {
+          "info": {
+            "name": "Execute a Change Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=ExecuteChangeSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "ChangeSetName",
+                  "value": ""
+                },
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                },
+                {
+                  "name": "DisableRollback",
+                  "value": ""
+                },
+                {
+                  "name": "RetainExceptOnCreate",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Updates a stack using the input information provided when the specified change set was created. After the call successfully completes, CloudFormation starts updating the stack."
+        },
+        {
+          "info": {
+            "name": "Delete a Change Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DeleteChangeSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "ChangeSetName",
+                  "value": ""
+                },
+                {
+                  "name": "StackName",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Deletes the specified change set. Deleting change sets ensures that no one executes the wrong change set. Only change sets in CREATE_COMPLETE or FAILED status can be deleted."
+        },
+        {
+          "info": {
+            "name": "List All Change Sets for a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=ListChangeSets",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns the ID and status of each active change set for a stack. For example, CloudFormation lists change sets that are in the CREATE_IN_PROGRESS or CREATE_COMPLETE status."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a Stack Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=GetTemplate",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "ChangeSetName",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateStage",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns the template body for a specified stack. You can get the template for running or deleted stacks."
+        },
+        {
+          "info": {
+            "name": "Get Summary Information About a Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=GetTemplateSummary",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                },
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns information about a new or existing template including parameter declarations, a list of resources, and capabilities required."
+        },
+        {
+          "info": {
+            "name": "Validate a Cloudformation Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=ValidateTemplate",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Validates a specified template. CloudFormation checks whether the template is valid JSON or YAML, whether all required values are present, and whether all references are valid."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stack Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a Stack Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=GetStackPolicy",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns the stack policy for a specified stack. If a stack does not have a policy, a null value is returned."
+        },
+        {
+          "info": {
+            "name": "Set a Stack Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=SetStackPolicy",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyBody",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyURL",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Sets a stack policy for a specified stack. A stack policy controls whether changes to stack resources are allowed during updates."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Exports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Stack Exports",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=ListExports",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "NextToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Lists all exported output values in the account and Region."
+        },
+        {
+          "info": {
+            "name": "List Stacks That Import an Exported Value",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=ListImports",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "ExportName",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Lists all stacks that import an exported output value. To find the exports, use ListExports."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stack Sets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Stack Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=CreateStackSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "Description",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                },
+                {
+                  "name": "Parameters",
+                  "value": ""
+                },
+                {
+                  "name": "Capabilities",
+                  "value": ""
+                },
+                {
+                  "name": "Tags",
+                  "value": ""
+                },
+                {
+                  "name": "AdministrationRoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "ExecutionRoleName",
+                  "value": ""
+                },
+                {
+                  "name": "PermissionModel",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates a stack set with the specified name and template. A stack set lets you create stacks in AWS accounts across regions by using a single CloudFormation template."
+        },
+        {
+          "info": {
+            "name": "Describe a Stack Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DescribeStackSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns the description of the specified stack set."
+        },
+        {
+          "info": {
+            "name": "Update a Stack Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=UpdateStackSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "Description",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                },
+                {
+                  "name": "UsePreviousTemplate",
+                  "value": ""
+                },
+                {
+                  "name": "Parameters",
+                  "value": ""
+                },
+                {
+                  "name": "Capabilities",
+                  "value": ""
+                },
+                {
+                  "name": "Tags",
+                  "value": ""
+                },
+                {
+                  "name": "OperationPreferences",
+                  "value": ""
+                },
+                {
+                  "name": "AdministrationRoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "ExecutionRoleName",
+                  "value": ""
+                },
+                {
+                  "name": "PermissionModel",
+                  "value": ""
+                },
+                {
+                  "name": "Accounts",
+                  "value": ""
+                },
+                {
+                  "name": "Regions",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                },
+                {
+                  "name": "OperationId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Updates the stack set, and associated stack instances in the specified accounts and regions."
+        },
+        {
+          "info": {
+            "name": "Delete a Stack Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DeleteStackSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Deletes a stack set. Before you can delete a stack set, all its member stack instances must be deleted."
+        },
+        {
+          "info": {
+            "name": "List All Stack Sets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=ListStackSets",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "NextToken",
+                  "value": ""
+                },
+                {
+                  "name": "MaxResults",
+                  "value": ""
+                },
+                {
+                  "name": "Status",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns summary information about stack sets in the caller's account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stack Instances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Stack Instances in Accounts and Regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=CreateStackInstances",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "Accounts",
+                  "value": ""
+                },
+                {
+                  "name": "Regions",
+                  "value": ""
+                },
+                {
+                  "name": "ParameterOverrides",
+                  "value": ""
+                },
+                {
+                  "name": "OperationPreferences",
+                  "value": ""
+                },
+                {
+                  "name": "OperationId",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates stack instances for the specified accounts in the specified regions. A stack instance refers to a stack in a specific account and region."
+        },
+        {
+          "info": {
+            "name": "Describe a Stack Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DescribeStackInstance",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "StackInstanceAccount",
+                  "value": ""
+                },
+                {
+                  "name": "StackInstanceRegion",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns the stack instance associated with the specified stack set, account, and region."
+        },
+        {
+          "info": {
+            "name": "List Stack Instances in a Stack Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=ListStackInstances",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                },
+                {
+                  "name": "MaxResults",
+                  "value": ""
+                },
+                {
+                  "name": "StackInstanceAccount",
+                  "value": ""
+                },
+                {
+                  "name": "StackInstanceRegion",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns summary information about stack instances associated with the specified stack set."
+        },
+        {
+          "info": {
+            "name": "Delete Stack Instances From a Stack Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DeleteStackInstances",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "Accounts",
+                  "value": ""
+                },
+                {
+                  "name": "Regions",
+                  "value": ""
+                },
+                {
+                  "name": "RetainStacks",
+                  "value": ""
+                },
+                {
+                  "name": "OperationPreferences",
+                  "value": ""
+                },
+                {
+                  "name": "OperationId",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Deletes stack instances for the specified accounts in the specified regions."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Registry",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Available Extension Types in the Registry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=ListTypes",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "Visibility",
+                  "value": ""
+                },
+                {
+                  "name": "ProvisioningType",
+                  "value": ""
+                },
+                {
+                  "name": "Type",
+                  "value": ""
+                },
+                {
+                  "name": "Filters",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                },
+                {
+                  "name": "MaxResults",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns summary information about extension types registered in the CloudFormation Registry."
+        },
+        {
+          "info": {
+            "name": "Describe an Extension Type in the Registry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudformation.{region}.amazonaws.com/?Action=DescribeType",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "Type",
+                  "value": ""
+                },
+                {
+                  "name": "TypeName",
+                  "value": ""
+                },
+                {
+                  "name": "Arn",
+                  "value": ""
+                },
+                {
+                  "name": "VersionId",
+                  "value": ""
+                },
+                {
+                  "name": "PublisherId",
+                  "value": ""
+                },
+                {
+                  "name": "PublicVersionNumber",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns detailed information about an extension type registered in the CloudFormation Registry."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

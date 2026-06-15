@@ -1,0 +1,3246 @@
+{
+  "info": {
+    "_postman_id": "97500ca3-a544-4882-939e-7ca7be5055de",
+    "name": "AWS Cloud Control API",
+    "description": "AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.\n\nContact Support:\n Name: AWS Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:07:00.000Z",
+    "updatedAt": "2026-06-05T15:07:00.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-97500ca3-a544-4882-939e-7ca7be5055de"
+  },
+  "item": [
+    {
+      "name": "?Action=CreateResource",
+      "item": [
+        {
+          "name": "Create a New Cloud Resource",
+          "id": "0cee8178-cc71-4255-8b77-4b2bac8e2680",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"TypeName\": \"7HY42RmurejQKOVGJc3xHNamOeTLEAZXWhDm::f9xfeCcBv3e::tN14jtG3It8qt8sdQ3zDpP1ECBNfQvcqe5LhJkJTQnyeNCFEAYyF0w\",\n  \"DesiredState\": \"<string>\",\n  \"TypeVersionId\": \"h5qj-RR6Gpl\",\n  \"RoleArn\": \"arn:Hk::iam::384880666711:role/2d#{L#[tp[\",\n  \"ClientToken\": \"CuE\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/?Action=CreateResource&Version=2021-09-30",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "CreateResource"
+                },
+                {
+                  "description": "(Required) The API version. Fixed to 2021-09-30.",
+                  "key": "Version",
+                  "value": "2021-09-30"
+                }
+              ]
+            },
+            "description": "Creates the specified resource. For more information, see Creating a resource in the CloudFormation User Guide. After you have initiated a resource creation request, you can monitor the progress of your request by calling GetResourceRequestStatus using the RequestToken of the ProgressEvent returned by CreateResource."
+          },
+          "response": [
+            {
+              "id": "ce7d4158-9ce7-4ba1-9934-c45e02ce55a9",
+              "name": "Resource creation initiated successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"7HY42RmurejQKOVGJc3xHNamOeTLEAZXWhDm::f9xfeCcBv3e::tN14jtG3It8qt8sdQ3zDpP1ECBNfQvcqe5LhJkJTQnyeNCFEAYyF0w\",\n  \"DesiredState\": \"<string>\",\n  \"TypeVersionId\": \"h5qj-RR6Gpl\",\n  \"RoleArn\": \"arn:Hk::iam::384880666711:role/2d#{L#[tp[\",\n  \"ClientToken\": \"CuE\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"ProgressEvent\": {\n    \"TypeName\": \"<string>\",\n    \"Identifier\": \"<string>\",\n    \"RequestToken\": \"<string>\",\n    \"HooksRequestToken\": \"<string>\",\n    \"Operation\": \"DELETE\",\n    \"OperationStatus\": \"CANCEL_IN_PROGRESS\",\n    \"EventTime\": \"<number>\",\n    \"ResourceModel\": \"<string>\",\n    \"StatusMessage\": \"<string>\",\n    \"ErrorCode\": \"Unknown\",\n    \"RetryAfter\": \"<number>\"\n  }\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-ce7d4158-9ce7-4ba1-9934-c45e02ce55a9"
+            },
+            {
+              "id": "fec315a5-1097-4916-bf00-848d248cabf0",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"7HY42RmurejQKOVGJc3xHNamOeTLEAZXWhDm::f9xfeCcBv3e::tN14jtG3It8qt8sdQ3zDpP1ECBNfQvcqe5LhJkJTQnyeNCFEAYyF0w\",\n  \"DesiredState\": \"<string>\",\n  \"TypeVersionId\": \"h5qj-RR6Gpl\",\n  \"RoleArn\": \"arn:Hk::iam::384880666711:role/2d#{L#[tp[\",\n  \"ClientToken\": \"CuE\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-fec315a5-1097-4916-bf00-848d248cabf0"
+            },
+            {
+              "id": "87a206d5-2c4e-4835-bfe1-43201fc04b72",
+              "name": "The specified resource type was not found in the CloudFormation Registry.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"7HY42RmurejQKOVGJc3xHNamOeTLEAZXWhDm::f9xfeCcBv3e::tN14jtG3It8qt8sdQ3zDpP1ECBNfQvcqe5LhJkJTQnyeNCFEAYyF0w\",\n  \"DesiredState\": \"<string>\",\n  \"TypeVersionId\": \"h5qj-RR6Gpl\",\n  \"RoleArn\": \"arn:Hk::iam::384880666711:role/2d#{L#[tp[\",\n  \"ClientToken\": \"CuE\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-87a206d5-2c4e-4835-bfe1-43201fc04b72"
+            },
+            {
+              "id": "ada457c3-23cd-49e3-ba74-ad96c5e774eb",
+              "name": "A resource with the specified identifier already exists.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"7HY42RmurejQKOVGJc3xHNamOeTLEAZXWhDm::f9xfeCcBv3e::tN14jtG3It8qt8sdQ3zDpP1ECBNfQvcqe5LhJkJTQnyeNCFEAYyF0w\",\n  \"DesiredState\": \"<string>\",\n  \"TypeVersionId\": \"h5qj-RR6Gpl\",\n  \"RoleArn\": \"arn:Hk::iam::384880666711:role/2d#{L#[tp[\",\n  \"ClientToken\": \"CuE\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-ada457c3-23cd-49e3-ba74-ad96c5e774eb"
+            },
+            {
+              "id": "a9f7c6bd-7d5a-4a29-aaff-170e18fc71c5",
+              "name": "The request was denied due to request throttling.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"7HY42RmurejQKOVGJc3xHNamOeTLEAZXWhDm::f9xfeCcBv3e::tN14jtG3It8qt8sdQ3zDpP1ECBNfQvcqe5LhJkJTQnyeNCFEAYyF0w\",\n  \"DesiredState\": \"<string>\",\n  \"TypeVersionId\": \"h5qj-RR6Gpl\",\n  \"RoleArn\": \"arn:Hk::iam::384880666711:role/2d#{L#[tp[\",\n  \"ClientToken\": \"CuE\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-a9f7c6bd-7d5a-4a29-aaff-170e18fc71c5"
+            },
+            {
+              "id": "b1670eb9-4162-424b-8841-4a6b25c58cef",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"7HY42RmurejQKOVGJc3xHNamOeTLEAZXWhDm::f9xfeCcBv3e::tN14jtG3It8qt8sdQ3zDpP1ECBNfQvcqe5LhJkJTQnyeNCFEAYyF0w\",\n  \"DesiredState\": \"<string>\",\n  \"TypeVersionId\": \"h5qj-RR6Gpl\",\n  \"RoleArn\": \"arn:Hk::iam::384880666711:role/2d#{L#[tp[\",\n  \"ClientToken\": \"CuE\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-b1670eb9-4162-424b-8841-4a6b25c58cef"
+            }
+          ],
+          "createdAt": "2026-06-05T15:07:00.000Z",
+          "updatedAt": "2026-06-05T15:07:00.000Z",
+          "uid": "35240-0cee8178-cc71-4255-8b77-4b2bac8e2680"
+        }
+      ],
+      "id": "555654cd-f1f6-41b8-a019-0a8f354f9c99",
+      "createdAt": "2026-06-05T15:07:00.000Z",
+      "updatedAt": "2026-06-05T15:07:00.000Z",
+      "uid": "35240-555654cd-f1f6-41b8-a019-0a8f354f9c99"
+    },
+    {
+      "name": "?Action=GetResource",
+      "item": [
+        {
+          "name": "Read a Cloud Resource",
+          "id": "ebe603dd-837e-4ee7-81ed-68f0398a20a7",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"TypeName\": \"j9SQeDnPNz74dO5YvdNxIGlYvB::gwzPRoOH89CbLUmARnLqcyuqHHKrsZWX5mytnq3R::zbVlRjVKAsUjkm5UVOXP4Mff9a4nO\",\n  \"Identifier\": \"<string>\",\n  \"TypeVersionId\": \"Q7PYr\",\n  \"RoleArn\": \"arn:=A?Uf$VSzK:iam::460055780553:role/77AX-Z\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/?Action=GetResource&Version=2021-09-30",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "GetResource"
+                },
+                {
+                  "description": "(Required) The API version. Fixed to 2021-09-30.",
+                  "key": "Version",
+                  "value": "2021-09-30"
+                }
+              ]
+            },
+            "description": "Returns information about the current state of the specified resource. For details, see Reading a resource's current state in the CloudFormation User Guide."
+          },
+          "response": [
+            {
+              "id": "64f53d73-a7fd-4bf3-9952-8f1ea8bda4a1",
+              "name": "Resource details returned successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"j9SQeDnPNz74dO5YvdNxIGlYvB::gwzPRoOH89CbLUmARnLqcyuqHHKrsZWX5mytnq3R::zbVlRjVKAsUjkm5UVOXP4Mff9a4nO\",\n  \"Identifier\": \"<string>\",\n  \"TypeVersionId\": \"Q7PYr\",\n  \"RoleArn\": \"arn:=A?Uf$VSzK:iam::460055780553:role/77AX-Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"TypeName\": \"<string>\",\n  \"ResourceDescription\": {\n    \"Identifier\": \"<string>\",\n    \"Properties\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-64f53d73-a7fd-4bf3-9952-8f1ea8bda4a1"
+            },
+            {
+              "id": "0a739fc9-39e3-493f-a990-334c320814bd",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"j9SQeDnPNz74dO5YvdNxIGlYvB::gwzPRoOH89CbLUmARnLqcyuqHHKrsZWX5mytnq3R::zbVlRjVKAsUjkm5UVOXP4Mff9a4nO\",\n  \"Identifier\": \"<string>\",\n  \"TypeVersionId\": \"Q7PYr\",\n  \"RoleArn\": \"arn:=A?Uf$VSzK:iam::460055780553:role/77AX-Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-0a739fc9-39e3-493f-a990-334c320814bd"
+            },
+            {
+              "id": "4e4af701-6e90-43a5-8010-f22ce3402336",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"j9SQeDnPNz74dO5YvdNxIGlYvB::gwzPRoOH89CbLUmARnLqcyuqHHKrsZWX5mytnq3R::zbVlRjVKAsUjkm5UVOXP4Mff9a4nO\",\n  \"Identifier\": \"<string>\",\n  \"TypeVersionId\": \"Q7PYr\",\n  \"RoleArn\": \"arn:=A?Uf$VSzK:iam::460055780553:role/77AX-Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-4e4af701-6e90-43a5-8010-f22ce3402336"
+            },
+            {
+              "id": "e0c45f0d-7174-4949-bbdf-d858a288a5d2",
+              "name": "The request was denied due to request throttling.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"j9SQeDnPNz74dO5YvdNxIGlYvB::gwzPRoOH89CbLUmARnLqcyuqHHKrsZWX5mytnq3R::zbVlRjVKAsUjkm5UVOXP4Mff9a4nO\",\n  \"Identifier\": \"<string>\",\n  \"TypeVersionId\": \"Q7PYr\",\n  \"RoleArn\": \"arn:=A?Uf$VSzK:iam::460055780553:role/77AX-Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-e0c45f0d-7174-4949-bbdf-d858a288a5d2"
+            },
+            {
+              "id": "90c29268-e648-4ca0-8686-dd39a5752f25",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"j9SQeDnPNz74dO5YvdNxIGlYvB::gwzPRoOH89CbLUmARnLqcyuqHHKrsZWX5mytnq3R::zbVlRjVKAsUjkm5UVOXP4Mff9a4nO\",\n  \"Identifier\": \"<string>\",\n  \"TypeVersionId\": \"Q7PYr\",\n  \"RoleArn\": \"arn:=A?Uf$VSzK:iam::460055780553:role/77AX-Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-90c29268-e648-4ca0-8686-dd39a5752f25"
+            }
+          ],
+          "createdAt": "2026-06-05T15:07:00.000Z",
+          "updatedAt": "2026-06-05T15:07:00.000Z",
+          "uid": "35240-ebe603dd-837e-4ee7-81ed-68f0398a20a7"
+        }
+      ],
+      "id": "a2f06d34-19d8-4183-a935-f3a9f8af7bff",
+      "createdAt": "2026-06-05T15:07:00.000Z",
+      "updatedAt": "2026-06-05T15:07:00.000Z",
+      "uid": "35240-a2f06d34-19d8-4183-a935-f3a9f8af7bff"
+    },
+    {
+      "name": "?Action=UpdateResource",
+      "item": [
+        {
+          "name": "Update an Existing Cloud Resource",
+          "id": "63bd62b0-51b0-41eb-8029-b7c78f28e52e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"TypeName\": \"5fyFbHBCySv8AtOGDeN5j5Zm4yZTBOyojvfaMu4ifhy3G55yZgVQ2StVuN::eFPqn5AYR3gY34inP0I0mEXSy3hj7DfIBAuCIYHM::uwBc9GtV7P5aLcOw4QhJ0jkeqxokGc1Q65ymQTdqs\",\n  \"Identifier\": \"<string>\",\n  \"PatchDocument\": \"<string>\",\n  \"TypeVersionId\": \"DqbWY\",\n  \"RoleArn\": \"arn:8nAY4tWm:iam::684949547659:role/u*({OP9Pl\",\n  \"ClientToken\": \"5ErpT3R\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/?Action=UpdateResource&Version=2021-09-30",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "UpdateResource"
+                },
+                {
+                  "description": "(Required) The API version. Fixed to 2021-09-30.",
+                  "key": "Version",
+                  "value": "2021-09-30"
+                }
+              ]
+            },
+            "description": "Updates the specified property values of the resource. You specify your resource property updates as a JSON patch document. After you have initiated a resource update request, you can monitor the progress by calling GetResourceRequestStatus using the RequestToken of the ProgressEvent returned by UpdateResource."
+          },
+          "response": [
+            {
+              "id": "baabaaaa-e673-4241-8a36-77c3f81ce411",
+              "name": "Resource update initiated successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"5fyFbHBCySv8AtOGDeN5j5Zm4yZTBOyojvfaMu4ifhy3G55yZgVQ2StVuN::eFPqn5AYR3gY34inP0I0mEXSy3hj7DfIBAuCIYHM::uwBc9GtV7P5aLcOw4QhJ0jkeqxokGc1Q65ymQTdqs\",\n  \"Identifier\": \"<string>\",\n  \"PatchDocument\": \"<string>\",\n  \"TypeVersionId\": \"DqbWY\",\n  \"RoleArn\": \"arn:8nAY4tWm:iam::684949547659:role/u*({OP9Pl\",\n  \"ClientToken\": \"5ErpT3R\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"ProgressEvent\": {\n    \"TypeName\": \"<string>\",\n    \"Identifier\": \"<string>\",\n    \"RequestToken\": \"<string>\",\n    \"HooksRequestToken\": \"<string>\",\n    \"Operation\": \"DELETE\",\n    \"OperationStatus\": \"CANCEL_IN_PROGRESS\",\n    \"EventTime\": \"<number>\",\n    \"ResourceModel\": \"<string>\",\n    \"StatusMessage\": \"<string>\",\n    \"ErrorCode\": \"Unknown\",\n    \"RetryAfter\": \"<number>\"\n  }\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-baabaaaa-e673-4241-8a36-77c3f81ce411"
+            },
+            {
+              "id": "09e393d8-9394-4e4b-8e40-e37fa3414607",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"5fyFbHBCySv8AtOGDeN5j5Zm4yZTBOyojvfaMu4ifhy3G55yZgVQ2StVuN::eFPqn5AYR3gY34inP0I0mEXSy3hj7DfIBAuCIYHM::uwBc9GtV7P5aLcOw4QhJ0jkeqxokGc1Q65ymQTdqs\",\n  \"Identifier\": \"<string>\",\n  \"PatchDocument\": \"<string>\",\n  \"TypeVersionId\": \"DqbWY\",\n  \"RoleArn\": \"arn:8nAY4tWm:iam::684949547659:role/u*({OP9Pl\",\n  \"ClientToken\": \"5ErpT3R\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-09e393d8-9394-4e4b-8e40-e37fa3414607"
+            },
+            {
+              "id": "1d37d250-c5c6-4e30-a3c9-84309c4e223f",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"5fyFbHBCySv8AtOGDeN5j5Zm4yZTBOyojvfaMu4ifhy3G55yZgVQ2StVuN::eFPqn5AYR3gY34inP0I0mEXSy3hj7DfIBAuCIYHM::uwBc9GtV7P5aLcOw4QhJ0jkeqxokGc1Q65ymQTdqs\",\n  \"Identifier\": \"<string>\",\n  \"PatchDocument\": \"<string>\",\n  \"TypeVersionId\": \"DqbWY\",\n  \"RoleArn\": \"arn:8nAY4tWm:iam::684949547659:role/u*({OP9Pl\",\n  \"ClientToken\": \"5ErpT3R\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-1d37d250-c5c6-4e30-a3c9-84309c4e223f"
+            },
+            {
+              "id": "968f2b0b-a12a-4da2-8652-4dc6b12ea595",
+              "name": "The resource is currently being modified by another operation.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"5fyFbHBCySv8AtOGDeN5j5Zm4yZTBOyojvfaMu4ifhy3G55yZgVQ2StVuN::eFPqn5AYR3gY34inP0I0mEXSy3hj7DfIBAuCIYHM::uwBc9GtV7P5aLcOw4QhJ0jkeqxokGc1Q65ymQTdqs\",\n  \"Identifier\": \"<string>\",\n  \"PatchDocument\": \"<string>\",\n  \"TypeVersionId\": \"DqbWY\",\n  \"RoleArn\": \"arn:8nAY4tWm:iam::684949547659:role/u*({OP9Pl\",\n  \"ClientToken\": \"5ErpT3R\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-968f2b0b-a12a-4da2-8652-4dc6b12ea595"
+            },
+            {
+              "id": "9ccec888-2c63-4a6a-80c2-670b933a04f8",
+              "name": "The request was denied due to request throttling.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"5fyFbHBCySv8AtOGDeN5j5Zm4yZTBOyojvfaMu4ifhy3G55yZgVQ2StVuN::eFPqn5AYR3gY34inP0I0mEXSy3hj7DfIBAuCIYHM::uwBc9GtV7P5aLcOw4QhJ0jkeqxokGc1Q65ymQTdqs\",\n  \"Identifier\": \"<string>\",\n  \"PatchDocument\": \"<string>\",\n  \"TypeVersionId\": \"DqbWY\",\n  \"RoleArn\": \"arn:8nAY4tWm:iam::684949547659:role/u*({OP9Pl\",\n  \"ClientToken\": \"5ErpT3R\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-9ccec888-2c63-4a6a-80c2-670b933a04f8"
+            },
+            {
+              "id": "ec836236-5da6-427f-82e3-f8733d8bb6f0",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"5fyFbHBCySv8AtOGDeN5j5Zm4yZTBOyojvfaMu4ifhy3G55yZgVQ2StVuN::eFPqn5AYR3gY34inP0I0mEXSy3hj7DfIBAuCIYHM::uwBc9GtV7P5aLcOw4QhJ0jkeqxokGc1Q65ymQTdqs\",\n  \"Identifier\": \"<string>\",\n  \"PatchDocument\": \"<string>\",\n  \"TypeVersionId\": \"DqbWY\",\n  \"RoleArn\": \"arn:8nAY4tWm:iam::684949547659:role/u*({OP9Pl\",\n  \"ClientToken\": \"5ErpT3R\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-ec836236-5da6-427f-82e3-f8733d8bb6f0"
+            }
+          ],
+          "createdAt": "2026-06-05T15:07:00.000Z",
+          "updatedAt": "2026-06-05T15:07:00.000Z",
+          "uid": "35240-63bd62b0-51b0-41eb-8029-b7c78f28e52e"
+        }
+      ],
+      "id": "3519a521-9999-4584-84aa-74806d4be3ba",
+      "createdAt": "2026-06-05T15:07:00.000Z",
+      "updatedAt": "2026-06-05T15:07:00.000Z",
+      "uid": "35240-3519a521-9999-4584-84aa-74806d4be3ba"
+    },
+    {
+      "name": "?Action=DeleteResource",
+      "item": [
+        {
+          "name": "Delete a Cloud Resource",
+          "id": "848b35da-57f9-448b-84d8-1341547cfcbd",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"TypeName\": \"oeRMsP::H3tBF2LN0eALBVpKj::Tk6HLHVFfzJkt7482iImLI3KydHl6JsazbAgj7Q1mwAURfARhSuPh\",\n  \"Identifier\": \"<string>\",\n  \"TypeVersionId\": \"tzL4\",\n  \"RoleArn\": \"arn:5J:iam::219973349901:role/oEx% \",\n  \"ClientToken\": \"hCgOx27N\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/?Action=DeleteResource&Version=2021-09-30",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "DeleteResource"
+                },
+                {
+                  "description": "(Required) The API version. Fixed to 2021-09-30.",
+                  "key": "Version",
+                  "value": "2021-09-30"
+                }
+              ]
+            },
+            "description": "Deletes the specified resource. After you have initiated a resource deletion request, you can monitor the progress by calling GetResourceRequestStatus using the RequestToken of the ProgressEvent returned by DeleteResource."
+          },
+          "response": [
+            {
+              "id": "9b35199a-14a2-4242-b2e3-7554a1309dc7",
+              "name": "Resource deletion initiated successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"oeRMsP::H3tBF2LN0eALBVpKj::Tk6HLHVFfzJkt7482iImLI3KydHl6JsazbAgj7Q1mwAURfARhSuPh\",\n  \"Identifier\": \"<string>\",\n  \"TypeVersionId\": \"tzL4\",\n  \"RoleArn\": \"arn:5J:iam::219973349901:role/oEx% \",\n  \"ClientToken\": \"hCgOx27N\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"ProgressEvent\": {\n    \"TypeName\": \"<string>\",\n    \"Identifier\": \"<string>\",\n    \"RequestToken\": \"<string>\",\n    \"HooksRequestToken\": \"<string>\",\n    \"Operation\": \"DELETE\",\n    \"OperationStatus\": \"CANCEL_IN_PROGRESS\",\n    \"EventTime\": \"<number>\",\n    \"ResourceModel\": \"<string>\",\n    \"StatusMessage\": \"<string>\",\n    \"ErrorCode\": \"Unknown\",\n    \"RetryAfter\": \"<number>\"\n  }\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-9b35199a-14a2-4242-b2e3-7554a1309dc7"
+            },
+            {
+              "id": "71cc55a6-5b8c-4b32-8448-e1152756cfc7",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"oeRMsP::H3tBF2LN0eALBVpKj::Tk6HLHVFfzJkt7482iImLI3KydHl6JsazbAgj7Q1mwAURfARhSuPh\",\n  \"Identifier\": \"<string>\",\n  \"TypeVersionId\": \"tzL4\",\n  \"RoleArn\": \"arn:5J:iam::219973349901:role/oEx% \",\n  \"ClientToken\": \"hCgOx27N\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-71cc55a6-5b8c-4b32-8448-e1152756cfc7"
+            },
+            {
+              "id": "13bf0f9d-271c-4494-b089-3ca3388342a6",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"oeRMsP::H3tBF2LN0eALBVpKj::Tk6HLHVFfzJkt7482iImLI3KydHl6JsazbAgj7Q1mwAURfARhSuPh\",\n  \"Identifier\": \"<string>\",\n  \"TypeVersionId\": \"tzL4\",\n  \"RoleArn\": \"arn:5J:iam::219973349901:role/oEx% \",\n  \"ClientToken\": \"hCgOx27N\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-13bf0f9d-271c-4494-b089-3ca3388342a6"
+            },
+            {
+              "id": "8152fa86-4266-4b92-812f-d9e874c0cc4a",
+              "name": "The resource is currently being modified by another operation.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"oeRMsP::H3tBF2LN0eALBVpKj::Tk6HLHVFfzJkt7482iImLI3KydHl6JsazbAgj7Q1mwAURfARhSuPh\",\n  \"Identifier\": \"<string>\",\n  \"TypeVersionId\": \"tzL4\",\n  \"RoleArn\": \"arn:5J:iam::219973349901:role/oEx% \",\n  \"ClientToken\": \"hCgOx27N\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-8152fa86-4266-4b92-812f-d9e874c0cc4a"
+            },
+            {
+              "id": "cf0e596b-bd9c-4d1a-a1c1-f3d9fb92cd4f",
+              "name": "The request was denied due to request throttling.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"oeRMsP::H3tBF2LN0eALBVpKj::Tk6HLHVFfzJkt7482iImLI3KydHl6JsazbAgj7Q1mwAURfARhSuPh\",\n  \"Identifier\": \"<string>\",\n  \"TypeVersionId\": \"tzL4\",\n  \"RoleArn\": \"arn:5J:iam::219973349901:role/oEx% \",\n  \"ClientToken\": \"hCgOx27N\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-cf0e596b-bd9c-4d1a-a1c1-f3d9fb92cd4f"
+            },
+            {
+              "id": "cc8fc73f-4dce-4366-a565-61ee4e963c5e",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"oeRMsP::H3tBF2LN0eALBVpKj::Tk6HLHVFfzJkt7482iImLI3KydHl6JsazbAgj7Q1mwAURfARhSuPh\",\n  \"Identifier\": \"<string>\",\n  \"TypeVersionId\": \"tzL4\",\n  \"RoleArn\": \"arn:5J:iam::219973349901:role/oEx% \",\n  \"ClientToken\": \"hCgOx27N\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-cc8fc73f-4dce-4366-a565-61ee4e963c5e"
+            }
+          ],
+          "createdAt": "2026-06-05T15:07:00.000Z",
+          "updatedAt": "2026-06-05T15:07:00.000Z",
+          "uid": "35240-848b35da-57f9-448b-84d8-1341547cfcbd"
+        }
+      ],
+      "id": "97a03a0d-8da2-4559-b453-e2a52224d7b3",
+      "createdAt": "2026-06-05T15:07:00.000Z",
+      "updatedAt": "2026-06-05T15:07:00.000Z",
+      "uid": "35240-97a03a0d-8da2-4559-b453-e2a52224d7b3"
+    },
+    {
+      "name": "?Action=ListResources",
+      "item": [
+        {
+          "name": "List Resources of a Specified Type",
+          "id": "26d3e475-628f-4135-acf2-eb071f57c56a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"TypeName\": \"zjbdnuxvuyBZYE0I3rOFUPdPOJwcv4aol4dmgRilhsboN::iCBK8H::Aji5MiaM9TSL9EMAM0bBQP3nmiUxS2vJacK8JKQVsGpkl\",\n  \"TypeVersionId\": \"RbM\",\n  \"RoleArn\": \"arn:3&Da:iam::888584002647:role/7{9jN<~P\",\n  \"NextToken\": \"<string>\",\n  \"MaxResults\": \"<integer>\",\n  \"ResourceModel\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/?Action=ListResources&Version=2021-09-30",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "ListResources"
+                },
+                {
+                  "description": "(Required) The API version. Fixed to 2021-09-30.",
+                  "key": "Version",
+                  "value": "2021-09-30"
+                }
+              ]
+            },
+            "description": "Returns information about the specified resources. For more information, see Discovering resources in the CloudFormation User Guide. You can use this operation to discover resources that are available in your account."
+          },
+          "response": [
+            {
+              "id": "9a0f79fa-f2f7-4457-b412-c31d50629f99",
+              "name": "Resource list returned successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"zjbdnuxvuyBZYE0I3rOFUPdPOJwcv4aol4dmgRilhsboN::iCBK8H::Aji5MiaM9TSL9EMAM0bBQP3nmiUxS2vJacK8JKQVsGpkl\",\n  \"TypeVersionId\": \"RbM\",\n  \"RoleArn\": \"arn:3&Da:iam::888584002647:role/7{9jN<~P\",\n  \"NextToken\": \"<string>\",\n  \"MaxResults\": \"<integer>\",\n  \"ResourceModel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"TypeName\": \"<string>\",\n  \"ResourceDescriptions\": [\n    {\n      \"Identifier\": \"<string>\",\n      \"Properties\": \"<string>\"\n    },\n    {\n      \"Identifier\": \"<string>\",\n      \"Properties\": \"<string>\"\n    }\n  ],\n  \"NextToken\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-9a0f79fa-f2f7-4457-b412-c31d50629f99"
+            },
+            {
+              "id": "19ea103a-2f03-41d5-81d3-35161f5fcd2c",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"zjbdnuxvuyBZYE0I3rOFUPdPOJwcv4aol4dmgRilhsboN::iCBK8H::Aji5MiaM9TSL9EMAM0bBQP3nmiUxS2vJacK8JKQVsGpkl\",\n  \"TypeVersionId\": \"RbM\",\n  \"RoleArn\": \"arn:3&Da:iam::888584002647:role/7{9jN<~P\",\n  \"NextToken\": \"<string>\",\n  \"MaxResults\": \"<integer>\",\n  \"ResourceModel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-19ea103a-2f03-41d5-81d3-35161f5fcd2c"
+            },
+            {
+              "id": "f524e06f-75da-4f82-a34e-b0b1560c7914",
+              "name": "The specified resource type was not found in the CloudFormation Registry.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"zjbdnuxvuyBZYE0I3rOFUPdPOJwcv4aol4dmgRilhsboN::iCBK8H::Aji5MiaM9TSL9EMAM0bBQP3nmiUxS2vJacK8JKQVsGpkl\",\n  \"TypeVersionId\": \"RbM\",\n  \"RoleArn\": \"arn:3&Da:iam::888584002647:role/7{9jN<~P\",\n  \"NextToken\": \"<string>\",\n  \"MaxResults\": \"<integer>\",\n  \"ResourceModel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-f524e06f-75da-4f82-a34e-b0b1560c7914"
+            },
+            {
+              "id": "798b3572-3e7b-4804-ab2b-a8a824233beb",
+              "name": "The request was denied due to request throttling.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"zjbdnuxvuyBZYE0I3rOFUPdPOJwcv4aol4dmgRilhsboN::iCBK8H::Aji5MiaM9TSL9EMAM0bBQP3nmiUxS2vJacK8JKQVsGpkl\",\n  \"TypeVersionId\": \"RbM\",\n  \"RoleArn\": \"arn:3&Da:iam::888584002647:role/7{9jN<~P\",\n  \"NextToken\": \"<string>\",\n  \"MaxResults\": \"<integer>\",\n  \"ResourceModel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-798b3572-3e7b-4804-ab2b-a8a824233beb"
+            },
+            {
+              "id": "96f340f3-5469-4c89-aa21-2b91b7e61516",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"TypeName\": \"zjbdnuxvuyBZYE0I3rOFUPdPOJwcv4aol4dmgRilhsboN::iCBK8H::Aji5MiaM9TSL9EMAM0bBQP3nmiUxS2vJacK8JKQVsGpkl\",\n  \"TypeVersionId\": \"RbM\",\n  \"RoleArn\": \"arn:3&Da:iam::888584002647:role/7{9jN<~P\",\n  \"NextToken\": \"<string>\",\n  \"MaxResults\": \"<integer>\",\n  \"ResourceModel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-96f340f3-5469-4c89-aa21-2b91b7e61516"
+            }
+          ],
+          "createdAt": "2026-06-05T15:07:00.000Z",
+          "updatedAt": "2026-06-05T15:07:00.000Z",
+          "uid": "35240-26d3e475-628f-4135-acf2-eb071f57c56a"
+        }
+      ],
+      "id": "db0bf57a-8207-4059-a556-04c2f2312dde",
+      "createdAt": "2026-06-05T15:07:00.000Z",
+      "updatedAt": "2026-06-05T15:07:00.000Z",
+      "uid": "35240-db0bf57a-8207-4059-a556-04c2f2312dde"
+    },
+    {
+      "name": "?Action=GetResourceRequestStatus",
+      "item": [
+        {
+          "name": "Get the Status of a Resource Operation Request",
+          "id": "4812c028-d003-4af9-bc68-24216af493e2",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"RequestToken\": \"n\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/?Action=GetResourceRequestStatus&Version=2021-09-30",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "GetResourceRequestStatus"
+                },
+                {
+                  "description": "(Required) The API version. Fixed to 2021-09-30.",
+                  "key": "Version",
+                  "value": "2021-09-30"
+                }
+              ]
+            },
+            "description": "Returns the current status of a resource operation request. For more information, see Managing resource operation requests in the CloudFormation User Guide."
+          },
+          "response": [
+            {
+              "id": "f67f7851-dd94-4807-91fe-b22f8ae44419",
+              "name": "Request status returned successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"RequestToken\": \"n\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"ProgressEvent\": {\n    \"TypeName\": \"<string>\",\n    \"Identifier\": \"<string>\",\n    \"RequestToken\": \"<string>\",\n    \"HooksRequestToken\": \"<string>\",\n    \"Operation\": \"UPDATE\",\n    \"OperationStatus\": \"FAILED\",\n    \"EventTime\": \"<number>\",\n    \"ResourceModel\": \"<string>\",\n    \"StatusMessage\": \"<string>\",\n    \"ErrorCode\": \"InvalidTypeConfiguration\",\n    \"RetryAfter\": \"<number>\"\n  },\n  \"HooksProgressEvent\": [\n    {\n      \"HookTypeName\": \"<string>\",\n      \"HookTypeVersionId\": \"<string>\",\n      \"HookTypeArn\": \"<string>\",\n      \"InvocationPoint\": \"PRE_PROVISION\",\n      \"HookStatus\": \"HOOK_IN_PROGRESS\",\n      \"HookEventTime\": \"<number>\",\n      \"HookStatusMessage\": \"<string>\",\n      \"FailureMode\": \"WARN\"\n    },\n    {\n      \"HookTypeName\": \"<string>\",\n      \"HookTypeVersionId\": \"<string>\",\n      \"HookTypeArn\": \"<string>\",\n      \"InvocationPoint\": \"PRE_PROVISION\",\n      \"HookStatus\": \"HOOK_FAILED\",\n      \"HookEventTime\": \"<number>\",\n      \"HookStatusMessage\": \"<string>\",\n      \"FailureMode\": \"FAIL\"\n    }\n  ]\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-f67f7851-dd94-4807-91fe-b22f8ae44419"
+            },
+            {
+              "id": "cb636e49-d118-4e3e-800d-9590be19d7f4",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"RequestToken\": \"n\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-cb636e49-d118-4e3e-800d-9590be19d7f4"
+            },
+            {
+              "id": "870f5c2b-7b2b-416d-bb7c-1c548b161fc8",
+              "name": "The specified request token was not found.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"RequestToken\": \"n\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-870f5c2b-7b2b-416d-bb7c-1c548b161fc8"
+            },
+            {
+              "id": "df7f6dd1-765d-4b84-ac18-e75ea96628b4",
+              "name": "The request was denied due to request throttling.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"RequestToken\": \"n\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-df7f6dd1-765d-4b84-ac18-e75ea96628b4"
+            },
+            {
+              "id": "b7d9829f-7a5c-463d-a25c-ba7cf9ee9455",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"RequestToken\": \"n\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-b7d9829f-7a5c-463d-a25c-ba7cf9ee9455"
+            }
+          ],
+          "createdAt": "2026-06-05T15:07:00.000Z",
+          "updatedAt": "2026-06-05T15:07:00.000Z",
+          "uid": "35240-4812c028-d003-4af9-bc68-24216af493e2"
+        }
+      ],
+      "id": "d39074ba-4bc2-415b-91bb-1ee6e724ca3a",
+      "createdAt": "2026-06-05T15:07:00.000Z",
+      "updatedAt": "2026-06-05T15:07:00.000Z",
+      "uid": "35240-d39074ba-4bc2-415b-91bb-1ee6e724ca3a"
+    },
+    {
+      "name": "?Action=ListResourceRequests",
+      "item": [
+        {
+          "name": "List Resource Operation Requests",
+          "id": "b8f35faa-9566-4420-a438-1938b1a5072e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"MaxResults\": \"<integer>\",\n  \"NextToken\": \"<string>\",\n  \"ResourceRequestStatusFilter\": {\n    \"Operations\": [\n      \"UPDATE\",\n      \"DELETE\"\n    ],\n    \"OperationStatuses\": [\n      \"FAILED\",\n      \"CANCEL_IN_PROGRESS\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/?Action=ListResourceRequests&Version=2021-09-30",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "ListResourceRequests"
+                },
+                {
+                  "description": "(Required) The API version. Fixed to 2021-09-30.",
+                  "key": "Version",
+                  "value": "2021-09-30"
+                }
+              ]
+            },
+            "description": "Returns existing resource operation requests. This includes requests of all statuses. For more information, see Managing resource operation requests in the CloudFormation User Guide."
+          },
+          "response": [
+            {
+              "id": "14667aef-fc8e-454b-983c-272ed0593433",
+              "name": "Resource requests returned successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"MaxResults\": \"<integer>\",\n  \"NextToken\": \"<string>\",\n  \"ResourceRequestStatusFilter\": {\n    \"Operations\": [\n      \"UPDATE\",\n      \"DELETE\"\n    ],\n    \"OperationStatuses\": [\n      \"FAILED\",\n      \"CANCEL_IN_PROGRESS\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"ResourceRequestStatusSummaries\": [\n    {\n      \"TypeName\": \"<string>\",\n      \"Identifier\": \"<string>\",\n      \"RequestToken\": \"<string>\",\n      \"HooksRequestToken\": \"<string>\",\n      \"Operation\": \"UPDATE\",\n      \"OperationStatus\": \"CANCEL_COMPLETE\",\n      \"EventTime\": \"<number>\",\n      \"ResourceModel\": \"<string>\",\n      \"StatusMessage\": \"<string>\",\n      \"ErrorCode\": \"InvalidTypeConfiguration\",\n      \"RetryAfter\": \"<number>\"\n    },\n    {\n      \"TypeName\": \"<string>\",\n      \"Identifier\": \"<string>\",\n      \"RequestToken\": \"<string>\",\n      \"HooksRequestToken\": \"<string>\",\n      \"Operation\": \"UPDATE\",\n      \"OperationStatus\": \"PENDING\",\n      \"EventTime\": \"<number>\",\n      \"ResourceModel\": \"<string>\",\n      \"StatusMessage\": \"<string>\",\n      \"ErrorCode\": \"ServiceInternalError\",\n      \"RetryAfter\": \"<number>\"\n    }\n  ],\n  \"NextToken\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-14667aef-fc8e-454b-983c-272ed0593433"
+            },
+            {
+              "id": "8781a418-5bd0-4b0e-8d2a-e54d55599eba",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"MaxResults\": \"<integer>\",\n  \"NextToken\": \"<string>\",\n  \"ResourceRequestStatusFilter\": {\n    \"Operations\": [\n      \"UPDATE\",\n      \"DELETE\"\n    ],\n    \"OperationStatuses\": [\n      \"FAILED\",\n      \"CANCEL_IN_PROGRESS\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-8781a418-5bd0-4b0e-8d2a-e54d55599eba"
+            },
+            {
+              "id": "da0611c2-3e87-4003-a51e-b5198062bdb2",
+              "name": "The request was denied due to request throttling.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"MaxResults\": \"<integer>\",\n  \"NextToken\": \"<string>\",\n  \"ResourceRequestStatusFilter\": {\n    \"Operations\": [\n      \"UPDATE\",\n      \"DELETE\"\n    ],\n    \"OperationStatuses\": [\n      \"FAILED\",\n      \"CANCEL_IN_PROGRESS\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-da0611c2-3e87-4003-a51e-b5198062bdb2"
+            },
+            {
+              "id": "d9fe0009-f348-48e5-a489-34e67325f572",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"MaxResults\": \"<integer>\",\n  \"NextToken\": \"<string>\",\n  \"ResourceRequestStatusFilter\": {\n    \"Operations\": [\n      \"UPDATE\",\n      \"DELETE\"\n    ],\n    \"OperationStatuses\": [\n      \"FAILED\",\n      \"CANCEL_IN_PROGRESS\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-d9fe0009-f348-48e5-a489-34e67325f572"
+            }
+          ],
+          "createdAt": "2026-06-05T15:07:00.000Z",
+          "updatedAt": "2026-06-05T15:07:00.000Z",
+          "uid": "35240-b8f35faa-9566-4420-a438-1938b1a5072e"
+        }
+      ],
+      "id": "b10de30e-76ea-4e2e-9c73-80d215b8d77c",
+      "createdAt": "2026-06-05T15:07:00.000Z",
+      "updatedAt": "2026-06-05T15:07:00.000Z",
+      "uid": "35240-b10de30e-76ea-4e2e-9c73-80d215b8d77c"
+    },
+    {
+      "name": "?Action=CancelResourceRequest",
+      "item": [
+        {
+          "name": "Cancel an In-progress Resource Operation Request",
+          "id": "5bd96920-bc49-4fc4-ad76-09d15a5206c6",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"RequestToken\": \"k7FyMa\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/?Action=CancelResourceRequest&Version=2021-09-30",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "CancelResourceRequest"
+                },
+                {
+                  "description": "(Required) The API version. Fixed to 2021-09-30.",
+                  "key": "Version",
+                  "value": "2021-09-30"
+                }
+              ]
+            },
+            "description": "Cancels the specified resource operation request. For more information, see Canceling resource operation requests in the CloudFormation User Guide. Only resource operations with a status of PENDING or IN_PROGRESS can be cancelled."
+          },
+          "response": [
+            {
+              "id": "ffe36faf-1dfb-4a1e-9a13-1696a9cda0eb",
+              "name": "Request cancellation initiated successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"RequestToken\": \"k7FyMa\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"ProgressEvent\": {\n    \"TypeName\": \"<string>\",\n    \"Identifier\": \"<string>\",\n    \"RequestToken\": \"<string>\",\n    \"HooksRequestToken\": \"<string>\",\n    \"Operation\": \"DELETE\",\n    \"OperationStatus\": \"CANCEL_IN_PROGRESS\",\n    \"EventTime\": \"<number>\",\n    \"ResourceModel\": \"<string>\",\n    \"StatusMessage\": \"<string>\",\n    \"ErrorCode\": \"Unknown\",\n    \"RetryAfter\": \"<number>\"\n  }\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-ffe36faf-1dfb-4a1e-9a13-1696a9cda0eb"
+            },
+            {
+              "id": "ceec85b4-5da9-4395-ba77-2b3c61857f8d",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"RequestToken\": \"k7FyMa\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-ceec85b4-5da9-4395-ba77-2b3c61857f8d"
+            },
+            {
+              "id": "9a5ff00b-5511-43e8-b82e-f873d3f75f4c",
+              "name": "The specified request token was not found.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"RequestToken\": \"k7FyMa\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-9a5ff00b-5511-43e8-b82e-f873d3f75f4c"
+            },
+            {
+              "id": "ba5da7ba-9fbc-4c66-8077-4482dd959a4e",
+              "name": "The request is not in a cancellable state. Only PENDING or IN_PROGRESS requests can be cancelled.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"RequestToken\": \"k7FyMa\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-ba5da7ba-9fbc-4c66-8077-4482dd959a4e"
+            },
+            {
+              "id": "8f756321-a346-44a2-aa7e-56e0518be810",
+              "name": "The request was denied due to request throttling.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"RequestToken\": \"k7FyMa\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-8f756321-a346-44a2-aa7e-56e0518be810"
+            },
+            {
+              "id": "f208c879-5d86-4bb3-9ed8-fca3b32bd9d5",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"RequestToken\": \"k7FyMa\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/?Version=2021-09-30",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The API version. Fixed to 2021-09-30.",
+                      "key": "Version",
+                      "value": "2021-09-30"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Message\": \"<string>\",\n  \"Code\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T15:07:00.000Z",
+              "updatedAt": "2026-06-05T15:07:00.000Z",
+              "uid": "35240-f208c879-5d86-4bb3-9ed8-fca3b32bd9d5"
+            }
+          ],
+          "createdAt": "2026-06-05T15:07:00.000Z",
+          "updatedAt": "2026-06-05T15:07:00.000Z",
+          "uid": "35240-5bd96920-bc49-4fc4-ad76-09d15a5206c6"
+        }
+      ],
+      "id": "8e12cca0-d4e6-499a-bc0e-9d844c89ba69",
+      "createdAt": "2026-06-05T15:07:00.000Z",
+      "updatedAt": "2026-06-05T15:07:00.000Z",
+      "uid": "35240-8e12cca0-d4e6-499a-bc0e-9d844c89ba69"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "region",
+      "value": "us-east-1"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://cloudcontrolapi.{{region}}.amazonaws.com"
+    }
+  ]
+}
