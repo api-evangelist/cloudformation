@@ -41,7 +41,7 @@ apis:
         url: https://aws.amazon.com/cloudformation/getting-started/
       - type: ChangeLog
         url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
-      - type: SDK
+      - type: SDKs
         url: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
         title: Python SDK (Boto3)
     contact:
@@ -75,38 +75,33 @@ apis:
 common:
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/aws-cloudformation/overview
-  - type: ArazzoWorkflows
-    url: arazzo/
-    workflows:
-      - url: arazzo/cloudformation-audit-exports-workflow.yml
-        name: CloudFormation Audit Cross-Stack Exports
-        summary: List the account's stack exports, then list the stacks that import a named export.
-      - url: arazzo/cloudformation-change-set-deploy-workflow.yml
-        name: CloudFormation Create and Execute a Change Set
-        summary: Create a change set, poll until CREATE_COMPLETE, execute it, then wait for the stack update to finish.
-      - url: arazzo/cloudformation-deploy-stack-set-workflow.yml
-        name: CloudFormation Deploy a Stack Set
-        summary: Create a stack set, roll out an instance to an account and region, then poll the instance until CURRENT.
-      - url: arazzo/cloudformation-detect-stack-drift-workflow.yml
-        name: CloudFormation Detect Stack Drift
-        summary: Start drift detection, poll until detection completes, then list the drifted resources.
-      - url: arazzo/cloudformation-inspect-stack-resource-workflow.yml
-        name: CloudFormation Inspect a Stack Resource
-        summary: Describe a single stack resource, then run targeted drift detection against just that resource.
-      - url: arazzo/cloudformation-provision-stack-workflow.yml
-        name: CloudFormation Provision a Stack
-        summary: Validate a template, create a stack, poll until CREATE_COMPLETE, then list its resources.
-      - url: arazzo/cloudformation-review-change-set-workflow.yml
-        name: CloudFormation Review and Clean Up a Change Set
-        summary: >-
-          Create a change set, poll until it is computed, then branch — delete it when it contains no changes, otherwise
-          keep it for review.
-      - url: arazzo/cloudformation-safe-stack-update-workflow.yml
-        name: CloudFormation Safe Stack Update
-        summary: Summarize a template, update the stack, poll until UPDATE_COMPLETE, then pull the stack events.
-      - url: arazzo/cloudformation-teardown-stack-workflow.yml
-        name: CloudFormation Tear Down a Stack
-        summary: Disable termination protection, delete the stack, then poll until DELETE_COMPLETE.
+  - type: Arazzo
+    url: arazzo/cloudformation-audit-exports-workflow.yml
+    name: CloudFormation Audit Cross-Stack Exports
+  - type: Arazzo
+    url: arazzo/cloudformation-change-set-deploy-workflow.yml
+    name: CloudFormation Create and Execute a Change Set
+  - type: Arazzo
+    url: arazzo/cloudformation-deploy-stack-set-workflow.yml
+    name: CloudFormation Deploy a Stack Set
+  - type: Arazzo
+    url: arazzo/cloudformation-detect-stack-drift-workflow.yml
+    name: CloudFormation Detect Stack Drift
+  - type: Arazzo
+    url: arazzo/cloudformation-inspect-stack-resource-workflow.yml
+    name: CloudFormation Inspect a Stack Resource
+  - type: Arazzo
+    url: arazzo/cloudformation-provision-stack-workflow.yml
+    name: CloudFormation Provision a Stack
+  - type: Arazzo
+    url: arazzo/cloudformation-review-change-set-workflow.yml
+    name: CloudFormation Review and Clean Up a Change Set
+  - type: Arazzo
+    url: arazzo/cloudformation-safe-stack-update-workflow.yml
+    name: CloudFormation Safe Stack Update
+  - type: Arazzo
+    url: arazzo/cloudformation-teardown-stack-workflow.yml
+    name: CloudFormation Tear Down a Stack
   - type: Portal
     url: https://aws.amazon.com/cloudformation/resources/
   - type: GettingStarted
@@ -125,7 +120,7 @@ common:
     url: https://status.aws.amazon.com/
   - type: Console
     url: https://console.aws.amazon.com/cloudformation/
-  - type: SignUp
+  - type: Signup
     url: https://portal.aws.amazon.com/billing/signup
   - type: GitHubOrganization
     url: https://github.com/aws-cloudformation
@@ -163,16 +158,16 @@ common:
         description: Simplified syntax for serverless application deployment via CloudFormation
       - name: Terraform
         description: Alternative IaC tool that can import/export CloudFormation templates
-  - type: SDK
+  - type: SDKs
     url: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
     title: Python SDK (Boto3)
-  - type: SDK
+  - type: SDKs
     url: https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/cloudformation-examples.html
     title: JavaScript SDK v3
-  - type: SDK
+  - type: SDKs
     url: https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/examples-cloudformation.html
     title: Java SDK
-  - type: SDK
+  - type: SDKs
     url: https://docs.aws.amazon.com/sdk-for-go/api/service/cloudformation/
     title: Go SDK
   - type: CLI
