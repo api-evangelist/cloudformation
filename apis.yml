@@ -73,6 +73,14 @@ apis:
         url: https://aws.amazon.com/contact-us/
         email: ''
 common:
+  - type: TrustCenter
+    url: security/cloudformation-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/cloudformation-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/cloudformation-domain-security.yml
+  - type: Authentication
+    url: authentication/cloudformation-authentication.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/aws-cloudformation/overview
   - type: Arazzo
