@@ -73,6 +73,8 @@ apis:
         url: https://aws.amazon.com/contact-us/
         email: ''
 common:
+  - type: AgenticAccess
+    url: agentic-access/cloudformation-agentic-access.yml
   - type: TrustCenter
     url: security/cloudformation-trust-center.yml
   - type: VulnerabilityDisclosure
