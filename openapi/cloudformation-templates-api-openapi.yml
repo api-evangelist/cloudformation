@@ -1,0 +1,363 @@
+openapi: 3.1.0
+info:
+  title: AWS Cloud Control Change Sets Templates API
+  description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
+  version: '2021-09-30'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/contact-us/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-logo:
+    url: https://aws.amazon.com/cloudformation/logo.png
+servers:
+- url: https://cloudcontrolapi.{region}.amazonaws.com
+  description: AWS Cloud Control API Regional Endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-central-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- AWS_Signature_V4: []
+tags:
+- name: Templates
+  description: Operations for retrieving, validating, and summarizing templates.
+paths:
+  /?Action=GetTemplate:
+    post:
+      operationId: getTemplate
+      summary: Retrieve a Stack Template
+      description: Returns the template body for a specified stack. You can get the template for running or deleted stacks.
+      tags:
+      - Templates
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                StackName:
+                  type: string
+                ChangeSetName:
+                  type: string
+                TemplateStage:
+                  type: string
+                  description: The stage of the template to return. Original returns the template before transforms; Processed returns after.
+                  enum:
+                  - Original
+                  - Processed
+            examples:
+              GettemplateRequestExample:
+                summary: Default getTemplate request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  ChangeSetName: example_value
+                  TemplateStage: Original
+      responses:
+        '200':
+          description: Template body returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  GetTemplateResult:
+                    type: object
+                    properties:
+                      TemplateBody:
+                        type: string
+                      StagesAvailable:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Gettemplate200Example:
+                  summary: Default getTemplate 200 response
+                  x-microcks-default: true
+                  value:
+                    GetTemplateResult:
+                      TemplateBody: example_value
+                      StagesAvailable:
+                      - example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=GetTemplateSummary:
+    post:
+      operationId: getTemplateSummary
+      summary: Get Summary Information About a Template
+      description: Returns information about a new or existing template including parameter declarations, a list of resources, and capabilities required.
+      tags:
+      - Templates
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                TemplateBody:
+                  type: string
+                TemplateURL:
+                  type: string
+                  format: uri
+                StackName:
+                  type: string
+                StackSetName:
+                  type: string
+            examples:
+              GettemplatesummaryRequestExample:
+                summary: Default getTemplateSummary request
+                x-microcks-default: true
+                value:
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
+                  StackName: example_value
+                  StackSetName: example_value
+      responses:
+        '200':
+          description: Template summary returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  GetTemplateSummaryResult:
+                    type: object
+                    properties:
+                      Description:
+                        type: string
+                      Capabilities:
+                        type: array
+                        items:
+                          type: string
+                      CapabilitiesReason:
+                        type: string
+                      ResourceTypes:
+                        type: array
+                        items:
+                          type: string
+                      Version:
+                        type: string
+                      Metadata:
+                        type: string
+                      DeclaredTransforms:
+                        type: array
+                        items:
+                          type: string
+                      Parameters:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ParameterDeclaration'
+              examples:
+                Gettemplatesummary200Example:
+                  summary: Default getTemplateSummary 200 response
+                  x-microcks-default: true
+                  value:
+                    GetTemplateSummaryResult:
+                      Description: A sample description.
+                      Capabilities:
+                      - example_value
+                      CapabilitiesReason: example_value
+                      ResourceTypes:
+                      - example_value
+                      Version: example_value
+                      Metadata: example_value
+                      DeclaredTransforms:
+                      - example_value
+                      Parameters:
+                      - ParameterKey: example_value
+                        DefaultValue: example_value
+                        ParameterType: example_value
+                        NoEcho: true
+                        Description: A sample description.
+                        ParameterConstraints: {}
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=ValidateTemplate:
+    post:
+      operationId: validateTemplate
+      summary: Validate a Cloudformation Template
+      description: Validates a specified template. CloudFormation checks whether the template is valid JSON or YAML, whether all required values are present, and whether all references are valid.
+      tags:
+      - Templates
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                TemplateBody:
+                  type: string
+                  description: Template body string (1-51,200 bytes).
+                TemplateURL:
+                  type: string
+                  description: Location of template file in Amazon S3.
+                  format: uri
+            examples:
+              ValidatetemplateRequestExample:
+                summary: Default validateTemplate request
+                x-microcks-default: true
+                value:
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
+      responses:
+        '200':
+          description: Template validation result returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ValidateTemplateResult:
+                    type: object
+                    properties:
+                      Description:
+                        type: string
+                      Capabilities:
+                        type: array
+                        items:
+                          type: string
+                      CapabilitiesReason:
+                        type: string
+                      Parameters:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ParameterDeclaration'
+                      DeclaredTransforms:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Validatetemplate200Example:
+                  summary: Default validateTemplate 200 response
+                  x-microcks-default: true
+                  value:
+                    ValidateTemplateResult:
+                      Description: A sample description.
+                      Capabilities:
+                      - example_value
+                      CapabilitiesReason: example_value
+                      Parameters:
+                      - ParameterKey: example_value
+                        DefaultValue: example_value
+                        ParameterType: example_value
+                        NoEcho: true
+                        Description: A sample description.
+                        ParameterConstraints: {}
+                      DeclaredTransforms:
+                      - example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2010-05-15'
+      description: The API version. Fixed to 2010-05-15.
+  responses:
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: An internal service error occurred.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: The specified resource was not found.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+          example: example_value
+        RequestId:
+          type: string
+          example: '500123'
+    ParameterDeclaration:
+      type: object
+      properties:
+        ParameterKey:
+          type: string
+          example: example_value
+        DefaultValue:
+          type: string
+          example: example_value
+        ParameterType:
+          type: string
+          example: example_value
+        NoEcho:
+          type: boolean
+          example: true
+        Description:
+          type: string
+          example: A sample description.
+        ParameterConstraints:
+          type: object
+          properties:
+            AllowedValues:
+              type: array
+              items:
+                type: string
+          example: example_value
+  securitySchemes:
+    AWS_Signature_V4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication.

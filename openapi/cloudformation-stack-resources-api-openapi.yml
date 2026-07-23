@@ -1,0 +1,477 @@
+openapi: 3.1.0
+info:
+  title: AWS Cloud Control Change Sets Stack Resources API
+  description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
+  version: '2021-09-30'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/contact-us/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-logo:
+    url: https://aws.amazon.com/cloudformation/logo.png
+servers:
+- url: https://cloudcontrolapi.{region}.amazonaws.com
+  description: AWS Cloud Control API Regional Endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-central-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- AWS_Signature_V4: []
+tags:
+- name: Stack Resources
+  description: Operations for describing resources within a stack.
+paths:
+  /?Action=DescribeStackResource:
+    post:
+      operationId: describeStackResource
+      summary: Describe a Specific Resource in a Stack
+      description: Returns a description of the specified resource in the specified stack.
+      tags:
+      - Stack Resources
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              - LogicalResourceId
+              properties:
+                StackName:
+                  type: string
+                LogicalResourceId:
+                  type: string
+                  description: The logical name of the resource as specified in the template.
+            examples:
+              DescribestackresourceRequestExample:
+                summary: Default describeStackResource request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  LogicalResourceId: '500123'
+      responses:
+        '200':
+          description: Stack resource details returned successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackResourceResult:
+                    type: object
+                    properties:
+                      StackResourceDetail:
+                        $ref: '#/components/schemas/StackResource'
+              examples:
+                Describestackresource200Example:
+                  summary: Default describeStackResource 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackResourceResult:
+                      StackResourceDetail:
+                        StackName: example_value
+                        StackId: '500123'
+                        LogicalResourceId: '500123'
+                        PhysicalResourceId: '500123'
+                        ResourceType: example_value
+                        Timestamp: '2026-01-15T10:30:00Z'
+                        ResourceStatus: CREATE_IN_PROGRESS
+                        ResourceStatusReason: example_value
+                        Description: A sample description.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=DescribeStackResources:
+    post:
+      operationId: describeStackResources
+      summary: Describe All Resources in a Stack
+      description: Returns AWS resource descriptions for running or deleted stacks. You must specify a StackName or PhysicalResourceId.
+      tags:
+      - Stack Resources
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                StackName:
+                  type: string
+                LogicalResourceId:
+                  type: string
+                PhysicalResourceId:
+                  type: string
+            examples:
+              DescribestackresourcesRequestExample:
+                summary: Default describeStackResources request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  LogicalResourceId: '500123'
+                  PhysicalResourceId: '500123'
+      responses:
+        '200':
+          description: Stack resources returned successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackResourcesResult:
+                    type: object
+                    properties:
+                      StackResources:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackResource'
+              examples:
+                Describestackresources200Example:
+                  summary: Default describeStackResources 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackResourcesResult:
+                      StackResources:
+                      - StackName: example_value
+                        StackId: '500123'
+                        LogicalResourceId: '500123'
+                        PhysicalResourceId: '500123'
+                        ResourceType: example_value
+                        Timestamp: '2026-01-15T10:30:00Z'
+                        ResourceStatus: CREATE_IN_PROGRESS
+                        ResourceStatusReason: example_value
+                        Description: A sample description.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=ListStackResources:
+    post:
+      operationId: listStackResources
+      summary: List Resources in a Stack
+      description: Returns descriptions of all resources of the specified stack.
+      tags:
+      - Stack Resources
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              properties:
+                StackName:
+                  type: string
+                NextToken:
+                  type: string
+                  maxLength: 1024
+            examples:
+              ListstackresourcesRequestExample:
+                summary: Default listStackResources request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  NextToken: example_value
+      responses:
+        '200':
+          description: Stack resource summaries returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListStackResourcesResult:
+                    type: object
+                    properties:
+                      StackResourceSummaries:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackResourceSummary'
+                      NextToken:
+                        type: string
+              examples:
+                Liststackresources200Example:
+                  summary: Default listStackResources 200 response
+                  x-microcks-default: true
+                  value:
+                    ListStackResourcesResult:
+                      StackResourceSummaries:
+                      - LogicalResourceId: '500123'
+                        PhysicalResourceId: '500123'
+                        ResourceType: example_value
+                        LastUpdatedTimestamp: '2026-01-15T10:30:00Z'
+                        ResourceStatus: example_value
+                        ResourceStatusReason: example_value
+                      NextToken: example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=SignalResource:
+    post:
+      operationId: signalResource
+      summary: Send a Signal to a Resource in a Stack
+      description: Sends a signal to the specified resource with a success or failure status. You can use the SignalResource operation in conjunction with a creation policy or update policy.
+      tags:
+      - Stack Resources
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              - LogicalResourceId
+              - UniqueId
+              - Status
+              properties:
+                StackName:
+                  type: string
+                LogicalResourceId:
+                  type: string
+                UniqueId:
+                  type: string
+                  description: A unique ID of the signal.
+                  maxLength: 64
+                Status:
+                  type: string
+                  enum:
+                  - SUCCESS
+                  - FAILURE
+            examples:
+              SignalresourceRequestExample:
+                summary: Default signalResource request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  LogicalResourceId: '500123'
+                  UniqueId: '500123'
+                  Status: SUCCESS
+      responses:
+        '200':
+          description: Signal sent successfully.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2010-05-15'
+      description: The API version. Fixed to 2010-05-15.
+  schemas:
+    StackResource:
+      type: object
+      required:
+      - LogicalResourceId
+      - ResourceType
+      - ResourceStatus
+      - Timestamp
+      properties:
+        StackName:
+          type: string
+          description: The name of the stack.
+          example: example_value
+        StackId:
+          type: string
+          description: Unique identifier of the stack.
+          example: '500123'
+        LogicalResourceId:
+          type: string
+          description: The logical name of the resource specified in the template.
+          example: '500123'
+        PhysicalResourceId:
+          type: string
+          description: The name or unique identifier of the physical resource.
+          example: '500123'
+        ResourceType:
+          type: string
+          description: Type of AWS resource.
+          minLength: 1
+          maxLength: 256
+          example: example_value
+        Timestamp:
+          type: string
+          format: date-time
+          description: Time the status was updated.
+          example: '2026-01-15T10:30:00Z'
+        ResourceStatus:
+          type: string
+          description: Current status of the resource.
+          enum:
+          - CREATE_IN_PROGRESS
+          - CREATE_FAILED
+          - CREATE_COMPLETE
+          - DELETE_IN_PROGRESS
+          - DELETE_FAILED
+          - DELETE_COMPLETE
+          - UPDATE_IN_PROGRESS
+          - UPDATE_FAILED
+          - UPDATE_COMPLETE
+          - IMPORT_FAILED
+          - IMPORT_COMPLETE
+          - IMPORT_IN_PROGRESS
+          - IMPORT_ROLLBACK_IN_PROGRESS
+          - IMPORT_ROLLBACK_FAILED
+          - IMPORT_ROLLBACK_COMPLETE
+          - ROLLBACK_IN_PROGRESS
+          - ROLLBACK_COMPLETE
+          example: CREATE_IN_PROGRESS
+        ResourceStatusReason:
+          type: string
+          description: Message associated with the resource status.
+          example: example_value
+        Description:
+          type: string
+          description: User-defined description.
+          maxLength: 1024
+          example: A sample description.
+        DriftInformation:
+          $ref: '#/components/schemas/StackResourceDriftInformation'
+        ModuleInfo:
+          $ref: '#/components/schemas/ModuleInfo'
+    StackResourceSummary:
+      type: object
+      required:
+      - LogicalResourceId
+      - ResourceType
+      - ResourceStatus
+      - LastUpdatedTimestamp
+      properties:
+        LogicalResourceId:
+          type: string
+          example: '500123'
+        PhysicalResourceId:
+          type: string
+          example: '500123'
+        ResourceType:
+          type: string
+          example: example_value
+        LastUpdatedTimestamp:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        ResourceStatus:
+          type: string
+          example: example_value
+        ResourceStatusReason:
+          type: string
+          example: example_value
+        DriftInformation:
+          $ref: '#/components/schemas/StackResourceDriftInformation'
+        ModuleInfo:
+          $ref: '#/components/schemas/ModuleInfo'
+    StackResourceDriftInformation:
+      type: object
+      required:
+      - StackResourceDriftStatus
+      properties:
+        StackResourceDriftStatus:
+          type: string
+          enum:
+          - IN_SYNC
+          - MODIFIED
+          - DELETED
+          - NOT_CHECKED
+          example: IN_SYNC
+        LastCheckTimestamp:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+          example: example_value
+        RequestId:
+          type: string
+          example: '500123'
+    ModuleInfo:
+      type: object
+      properties:
+        TypeHierarchy:
+          type: string
+          description: A concatenated list of the module type hierarchy. For modules within other modules the format is Module1::Module2.
+          example: example_value
+        LogicalIdHierarchy:
+          type: string
+          description: A concatenated list of the logical IDs of the module.
+          example: example_value
+  responses:
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: An internal service error occurred.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: The specified resource was not found.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    AWS_Signature_V4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication.

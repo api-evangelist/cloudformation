@@ -1,0 +1,589 @@
+openapi: 3.1.0
+info:
+  title: AWS Cloud Control Change Sets Stack Instances API
+  description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
+  version: '2021-09-30'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/contact-us/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-logo:
+    url: https://aws.amazon.com/cloudformation/logo.png
+servers:
+- url: https://cloudcontrolapi.{region}.amazonaws.com
+  description: AWS Cloud Control API Regional Endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-central-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- AWS_Signature_V4: []
+tags:
+- name: Stack Instances
+  description: Operations for managing stack instances within a stack set.
+paths:
+  /?Action=CreateStackInstances:
+    post:
+      operationId: createStackInstances
+      summary: Create Stack Instances in Accounts and Regions
+      description: Creates stack instances for the specified accounts in the specified regions. A stack instance refers to a stack in a specific account and region.
+      tags:
+      - Stack Instances
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackSetName
+              - Regions
+              properties:
+                StackSetName:
+                  type: string
+                Accounts:
+                  type: array
+                  items:
+                    type: string
+                Regions:
+                  type: array
+                  items:
+                    type: string
+                ParameterOverrides:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Parameter'
+                OperationPreferences:
+                  $ref: '#/components/schemas/StackSetOperationPreferences'
+                OperationId:
+                  type: string
+                  maxLength: 128
+                CallAs:
+                  type: string
+                  enum:
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              CreatestackinstancesRequestExample:
+                summary: Default createStackInstances request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  Accounts:
+                  - example_value
+                  Regions:
+                  - example_value
+                  ParameterOverrides:
+                  - ParameterKey: example_value
+                    ParameterValue: example_value
+                    UsePreviousValue: true
+                    ResolvedValue: example_value
+                  OperationPreferences:
+                    RegionConcurrencyType: SEQUENTIAL
+                    RegionOrder:
+                    - example_value
+                    FailureToleranceCount: 10
+                    FailureTolerancePercentage: 10
+                    MaxConcurrentCount: 10
+                    MaxConcurrentPercentage: 10
+                  OperationId: '500123'
+                  CallAs: SELF
+      responses:
+        '200':
+          description: Stack instances creation initiated.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  CreateStackInstancesResult:
+                    type: object
+                    properties:
+                      OperationId:
+                        type: string
+              examples:
+                Createstackinstances200Example:
+                  summary: Default createStackInstances 200 response
+                  x-microcks-default: true
+                  value:
+                    CreateStackInstancesResult:
+                      OperationId: '500123'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=DescribeStackInstance:
+    post:
+      operationId: describeStackInstance
+      summary: Describe a Stack Instance
+      description: Returns the stack instance associated with the specified stack set, account, and region.
+      tags:
+      - Stack Instances
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackSetName
+              - StackInstanceAccount
+              - StackInstanceRegion
+              properties:
+                StackSetName:
+                  type: string
+                StackInstanceAccount:
+                  type: string
+                StackInstanceRegion:
+                  type: string
+                CallAs:
+                  type: string
+                  enum:
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              DescribestackinstanceRequestExample:
+                summary: Default describeStackInstance request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  StackInstanceAccount: example_value
+                  StackInstanceRegion: example_value
+                  CallAs: SELF
+      responses:
+        '200':
+          description: Stack instance details returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackInstanceResult:
+                    type: object
+                    properties:
+                      StackInstance:
+                        $ref: '#/components/schemas/StackInstance'
+              examples:
+                Describestackinstance200Example:
+                  summary: Default describeStackInstance 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackInstanceResult:
+                      StackInstance:
+                        StackSetId: '500123'
+                        Region: example_value
+                        Account: example_value
+                        StackId: '500123'
+                        ParameterOverrides:
+                        - {}
+                        Status: CURRENT
+                        StackInstanceStatus:
+                          DetailedStatus: PENDING
+                        StatusReason: example_value
+                        DriftStatus: DRIFTED
+                        LastDriftCheckTimestamp: '2026-01-15T10:30:00Z'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=ListStackInstances:
+    post:
+      operationId: listStackInstances
+      summary: List Stack Instances in a Stack Set
+      description: Returns summary information about stack instances associated with the specified stack set.
+      tags:
+      - Stack Instances
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackSetName
+              properties:
+                StackSetName:
+                  type: string
+                NextToken:
+                  type: string
+                  maxLength: 1024
+                MaxResults:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+                StackInstanceAccount:
+                  type: string
+                StackInstanceRegion:
+                  type: string
+                CallAs:
+                  type: string
+                  enum:
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              ListstackinstancesRequestExample:
+                summary: Default listStackInstances request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  NextToken: example_value
+                  MaxResults: 10
+                  StackInstanceAccount: example_value
+                  StackInstanceRegion: example_value
+                  CallAs: SELF
+      responses:
+        '200':
+          description: Stack instance summaries returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListStackInstancesResult:
+                    type: object
+                    properties:
+                      Summaries:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackInstanceSummary'
+                      NextToken:
+                        type: string
+              examples:
+                Liststackinstances200Example:
+                  summary: Default listStackInstances 200 response
+                  x-microcks-default: true
+                  value:
+                    ListStackInstancesResult:
+                      Summaries:
+                      - StackSetId: '500123'
+                        Region: example_value
+                        Account: example_value
+                        StackId: '500123'
+                        Status: CURRENT
+                        StatusReason: example_value
+                        DriftStatus: DRIFTED
+                        LastDriftCheckTimestamp: '2026-01-15T10:30:00Z'
+                      NextToken: example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=DeleteStackInstances:
+    post:
+      operationId: deleteStackInstances
+      summary: Delete Stack Instances From a Stack Set
+      description: Deletes stack instances for the specified accounts in the specified regions.
+      tags:
+      - Stack Instances
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackSetName
+              - Regions
+              - RetainStacks
+              properties:
+                StackSetName:
+                  type: string
+                Accounts:
+                  type: array
+                  items:
+                    type: string
+                Regions:
+                  type: array
+                  items:
+                    type: string
+                RetainStacks:
+                  type: boolean
+                  description: Whether to remove the stack instances from the stack set but not delete the stacks.
+                OperationPreferences:
+                  $ref: '#/components/schemas/StackSetOperationPreferences'
+                OperationId:
+                  type: string
+                  maxLength: 128
+                CallAs:
+                  type: string
+                  enum:
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              DeletestackinstancesRequestExample:
+                summary: Default deleteStackInstances request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  Accounts:
+                  - example_value
+                  Regions:
+                  - example_value
+                  RetainStacks: true
+                  OperationPreferences:
+                    RegionConcurrencyType: SEQUENTIAL
+                    RegionOrder:
+                    - example_value
+                    FailureToleranceCount: 10
+                    FailureTolerancePercentage: 10
+                    MaxConcurrentCount: 10
+                    MaxConcurrentPercentage: 10
+                  OperationId: '500123'
+                  CallAs: SELF
+      responses:
+        '200':
+          description: Stack instance deletion initiated.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DeleteStackInstancesResult:
+                    type: object
+                    properties:
+                      OperationId:
+                        type: string
+              examples:
+                Deletestackinstances200Example:
+                  summary: Default deleteStackInstances 200 response
+                  x-microcks-default: true
+                  value:
+                    DeleteStackInstancesResult:
+                      OperationId: '500123'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2010-05-15'
+      description: The API version. Fixed to 2010-05-15.
+  schemas:
+    Parameter:
+      type: object
+      properties:
+        ParameterKey:
+          type: string
+          description: The key associated with the parameter.
+          example: example_value
+        ParameterValue:
+          type: string
+          description: The input value associated with the parameter.
+          example: example_value
+        UsePreviousValue:
+          type: boolean
+          description: Use the existing parameter value during stack updates.
+          example: true
+        ResolvedValue:
+          type: string
+          description: The value that resolves to for SSM parameter types.
+          example: example_value
+    StackInstance:
+      type: object
+      properties:
+        StackSetId:
+          type: string
+          example: '500123'
+        Region:
+          type: string
+          example: example_value
+        Account:
+          type: string
+          example: example_value
+        StackId:
+          type: string
+          example: '500123'
+        ParameterOverrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          example: []
+        Status:
+          type: string
+          enum:
+          - CURRENT
+          - OUTDATED
+          - INOPERABLE
+          example: CURRENT
+        StackInstanceStatus:
+          type: object
+          properties:
+            DetailedStatus:
+              type: string
+              enum:
+              - PENDING
+              - RUNNING
+              - SUCCEEDED
+              - FAILED
+              - CANCELLED
+              - INOPERABLE
+              - SKIPPED_SUSPENDED_ACCOUNT
+          example: example_value
+        StatusReason:
+          type: string
+          example: example_value
+        DriftStatus:
+          type: string
+          enum:
+          - DRIFTED
+          - IN_SYNC
+          - UNKNOWN
+          - NOT_CHECKED
+          example: DRIFTED
+        LastDriftCheckTimestamp:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+    StackInstanceSummary:
+      type: object
+      properties:
+        StackSetId:
+          type: string
+          example: '500123'
+        Region:
+          type: string
+          example: example_value
+        Account:
+          type: string
+          example: example_value
+        StackId:
+          type: string
+          example: '500123'
+        Status:
+          type: string
+          enum:
+          - CURRENT
+          - OUTDATED
+          - INOPERABLE
+          example: CURRENT
+        StatusReason:
+          type: string
+          example: example_value
+        DriftStatus:
+          type: string
+          enum:
+          - DRIFTED
+          - IN_SYNC
+          - UNKNOWN
+          - NOT_CHECKED
+          example: DRIFTED
+        LastDriftCheckTimestamp:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+          example: example_value
+        RequestId:
+          type: string
+          example: '500123'
+    StackSetOperationPreferences:
+      type: object
+      properties:
+        RegionConcurrencyType:
+          type: string
+          enum:
+          - SEQUENTIAL
+          - PARALLEL
+          example: SEQUENTIAL
+        RegionOrder:
+          type: array
+          items:
+            type: string
+          example: []
+        FailureToleranceCount:
+          type: integer
+          minimum: 0
+          example: 10
+        FailureTolerancePercentage:
+          type: integer
+          minimum: 0
+          maximum: 100
+          example: 10
+        MaxConcurrentCount:
+          type: integer
+          minimum: 1
+          example: 10
+        MaxConcurrentPercentage:
+          type: integer
+          minimum: 1
+          maximum: 100
+          example: 10
+  responses:
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: An internal service error occurred.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: The specified resource was not found.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    AWS_Signature_V4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication.

@@ -1,0 +1,215 @@
+openapi: 3.1.0
+info:
+  title: AWS Cloud Control Change Sets Stack Events API
+  description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
+  version: '2021-09-30'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/contact-us/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-logo:
+    url: https://aws.amazon.com/cloudformation/logo.png
+servers:
+- url: https://cloudcontrolapi.{region}.amazonaws.com
+  description: AWS Cloud Control API Regional Endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-central-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- AWS_Signature_V4: []
+tags:
+- name: Stack Events
+  description: Operations for retrieving stack-related events.
+paths:
+  /?Action=DescribeStackEvents:
+    post:
+      operationId: describeStackEvents
+      summary: Retrieve Events for a Stack
+      description: Returns all stack-related events for a specified stack in reverse chronological order.
+      tags:
+      - Stack Events
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                StackName:
+                  type: string
+                NextToken:
+                  type: string
+                  maxLength: 1024
+            examples:
+              DescribestackeventsRequestExample:
+                summary: Default describeStackEvents request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  NextToken: example_value
+      responses:
+        '200':
+          description: Stack events returned successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackEventsResult:
+                    type: object
+                    properties:
+                      StackEvents:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackEvent'
+                      NextToken:
+                        type: string
+              examples:
+                Describestackevents200Example:
+                  summary: Default describeStackEvents 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackEventsResult:
+                      StackEvents:
+                      - StackId: '500123'
+                        EventId: '500123'
+                        StackName: example_value
+                        LogicalResourceId: '500123'
+                        PhysicalResourceId: '500123'
+                        ResourceType: example_value
+                        Timestamp: '2026-01-15T10:30:00Z'
+                        ResourceStatus: example_value
+                        ResourceStatusReason: example_value
+                        ResourceProperties: example_value
+                        ClientRequestToken: example_value
+                        HookType: example_value
+                        HookStatus: example_value
+                        HookStatusReason: example_value
+                        HookInvocationPoint: example_value
+                        HookFailureMode: example_value
+                      NextToken: example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2010-05-15'
+      description: The API version. Fixed to 2010-05-15.
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+          example: example_value
+        RequestId:
+          type: string
+          example: '500123'
+    StackEvent:
+      type: object
+      required:
+      - StackId
+      - EventId
+      - StackName
+      - Timestamp
+      properties:
+        StackId:
+          type: string
+          example: '500123'
+        EventId:
+          type: string
+          example: '500123'
+        StackName:
+          type: string
+          example: example_value
+        LogicalResourceId:
+          type: string
+          example: '500123'
+        PhysicalResourceId:
+          type: string
+          example: '500123'
+        ResourceType:
+          type: string
+          example: example_value
+        Timestamp:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        ResourceStatus:
+          type: string
+          example: example_value
+        ResourceStatusReason:
+          type: string
+          example: example_value
+        ResourceProperties:
+          type: string
+          example: example_value
+        ClientRequestToken:
+          type: string
+          example: example_value
+        HookType:
+          type: string
+          example: example_value
+        HookStatus:
+          type: string
+          example: example_value
+        HookStatusReason:
+          type: string
+          example: example_value
+        HookInvocationPoint:
+          type: string
+          example: example_value
+        HookFailureMode:
+          type: string
+          example: example_value
+  responses:
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: An internal service error occurred.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    AWS_Signature_V4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication.

@@ -1,0 +1,708 @@
+openapi: 3.1.0
+info:
+  title: AWS Cloud Control Change Sets Stack Sets API
+  description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
+  version: '2021-09-30'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/contact-us/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-logo:
+    url: https://aws.amazon.com/cloudformation/logo.png
+servers:
+- url: https://cloudcontrolapi.{region}.amazonaws.com
+  description: AWS Cloud Control API Regional Endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-central-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- AWS_Signature_V4: []
+tags:
+- name: Stack Sets
+  description: Operations for managing stack sets across multiple accounts and regions.
+paths:
+  /?Action=CreateStackSet:
+    post:
+      operationId: createStackSet
+      summary: Create a Stack Set
+      description: Creates a stack set with the specified name and template. A stack set lets you create stacks in AWS accounts across regions by using a single CloudFormation template.
+      tags:
+      - Stack Sets
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackSetName
+              properties:
+                StackSetName:
+                  type: string
+                  maxLength: 128
+                Description:
+                  type: string
+                  maxLength: 1024
+                TemplateBody:
+                  type: string
+                TemplateURL:
+                  type: string
+                  format: uri
+                Parameters:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Parameter'
+                Capabilities:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - CAPABILITY_IAM
+                    - CAPABILITY_NAMED_IAM
+                    - CAPABILITY_AUTO_EXPAND
+                Tags:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Tag'
+                  maxItems: 50
+                AdministrationRoleARN:
+                  type: string
+                  minLength: 20
+                  maxLength: 2048
+                ExecutionRoleName:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                PermissionModel:
+                  type: string
+                  enum:
+                  - SERVICE_MANAGED
+                  - SELF_MANAGED
+                CallAs:
+                  type: string
+                  enum:
+                  - SELF
+                  - DELEGATED_ADMIN
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+            examples:
+              CreatestacksetRequestExample:
+                summary: Default createStackSet request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  Description: A sample description.
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
+                  Parameters:
+                  - ParameterKey: example_value
+                    ParameterValue: example_value
+                    UsePreviousValue: true
+                    ResolvedValue: example_value
+                  Capabilities:
+                  - CAPABILITY_IAM
+                  Tags:
+                  - Key: example_value
+                    Value: example_value
+                  AdministrationRoleARN: example_value
+                  ExecutionRoleName: example_value
+                  PermissionModel: SERVICE_MANAGED
+                  CallAs: SELF
+                  ClientRequestToken: example_value
+      responses:
+        '200':
+          description: Stack set created.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  CreateStackSetResult:
+                    type: object
+                    properties:
+                      StackSetId:
+                        type: string
+              examples:
+                Createstackset200Example:
+                  summary: Default createStackSet 200 response
+                  x-microcks-default: true
+                  value:
+                    CreateStackSetResult:
+                      StackSetId: '500123'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '409':
+          $ref: '#/components/responses/AlreadyExistsError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=DescribeStackSet:
+    post:
+      operationId: describeStackSet
+      summary: Describe a Stack Set
+      description: Returns the description of the specified stack set.
+      tags:
+      - Stack Sets
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackSetName
+              properties:
+                StackSetName:
+                  type: string
+                CallAs:
+                  type: string
+                  enum:
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              DescribestacksetRequestExample:
+                summary: Default describeStackSet request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  CallAs: SELF
+      responses:
+        '200':
+          description: Stack set details returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackSetResult:
+                    type: object
+                    properties:
+                      StackSet:
+                        $ref: '#/components/schemas/StackSet'
+              examples:
+                Describestackset200Example:
+                  summary: Default describeStackSet 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackSetResult:
+                      StackSet:
+                        StackSetName: example_value
+                        StackSetId: '500123'
+                        Description: A sample description.
+                        Status: ACTIVE
+                        TemplateBody: example_value
+                        Parameters:
+                        - {}
+                        Capabilities:
+                        - {}
+                        Tags:
+                        - {}
+                        StackSetARN: example_value
+                        AdministrationRoleARN: example_value
+                        ExecutionRoleName: example_value
+                        PermissionModel: SERVICE_MANAGED
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=UpdateStackSet:
+    post:
+      operationId: updateStackSet
+      summary: Update a Stack Set
+      description: Updates the stack set, and associated stack instances in the specified accounts and regions.
+      tags:
+      - Stack Sets
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackSetName
+              properties:
+                StackSetName:
+                  type: string
+                Description:
+                  type: string
+                  maxLength: 1024
+                TemplateBody:
+                  type: string
+                TemplateURL:
+                  type: string
+                  format: uri
+                UsePreviousTemplate:
+                  type: boolean
+                Parameters:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Parameter'
+                Capabilities:
+                  type: array
+                  items:
+                    type: string
+                Tags:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Tag'
+                  maxItems: 50
+                OperationPreferences:
+                  $ref: '#/components/schemas/StackSetOperationPreferences'
+                AdministrationRoleARN:
+                  type: string
+                  minLength: 20
+                  maxLength: 2048
+                ExecutionRoleName:
+                  type: string
+                PermissionModel:
+                  type: string
+                  enum:
+                  - SERVICE_MANAGED
+                  - SELF_MANAGED
+                Accounts:
+                  type: array
+                  items:
+                    type: string
+                Regions:
+                  type: array
+                  items:
+                    type: string
+                CallAs:
+                  type: string
+                  enum:
+                  - SELF
+                  - DELEGATED_ADMIN
+                OperationId:
+                  type: string
+                  maxLength: 128
+            examples:
+              UpdatestacksetRequestExample:
+                summary: Default updateStackSet request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  Description: A sample description.
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
+                  UsePreviousTemplate: true
+                  Parameters:
+                  - ParameterKey: example_value
+                    ParameterValue: example_value
+                    UsePreviousValue: true
+                    ResolvedValue: example_value
+                  Capabilities:
+                  - example_value
+                  Tags:
+                  - Key: example_value
+                    Value: example_value
+                  OperationPreferences:
+                    RegionConcurrencyType: SEQUENTIAL
+                    RegionOrder:
+                    - example_value
+                    FailureToleranceCount: 10
+                    FailureTolerancePercentage: 10
+                    MaxConcurrentCount: 10
+                    MaxConcurrentPercentage: 10
+                  AdministrationRoleARN: example_value
+                  ExecutionRoleName: example_value
+                  PermissionModel: SERVICE_MANAGED
+                  Accounts:
+                  - example_value
+                  Regions:
+                  - example_value
+                  CallAs: SELF
+                  OperationId: '500123'
+      responses:
+        '200':
+          description: Stack set update initiated.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  UpdateStackSetResult:
+                    type: object
+                    properties:
+                      OperationId:
+                        type: string
+              examples:
+                Updatestackset200Example:
+                  summary: Default updateStackSet 200 response
+                  x-microcks-default: true
+                  value:
+                    UpdateStackSetResult:
+                      OperationId: '500123'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=DeleteStackSet:
+    post:
+      operationId: deleteStackSet
+      summary: Delete a Stack Set
+      description: Deletes a stack set. Before you can delete a stack set, all its member stack instances must be deleted.
+      tags:
+      - Stack Sets
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackSetName
+              properties:
+                StackSetName:
+                  type: string
+                CallAs:
+                  type: string
+                  enum:
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              DeletestacksetRequestExample:
+                summary: Default deleteStackSet request
+                x-microcks-default: true
+                value:
+                  StackSetName: example_value
+                  CallAs: SELF
+      responses:
+        '200':
+          description: Stack set deleted.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '409':
+          description: Stack set has active instances and cannot be deleted.
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=ListStackSets:
+    post:
+      operationId: listStackSets
+      summary: List All Stack Sets
+      description: Returns summary information about stack sets in the caller's account.
+      tags:
+      - Stack Sets
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                NextToken:
+                  type: string
+                  maxLength: 1024
+                MaxResults:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+                Status:
+                  type: string
+                  enum:
+                  - ACTIVE
+                  - DELETED
+                CallAs:
+                  type: string
+                  enum:
+                  - SELF
+                  - DELEGATED_ADMIN
+            examples:
+              ListstacksetsRequestExample:
+                summary: Default listStackSets request
+                x-microcks-default: true
+                value:
+                  NextToken: example_value
+                  MaxResults: 10
+                  Status: ACTIVE
+                  CallAs: SELF
+      responses:
+        '200':
+          description: Stack set summaries returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListStackSetsResult:
+                    type: object
+                    properties:
+                      Summaries:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackSetSummary'
+                      NextToken:
+                        type: string
+              examples:
+                Liststacksets200Example:
+                  summary: Default listStackSets 200 response
+                  x-microcks-default: true
+                  value:
+                    ListStackSetsResult:
+                      Summaries:
+                      - StackSetName: example_value
+                        StackSetId: '500123'
+                        Description: A sample description.
+                        Status: ACTIVE
+                        PermissionModel: SERVICE_MANAGED
+                        DriftStatus: DRIFTED
+                        LastDriftCheckTimestamp: '2026-01-15T10:30:00Z'
+                      NextToken: example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2010-05-15'
+      description: The API version. Fixed to 2010-05-15.
+  schemas:
+    StackSetSummary:
+      type: object
+      properties:
+        StackSetName:
+          type: string
+          example: example_value
+        StackSetId:
+          type: string
+          example: '500123'
+        Description:
+          type: string
+          example: A sample description.
+        Status:
+          type: string
+          enum:
+          - ACTIVE
+          - DELETED
+          example: ACTIVE
+        PermissionModel:
+          type: string
+          enum:
+          - SERVICE_MANAGED
+          - SELF_MANAGED
+          example: SERVICE_MANAGED
+        DriftStatus:
+          type: string
+          enum:
+          - DRIFTED
+          - IN_SYNC
+          - NOT_CHECKED
+          example: DRIFTED
+        LastDriftCheckTimestamp:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+    Parameter:
+      type: object
+      properties:
+        ParameterKey:
+          type: string
+          description: The key associated with the parameter.
+          example: example_value
+        ParameterValue:
+          type: string
+          description: The input value associated with the parameter.
+          example: example_value
+        UsePreviousValue:
+          type: boolean
+          description: Use the existing parameter value during stack updates.
+          example: true
+        ResolvedValue:
+          type: string
+          description: The value that resolves to for SSM parameter types.
+          example: example_value
+    StackSet:
+      type: object
+      properties:
+        StackSetName:
+          type: string
+          example: example_value
+        StackSetId:
+          type: string
+          example: '500123'
+        Description:
+          type: string
+          example: A sample description.
+        Status:
+          type: string
+          enum:
+          - ACTIVE
+          - DELETED
+          example: ACTIVE
+        TemplateBody:
+          type: string
+          example: example_value
+        Parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          example: []
+        Capabilities:
+          type: array
+          items:
+            type: string
+          example: []
+        Tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          example: []
+        StackSetARN:
+          type: string
+          example: example_value
+        AdministrationRoleARN:
+          type: string
+          example: example_value
+        ExecutionRoleName:
+          type: string
+          example: example_value
+        PermissionModel:
+          type: string
+          enum:
+          - SERVICE_MANAGED
+          - SELF_MANAGED
+          example: SERVICE_MANAGED
+    Tag:
+      type: object
+      required:
+      - Key
+      - Value
+      properties:
+        Key:
+          type: string
+          description: Tag key.
+          minLength: 1
+          maxLength: 128
+          example: example_value
+        Value:
+          type: string
+          description: Tag value.
+          minLength: 0
+          maxLength: 256
+          example: example_value
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+          example: example_value
+        RequestId:
+          type: string
+          example: '500123'
+    StackSetOperationPreferences:
+      type: object
+      properties:
+        RegionConcurrencyType:
+          type: string
+          enum:
+          - SEQUENTIAL
+          - PARALLEL
+          example: SEQUENTIAL
+        RegionOrder:
+          type: array
+          items:
+            type: string
+          example: []
+        FailureToleranceCount:
+          type: integer
+          minimum: 0
+          example: 10
+        FailureTolerancePercentage:
+          type: integer
+          minimum: 0
+          maximum: 100
+          example: 10
+        MaxConcurrentCount:
+          type: integer
+          minimum: 1
+          example: 10
+        MaxConcurrentPercentage:
+          type: integer
+          minimum: 1
+          maximum: 100
+          example: 10
+  responses:
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: An internal service error occurred.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    AlreadyExistsError:
+      description: The resource already exists.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: The specified resource was not found.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    AWS_Signature_V4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication.

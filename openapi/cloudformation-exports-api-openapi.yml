@@ -1,0 +1,221 @@
+openapi: 3.1.0
+info:
+  title: AWS Cloud Control Change Sets Exports API
+  description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
+  version: '2021-09-30'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/contact-us/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-logo:
+    url: https://aws.amazon.com/cloudformation/logo.png
+servers:
+- url: https://cloudcontrolapi.{region}.amazonaws.com
+  description: AWS Cloud Control API Regional Endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-central-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- AWS_Signature_V4: []
+tags:
+- name: Exports
+  description: Operations for listing stack exports and imports.
+paths:
+  /?Action=ListExports:
+    post:
+      operationId: listExports
+      summary: List Stack Exports
+      description: Lists all exported output values in the account and Region.
+      tags:
+      - Exports
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                NextToken:
+                  type: string
+                  maxLength: 1024
+            examples:
+              ListexportsRequestExample:
+                summary: Default listExports request
+                x-microcks-default: true
+                value:
+                  NextToken: example_value
+      responses:
+        '200':
+          description: Exports returned successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListExportsResult:
+                    type: object
+                    properties:
+                      Exports:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Export'
+                      NextToken:
+                        type: string
+              examples:
+                Listexports200Example:
+                  summary: Default listExports 200 response
+                  x-microcks-default: true
+                  value:
+                    ListExportsResult:
+                      Exports:
+                      - ExportingStackId: '500123'
+                        Name: Example Title
+                        Value: example_value
+                      NextToken: example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=ListImports:
+    post:
+      operationId: listImports
+      summary: List Stacks That Import an Exported Value
+      description: Lists all stacks that import an exported output value. To find the exports, use ListExports.
+      tags:
+      - Exports
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - ExportName
+              properties:
+                ExportName:
+                  type: string
+                  description: The name of the exported output value.
+                NextToken:
+                  type: string
+                  maxLength: 1024
+            examples:
+              ListimportsRequestExample:
+                summary: Default listImports request
+                x-microcks-default: true
+                value:
+                  ExportName: example_value
+                  NextToken: example_value
+      responses:
+        '200':
+          description: Importing stacks returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListImportsResult:
+                    type: object
+                    properties:
+                      Imports:
+                        type: array
+                        items:
+                          type: string
+                      NextToken:
+                        type: string
+              examples:
+                Listimports200Example:
+                  summary: Default listImports 200 response
+                  x-microcks-default: true
+                  value:
+                    ListImportsResult:
+                      Imports:
+                      - example_value
+                      NextToken: example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2010-05-15'
+      description: The API version. Fixed to 2010-05-15.
+  responses:
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: An internal service error occurred.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+          example: example_value
+        RequestId:
+          type: string
+          example: '500123'
+    Export:
+      type: object
+      properties:
+        ExportingStackId:
+          type: string
+          description: The stack that contains the exported output value.
+          example: '500123'
+        Name:
+          type: string
+          description: The name of the exported output value.
+          example: Example Title
+        Value:
+          type: string
+          description: The value of the exported output.
+          example: example_value
+  securitySchemes:
+    AWS_Signature_V4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication.

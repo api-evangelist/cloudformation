@@ -1,0 +1,471 @@
+openapi: 3.1.0
+info:
+  title: AWS Cloud Control Change Sets Stack Drift API
+  description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
+  version: '2021-09-30'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/contact-us/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-logo:
+    url: https://aws.amazon.com/cloudformation/logo.png
+servers:
+- url: https://cloudcontrolapi.{region}.amazonaws.com
+  description: AWS Cloud Control API Regional Endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-central-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- AWS_Signature_V4: []
+tags:
+- name: Stack Drift
+  description: Operations for detecting and describing configuration drift.
+paths:
+  /?Action=DetectStackDrift:
+    post:
+      operationId: detectStackDrift
+      summary: Detect Configuration Drift on a Stack
+      description: Detects whether a stack's actual configuration differs from its expected configuration as defined in the stack template. Returns a drift detection ID you can use to monitor the progress of the operation.
+      tags:
+      - Stack Drift
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              properties:
+                StackName:
+                  type: string
+                LogicalResourceIds:
+                  type: array
+                  items:
+                    type: string
+            examples:
+              DetectstackdriftRequestExample:
+                summary: Default detectStackDrift request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  LogicalResourceIds:
+                  - example_value
+      responses:
+        '200':
+          description: Drift detection initiated.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DetectStackDriftResult:
+                    type: object
+                    properties:
+                      StackDriftDetectionId:
+                        type: string
+              examples:
+                Detectstackdrift200Example:
+                  summary: Default detectStackDrift 200 response
+                  x-microcks-default: true
+                  value:
+                    DetectStackDriftResult:
+                      StackDriftDetectionId: '500123'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=DescribeStackDriftDetectionStatus:
+    post:
+      operationId: describeStackDriftDetectionStatus
+      summary: Check Status of Drift Detection
+      description: Returns information about a stack drift detection operation. Provides the current status and results of the operation.
+      tags:
+      - Stack Drift
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackDriftDetectionId
+              properties:
+                StackDriftDetectionId:
+                  type: string
+                  description: The ID of the drift detection operation.
+            examples:
+              DescribestackdriftdetectionstatusRequestExample:
+                summary: Default describeStackDriftDetectionStatus request
+                x-microcks-default: true
+                value:
+                  StackDriftDetectionId: '500123'
+      responses:
+        '200':
+          description: Drift detection status returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackDriftDetectionStatusResult:
+                    type: object
+                    properties:
+                      StackId:
+                        type: string
+                      StackDriftDetectionId:
+                        type: string
+                      StackDriftStatus:
+                        type: string
+                        enum:
+                        - DRIFTED
+                        - IN_SYNC
+                        - UNKNOWN
+                        - NOT_CHECKED
+                      DetectionStatus:
+                        type: string
+                        enum:
+                        - DETECTION_IN_PROGRESS
+                        - DETECTION_FAILED
+                        - DETECTION_COMPLETE
+                      DetectionStatusReason:
+                        type: string
+                      DriftedStackResourceCount:
+                        type: integer
+                      Timestamp:
+                        type: string
+                        format: date-time
+              examples:
+                Describestackdriftdetectionstatus200Example:
+                  summary: Default describeStackDriftDetectionStatus 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackDriftDetectionStatusResult:
+                      StackId: '500123'
+                      StackDriftDetectionId: '500123'
+                      StackDriftStatus: DRIFTED
+                      DetectionStatus: DETECTION_IN_PROGRESS
+                      DetectionStatusReason: example_value
+                      DriftedStackResourceCount: 10
+                      Timestamp: '2026-01-15T10:30:00Z'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=DescribeStackResourceDrifts:
+    post:
+      operationId: describeStackResourceDrifts
+      summary: Get Drift Information for Stack Resources
+      description: Returns drift information for the resources that have been checked for drift in the specified stack.
+      tags:
+      - Stack Drift
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              properties:
+                StackName:
+                  type: string
+                StackResourceDriftStatusFilters:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - IN_SYNC
+                    - MODIFIED
+                    - DELETED
+                    - NOT_CHECKED
+                NextToken:
+                  type: string
+                  maxLength: 1024
+                MaxResults:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+            examples:
+              DescribestackresourcedriftsRequestExample:
+                summary: Default describeStackResourceDrifts request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  StackResourceDriftStatusFilters:
+                  - IN_SYNC
+                  NextToken: example_value
+                  MaxResults: 10
+      responses:
+        '200':
+          description: Resource drift information returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStackResourceDriftsResult:
+                    type: object
+                    properties:
+                      StackResourceDrifts:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackResourceDrift'
+                      NextToken:
+                        type: string
+              examples:
+                Describestackresourcedrifts200Example:
+                  summary: Default describeStackResourceDrifts 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStackResourceDriftsResult:
+                      StackResourceDrifts:
+                      - StackId: '500123'
+                        LogicalResourceId: '500123'
+                        PhysicalResourceId: '500123'
+                        PhysicalResourceIdContext: {}
+                        ResourceType: example_value
+                        ExpectedProperties: example_value
+                        ActualProperties: example_value
+                        PropertyDifferences: {}
+                        StackResourceDriftStatus: IN_SYNC
+                        Timestamp: '2026-01-15T10:30:00Z'
+                      NextToken: example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=DetectStackResourceDrift:
+    post:
+      operationId: detectStackResourceDrift
+      summary: Detect Drift on a Specific Resource
+      description: Returns information about whether a resource's actual configuration differs from its expected configuration.
+      tags:
+      - Stack Drift
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              - LogicalResourceId
+              properties:
+                StackName:
+                  type: string
+                LogicalResourceId:
+                  type: string
+            examples:
+              DetectstackresourcedriftRequestExample:
+                summary: Default detectStackResourceDrift request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  LogicalResourceId: '500123'
+      responses:
+        '200':
+          description: Resource drift detection result returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DetectStackResourceDriftResult:
+                    type: object
+                    properties:
+                      StackResourceDrift:
+                        $ref: '#/components/schemas/StackResourceDrift'
+              examples:
+                Detectstackresourcedrift200Example:
+                  summary: Default detectStackResourceDrift 200 response
+                  x-microcks-default: true
+                  value:
+                    DetectStackResourceDriftResult:
+                      StackResourceDrift:
+                        StackId: '500123'
+                        LogicalResourceId: '500123'
+                        PhysicalResourceId: '500123'
+                        PhysicalResourceIdContext:
+                        - {}
+                        ResourceType: example_value
+                        ExpectedProperties: example_value
+                        ActualProperties: example_value
+                        PropertyDifferences:
+                        - {}
+                        StackResourceDriftStatus: IN_SYNC
+                        Timestamp: '2026-01-15T10:30:00Z'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2010-05-15'
+      description: The API version. Fixed to 2010-05-15.
+  schemas:
+    PropertyDifference:
+      type: object
+      required:
+      - PropertyPath
+      - ExpectedValue
+      - ActualValue
+      - DifferenceType
+      properties:
+        PropertyPath:
+          type: string
+          example: example_value
+        ExpectedValue:
+          type: string
+          example: example_value
+        ActualValue:
+          type: string
+          example: example_value
+        DifferenceType:
+          type: string
+          enum:
+          - ADD
+          - REMOVE
+          - NOT_EQUAL
+          example: ADD
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+          example: example_value
+        RequestId:
+          type: string
+          example: '500123'
+    StackResourceDrift:
+      type: object
+      required:
+      - StackId
+      - LogicalResourceId
+      - ResourceType
+      - StackResourceDriftStatus
+      - Timestamp
+      properties:
+        StackId:
+          type: string
+          example: '500123'
+        LogicalResourceId:
+          type: string
+          example: '500123'
+        PhysicalResourceId:
+          type: string
+          example: '500123'
+        PhysicalResourceIdContext:
+          type: array
+          items:
+            type: object
+            properties:
+              Key:
+                type: string
+              Value:
+                type: string
+          example: []
+        ResourceType:
+          type: string
+          example: example_value
+        ExpectedProperties:
+          type: string
+          description: A JSON string of the expected property values as defined in the template.
+          example: example_value
+        ActualProperties:
+          type: string
+          description: A JSON string of the actual property values of the resource.
+          example: example_value
+        PropertyDifferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyDifference'
+          example: []
+        StackResourceDriftStatus:
+          type: string
+          enum:
+          - IN_SYNC
+          - MODIFIED
+          - DELETED
+          - NOT_CHECKED
+          example: IN_SYNC
+        Timestamp:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+  responses:
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: An internal service error occurred.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: The specified resource was not found.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    AWS_Signature_V4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication.

@@ -1,0 +1,1131 @@
+openapi: 3.1.0
+info:
+  title: AWS Cloud Control Change Sets Stacks API
+  description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
+  version: '2021-09-30'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/contact-us/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-logo:
+    url: https://aws.amazon.com/cloudformation/logo.png
+servers:
+- url: https://cloudcontrolapi.{region}.amazonaws.com
+  description: AWS Cloud Control API Regional Endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-central-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- AWS_Signature_V4: []
+tags:
+- name: Stacks
+  description: Operations for creating, updating, deleting, and describing CloudFormation stacks.
+paths:
+  /?Action=CreateStack:
+    post:
+      operationId: createStack
+      summary: Create a New Stack
+      description: Creates a stack as specified in the template. After the call completes successfully, the stack creation starts. You can check the status of the stack through the DescribeStacks operation.
+      tags:
+      - Stacks
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              properties:
+                StackName:
+                  type: string
+                  description: The name associated with the stack. Must be unique within a region. Max 128 characters, alphanumeric and hyphens.
+                  maxLength: 128
+                TemplateBody:
+                  type: string
+                  description: Structure containing the template body with a minimum length of 1 byte and a maximum length of 51,200 bytes.
+                TemplateURL:
+                  type: string
+                  description: Location of file containing the template body. Must be a URL pointing to a template in an Amazon S3 bucket (max 1 MB).
+                  format: uri
+                Parameters:
+                  type: array
+                  description: A list of Parameter structures specifying input parameters for the stack.
+                  items:
+                    $ref: '#/components/schemas/Parameter'
+                DisableRollback:
+                  type: boolean
+                  description: Set to true to disable rollback of the stack if stack creation fails.
+                  default: false
+                RollbackConfiguration:
+                  $ref: '#/components/schemas/RollbackConfiguration'
+                TimeoutInMinutes:
+                  type: integer
+                  description: The amount of time that can pass before the stack status becomes CREATE_FAILED.
+                  minimum: 1
+                NotificationARNs:
+                  type: array
+                  description: The Amazon SNS topic ARNs to publish stack related events.
+                  items:
+                    type: string
+                  maxItems: 5
+                Capabilities:
+                  type: array
+                  description: A list of capabilities that you must specify before CloudFormation can create certain stacks.
+                  items:
+                    type: string
+                    enum:
+                    - CAPABILITY_IAM
+                    - CAPABILITY_NAMED_IAM
+                    - CAPABILITY_AUTO_EXPAND
+                OnFailure:
+                  type: string
+                  description: Determines what action to take if stack creation fails.
+                  enum:
+                  - DO_NOTHING
+                  - ROLLBACK
+                  - DELETE
+                  default: ROLLBACK
+                StackPolicyBody:
+                  type: string
+                  description: Structure containing the stack policy body (1-16,384 bytes).
+                StackPolicyURL:
+                  type: string
+                  description: Location of a file containing the stack policy.
+                  format: uri
+                Tags:
+                  type: array
+                  description: Key-value pairs to associate with this stack. Max 50 tags.
+                  items:
+                    $ref: '#/components/schemas/Tag'
+                  maxItems: 50
+                RoleARN:
+                  type: string
+                  description: The Amazon Resource Name (ARN) of an IAM role that CloudFormation assumes to create the stack.
+                  minLength: 20
+                  maxLength: 2048
+                EnableTerminationProtection:
+                  type: boolean
+                  description: Whether to enable termination protection on the stack.
+                  default: false
+                ClientRequestToken:
+                  type: string
+                  description: A unique identifier for this CreateStack request. Max 128 characters.
+                  maxLength: 128
+                RetainExceptOnCreate:
+                  type: boolean
+                  description: When true, newly created resources are deleted when the operation rolls back.
+                  default: false
+            examples:
+              CreatestackRequestExample:
+                summary: Default createStack request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
+                  Parameters:
+                  - ParameterKey: example_value
+                    ParameterValue: example_value
+                    UsePreviousValue: true
+                    ResolvedValue: example_value
+                  DisableRollback: true
+                  RollbackConfiguration:
+                    RollbackTriggers:
+                    - {}
+                    MonitoringTimeInMinutes: 10
+                  TimeoutInMinutes: 10
+                  NotificationARNs:
+                  - example_value
+                  Capabilities:
+                  - CAPABILITY_IAM
+                  OnFailure: DO_NOTHING
+                  StackPolicyBody: example_value
+                  StackPolicyURL: https://www.example.com
+                  Tags:
+                  - Key: example_value
+                    Value: example_value
+                  RoleARN: example_value
+                  EnableTerminationProtection: true
+                  ClientRequestToken: example_value
+                  RetainExceptOnCreate: true
+      responses:
+        '200':
+          description: Stack creation initiated successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  CreateStackResult:
+                    type: object
+                    properties:
+                      StackId:
+                        type: string
+                        description: Unique identifier of the stack.
+              examples:
+                Createstack200Example:
+                  summary: Default createStack 200 response
+                  x-microcks-default: true
+                  value:
+                    CreateStackResult:
+                      StackId: '500123'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '409':
+          $ref: '#/components/responses/AlreadyExistsError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=UpdateStack:
+    post:
+      operationId: updateStack
+      summary: Update an Existing Stack
+      description: Updates a stack as specified in the template. After the call completes successfully, the stack update starts. You can check the status of the stack through the DescribeStacks operation.
+      tags:
+      - Stacks
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              properties:
+                StackName:
+                  type: string
+                  description: The name or unique stack ID of the stack to update.
+                TemplateBody:
+                  type: string
+                  description: Structure containing the updated template body.
+                TemplateURL:
+                  type: string
+                  description: Location of the updated template in Amazon S3.
+                  format: uri
+                UsePreviousTemplate:
+                  type: boolean
+                  description: Reuse the existing template associated with the stack.
+                Parameters:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Parameter'
+                Capabilities:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - CAPABILITY_IAM
+                    - CAPABILITY_NAMED_IAM
+                    - CAPABILITY_AUTO_EXPAND
+                Tags:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Tag'
+                  maxItems: 50
+                RoleARN:
+                  type: string
+                  minLength: 20
+                  maxLength: 2048
+                RollbackConfiguration:
+                  $ref: '#/components/schemas/RollbackConfiguration'
+                StackPolicyBody:
+                  type: string
+                StackPolicyURL:
+                  type: string
+                  format: uri
+                StackPolicyDuringUpdateBody:
+                  type: string
+                  description: Temporary stack policy body used during the update.
+                StackPolicyDuringUpdateURL:
+                  type: string
+                  description: Temporary stack policy URL used during the update.
+                  format: uri
+                NotificationARNs:
+                  type: array
+                  items:
+                    type: string
+                  maxItems: 5
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+                DisableRollback:
+                  type: boolean
+                RetainExceptOnCreate:
+                  type: boolean
+            examples:
+              UpdatestackRequestExample:
+                summary: Default updateStack request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
+                  UsePreviousTemplate: true
+                  Parameters:
+                  - ParameterKey: example_value
+                    ParameterValue: example_value
+                    UsePreviousValue: true
+                    ResolvedValue: example_value
+                  Capabilities:
+                  - CAPABILITY_IAM
+                  Tags:
+                  - Key: example_value
+                    Value: example_value
+                  RoleARN: example_value
+                  RollbackConfiguration:
+                    RollbackTriggers:
+                    - {}
+                    MonitoringTimeInMinutes: 10
+                  StackPolicyBody: example_value
+                  StackPolicyURL: https://www.example.com
+                  StackPolicyDuringUpdateBody: example_value
+                  StackPolicyDuringUpdateURL: https://www.example.com
+                  NotificationARNs:
+                  - example_value
+                  ClientRequestToken: example_value
+                  DisableRollback: true
+                  RetainExceptOnCreate: true
+      responses:
+        '200':
+          description: Stack update initiated successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  UpdateStackResult:
+                    type: object
+                    properties:
+                      StackId:
+                        type: string
+              examples:
+                Updatestack200Example:
+                  summary: Default updateStack 200 response
+                  x-microcks-default: true
+                  value:
+                    UpdateStackResult:
+                      StackId: '500123'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=DeleteStack:
+    post:
+      operationId: deleteStack
+      summary: Delete an Existing Stack
+      description: Deletes a specified stack. Once the call completes successfully, stack deletion starts. Deleted stacks do not show up in DescribeStacks calls by default.
+      tags:
+      - Stacks
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              properties:
+                StackName:
+                  type: string
+                  description: The name or unique stack ID of the stack to delete.
+                RetainResources:
+                  type: array
+                  description: A list of logical resource IDs for resources you want to retain after stack deletion.
+                  items:
+                    type: string
+                RoleARN:
+                  type: string
+                  description: IAM role ARN for CloudFormation to assume during deletion.
+                  minLength: 20
+                  maxLength: 2048
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+                DeletionMode:
+                  type: string
+                  description: Specifies the deletion mode.
+                  enum:
+                  - STANDARD
+                  - FORCE_DELETE_STACK
+            examples:
+              DeletestackRequestExample:
+                summary: Default deleteStack request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  RetainResources:
+                  - example_value
+                  RoleARN: example_value
+                  ClientRequestToken: example_value
+                  DeletionMode: STANDARD
+      responses:
+        '200':
+          description: Stack deletion initiated successfully.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '409':
+          description: Stack cannot be deleted due to termination protection.
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=DescribeStacks:
+    post:
+      operationId: describeStacks
+      summary: Describe One or More Stacks
+      description: Returns the description for the specified stack. If no stack name was specified, then it returns descriptions for all stacks. Use ListStacks instead if you do not need full stack details for performance reasons.
+      tags:
+      - Stacks
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                StackName:
+                  type: string
+                  description: Stack name or unique ID. Required for deleted stacks to use unique ID.
+                NextToken:
+                  type: string
+                  description: Token for pagination from a prior call.
+                  maxLength: 1024
+            examples:
+              DescribestacksRequestExample:
+                summary: Default describeStacks request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  NextToken: example_value
+      responses:
+        '200':
+          description: Stack details returned successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  DescribeStacksResult:
+                    type: object
+                    properties:
+                      Stacks:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Stack'
+                      NextToken:
+                        type: string
+              examples:
+                Describestacks200Example:
+                  summary: Default describeStacks 200 response
+                  x-microcks-default: true
+                  value:
+                    DescribeStacksResult:
+                      Stacks:
+                      - StackId: '500123'
+                        StackName: example_value
+                        ChangeSetId: '500123'
+                        Description: A sample description.
+                        CreationTime: '2026-01-15T10:30:00Z'
+                        DeletionTime: '2026-01-15T10:30:00Z'
+                        LastUpdatedTime: '2026-01-15T10:30:00Z'
+                        StackStatusReason: example_value
+                        DisableRollback: true
+                        NotificationARNs: {}
+                        TimeoutInMinutes: 10
+                        Capabilities: {}
+                        Outputs: {}
+                        RoleARN: example_value
+                        Tags: {}
+                        EnableTerminationProtection: true
+                        Parameters: {}
+                        ParentId: '500123'
+                        RootId: '500123'
+                        DeletionMode: STANDARD
+                        DetailedStatus: CONFIGURATION_COMPLETE
+                        RetainExceptOnCreate: true
+                      NextToken: example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=ListStacks:
+    post:
+      operationId: listStacks
+      summary: List All Stacks
+      description: Returns summary information for all stacks. Deleted stacks are included for 90 days after deletion. You can filter by stack status.
+      tags:
+      - Stacks
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                NextToken:
+                  type: string
+                  maxLength: 1024
+                StackStatusFilter:
+                  type: array
+                  description: Filter stacks by status.
+                  items:
+                    $ref: '#/components/schemas/StackStatus'
+            examples:
+              ListstacksRequestExample:
+                summary: Default listStacks request
+                x-microcks-default: true
+                value:
+                  NextToken: example_value
+                  StackStatusFilter:
+                  - CREATE_IN_PROGRESS
+      responses:
+        '200':
+          description: Stack summaries returned successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListStacksResult:
+                    type: object
+                    properties:
+                      StackSummaries:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StackSummary'
+                      NextToken:
+                        type: string
+              examples:
+                Liststacks200Example:
+                  summary: Default listStacks 200 response
+                  x-microcks-default: true
+                  value:
+                    ListStacksResult:
+                      StackSummaries:
+                      - StackId: '500123'
+                        StackName: example_value
+                        TemplateDescription: example_value
+                        CreationTime: '2026-01-15T10:30:00Z'
+                        LastUpdatedTime: '2026-01-15T10:30:00Z'
+                        DeletionTime: '2026-01-15T10:30:00Z'
+                        StackStatusReason: example_value
+                        ParentId: '500123'
+                        RootId: '500123'
+                      NextToken: example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=CancelUpdateStack:
+    post:
+      operationId: cancelUpdateStack
+      summary: Cancel a Stack Update in Progress
+      description: Cancels an update on the specified stack. If the call completes successfully, the stack rolls back the update and reverts to the previous stack configuration.
+      tags:
+      - Stacks
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              properties:
+                StackName:
+                  type: string
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+            examples:
+              CancelupdatestackRequestExample:
+                summary: Default cancelUpdateStack request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  ClientRequestToken: example_value
+      responses:
+        '200':
+          description: Stack update cancellation initiated.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=ContinueUpdateRollback:
+    post:
+      operationId: continueUpdateRollback
+      summary: Continue Rolling Back a Failed Stack Update
+      description: For a specified stack in UPDATE_ROLLBACK_FAILED state, continues rolling back to the previous stable state. A stack enters this state when a resource fails during the update rollback process.
+      tags:
+      - Stacks
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              properties:
+                StackName:
+                  type: string
+                RoleARN:
+                  type: string
+                  minLength: 20
+                  maxLength: 2048
+                ResourcesToSkip:
+                  type: array
+                  items:
+                    type: string
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+            examples:
+              ContinueupdaterollbackRequestExample:
+                summary: Default continueUpdateRollback request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  RoleARN: example_value
+                  ResourcesToSkip:
+                  - example_value
+                  ClientRequestToken: example_value
+      responses:
+        '200':
+          description: Update rollback continuation initiated.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=RollbackStack:
+    post:
+      operationId: rollbackStack
+      summary: Rollback a Stack to a Previous Stable State
+      description: Rolls back the specified stack to the last known stable state.
+      tags:
+      - Stacks
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              properties:
+                StackName:
+                  type: string
+                RoleARN:
+                  type: string
+                  minLength: 20
+                  maxLength: 2048
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+                RetainExceptOnCreate:
+                  type: boolean
+            examples:
+              RollbackstackRequestExample:
+                summary: Default rollbackStack request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  RoleARN: example_value
+                  ClientRequestToken: example_value
+                  RetainExceptOnCreate: true
+      responses:
+        '200':
+          description: Stack rollback initiated successfully.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  RollbackStackResult:
+                    type: object
+                    properties:
+                      StackId:
+                        type: string
+              examples:
+                Rollbackstack200Example:
+                  summary: Default rollbackStack 200 response
+                  x-microcks-default: true
+                  value:
+                    RollbackStackResult:
+                      StackId: '500123'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=UpdateTerminationProtection:
+    post:
+      operationId: updateTerminationProtection
+      summary: Enable or Disable Termination Protection on a Stack
+      description: Updates termination protection for the specified stack. If a user attempts to delete a stack with termination protection enabled, the operation fails and the stack remains unchanged.
+      tags:
+      - Stacks
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              - EnableTerminationProtection
+              properties:
+                StackName:
+                  type: string
+                EnableTerminationProtection:
+                  type: boolean
+            examples:
+              UpdateterminationprotectionRequestExample:
+                summary: Default updateTerminationProtection request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  EnableTerminationProtection: true
+      responses:
+        '200':
+          description: Termination protection updated.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  UpdateTerminationProtectionResult:
+                    type: object
+                    properties:
+                      StackId:
+                        type: string
+              examples:
+                Updateterminationprotection200Example:
+                  summary: Default updateTerminationProtection 200 response
+                  x-microcks-default: true
+                  value:
+                    UpdateTerminationProtectionResult:
+                      StackId: '500123'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2010-05-15'
+      description: The API version. Fixed to 2010-05-15.
+  schemas:
+    RollbackConfiguration:
+      type: object
+      properties:
+        RollbackTriggers:
+          type: array
+          description: The triggers to monitor during stack creation or update.
+          items:
+            $ref: '#/components/schemas/RollbackTrigger'
+          maxItems: 5
+          example: []
+        MonitoringTimeInMinutes:
+          type: integer
+          description: The amount of time to monitor after stack deployment.
+          minimum: 0
+          maximum: 180
+          example: 10
+    Stack:
+      type: object
+      required:
+      - StackName
+      - CreationTime
+      - StackStatus
+      properties:
+        StackId:
+          type: string
+          description: Unique identifier of the stack.
+          example: '500123'
+        StackName:
+          type: string
+          description: The name associated with the stack.
+          example: example_value
+        ChangeSetId:
+          type: string
+          description: The unique ID of the change set.
+          example: '500123'
+        Description:
+          type: string
+          description: A user-defined description associated with the stack.
+          example: A sample description.
+        CreationTime:
+          type: string
+          format: date-time
+          description: The time the stack was created.
+          example: '2026-01-15T10:30:00Z'
+        DeletionTime:
+          type: string
+          format: date-time
+          description: The time the stack was deleted.
+          example: '2026-01-15T10:30:00Z'
+        LastUpdatedTime:
+          type: string
+          format: date-time
+          description: The time the stack was last updated.
+          example: '2026-01-15T10:30:00Z'
+        StackStatus:
+          $ref: '#/components/schemas/StackStatus'
+        StackStatusReason:
+          type: string
+          description: Explanation for the current stack status.
+          example: example_value
+        DisableRollback:
+          type: boolean
+          description: Whether rollback on stack creation failures is disabled.
+          example: true
+        NotificationARNs:
+          type: array
+          description: Amazon SNS topic ARNs for stack event notifications.
+          items:
+            type: string
+          maxItems: 5
+          example: []
+        TimeoutInMinutes:
+          type: integer
+          description: Time allowed for stack creation before failure.
+          example: 10
+        Capabilities:
+          type: array
+          description: The capabilities allowed in the stack.
+          items:
+            type: string
+            enum:
+            - CAPABILITY_IAM
+            - CAPABILITY_NAMED_IAM
+            - CAPABILITY_AUTO_EXPAND
+          example: []
+        Outputs:
+          type: array
+          description: A list of output structures.
+          items:
+            $ref: '#/components/schemas/Output'
+          example: []
+        RoleARN:
+          type: string
+          description: The IAM role ARN used by CloudFormation.
+          minLength: 20
+          maxLength: 2048
+          example: example_value
+        Tags:
+          type: array
+          description: Tags associated with the stack.
+          items:
+            $ref: '#/components/schemas/Tag'
+          maxItems: 50
+          example: []
+        EnableTerminationProtection:
+          type: boolean
+          description: Whether termination protection is enabled.
+          example: true
+        Parameters:
+          type: array
+          description: A list of parameter structures.
+          items:
+            $ref: '#/components/schemas/Parameter'
+          example: []
+        RollbackConfiguration:
+          $ref: '#/components/schemas/RollbackConfiguration'
+        ParentId:
+          type: string
+          description: For nested stacks, the stack ID of the direct parent.
+          example: '500123'
+        RootId:
+          type: string
+          description: For nested stacks, the stack ID of the top-level stack.
+          example: '500123'
+        DriftInformation:
+          $ref: '#/components/schemas/StackDriftInformation'
+        DeletionMode:
+          type: string
+          enum:
+          - STANDARD
+          - FORCE_DELETE_STACK
+          example: STANDARD
+        DetailedStatus:
+          type: string
+          enum:
+          - CONFIGURATION_COMPLETE
+          - VALIDATION_FAILED
+          example: CONFIGURATION_COMPLETE
+        RetainExceptOnCreate:
+          type: boolean
+          example: true
+    StackDriftInformation:
+      type: object
+      required:
+      - StackDriftStatus
+      properties:
+        StackDriftStatus:
+          type: string
+          enum:
+          - DRIFTED
+          - IN_SYNC
+          - UNKNOWN
+          - NOT_CHECKED
+          example: DRIFTED
+        LastCheckTimestamp:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+    StackSummary:
+      type: object
+      required:
+      - StackName
+      - CreationTime
+      - StackStatus
+      properties:
+        StackId:
+          type: string
+          example: '500123'
+        StackName:
+          type: string
+          example: example_value
+        TemplateDescription:
+          type: string
+          example: example_value
+        CreationTime:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        LastUpdatedTime:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        DeletionTime:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        StackStatus:
+          $ref: '#/components/schemas/StackStatus'
+        StackStatusReason:
+          type: string
+          example: example_value
+        ParentId:
+          type: string
+          example: '500123'
+        RootId:
+          type: string
+          example: '500123'
+        DriftInformation:
+          $ref: '#/components/schemas/StackDriftInformation'
+    Tag:
+      type: object
+      required:
+      - Key
+      - Value
+      properties:
+        Key:
+          type: string
+          description: Tag key.
+          minLength: 1
+          maxLength: 128
+          example: example_value
+        Value:
+          type: string
+          description: Tag value.
+          minLength: 0
+          maxLength: 256
+          example: example_value
+    StackStatus:
+      type: string
+      enum:
+      - CREATE_IN_PROGRESS
+      - CREATE_FAILED
+      - CREATE_COMPLETE
+      - ROLLBACK_IN_PROGRESS
+      - ROLLBACK_FAILED
+      - ROLLBACK_COMPLETE
+      - DELETE_IN_PROGRESS
+      - DELETE_FAILED
+      - DELETE_COMPLETE
+      - UPDATE_IN_PROGRESS
+      - UPDATE_COMPLETE_CLEANUP_IN_PROGRESS
+      - UPDATE_COMPLETE
+      - UPDATE_FAILED
+      - UPDATE_ROLLBACK_IN_PROGRESS
+      - UPDATE_ROLLBACK_FAILED
+      - UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS
+      - UPDATE_ROLLBACK_COMPLETE
+      - REVIEW_IN_PROGRESS
+      - IMPORT_IN_PROGRESS
+      - IMPORT_COMPLETE
+      - IMPORT_ROLLBACK_IN_PROGRESS
+      - IMPORT_ROLLBACK_FAILED
+      - IMPORT_ROLLBACK_COMPLETE
+    Parameter:
+      type: object
+      properties:
+        ParameterKey:
+          type: string
+          description: The key associated with the parameter.
+          example: example_value
+        ParameterValue:
+          type: string
+          description: The input value associated with the parameter.
+          example: example_value
+        UsePreviousValue:
+          type: boolean
+          description: Use the existing parameter value during stack updates.
+          example: true
+        ResolvedValue:
+          type: string
+          description: The value that resolves to for SSM parameter types.
+          example: example_value
+    RollbackTrigger:
+      type: object
+      required:
+      - Arn
+      - Type
+      properties:
+        Arn:
+          type: string
+          description: The Amazon Resource Name (ARN) of the rollback trigger.
+          example: example_value
+        Type:
+          type: string
+          description: The resource type of the rollback trigger.
+          example: example_value
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+          example: example_value
+        RequestId:
+          type: string
+          example: '500123'
+    Output:
+      type: object
+      properties:
+        OutputKey:
+          type: string
+          description: The key associated with the output.
+          example: example_value
+        OutputValue:
+          type: string
+          description: The value associated with the output.
+          example: example_value
+        Description:
+          type: string
+          description: User-defined description.
+          example: A sample description.
+        ExportName:
+          type: string
+          description: The name of the export associated with the output.
+          example: example_value
+  responses:
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: An internal service error occurred.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    AlreadyExistsError:
+      description: The resource already exists.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: The specified resource was not found.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    AWS_Signature_V4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication.

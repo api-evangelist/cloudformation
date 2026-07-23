@@ -1,0 +1,765 @@
+openapi: 3.1.0
+info:
+  title: AWS Cloud Control Change Sets API
+  description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
+  version: '2021-09-30'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/contact-us/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-logo:
+    url: https://aws.amazon.com/cloudformation/logo.png
+servers:
+- url: https://cloudcontrolapi.{region}.amazonaws.com
+  description: AWS Cloud Control API Regional Endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-central-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- AWS_Signature_V4: []
+tags:
+- name: Change Sets
+  description: Operations for creating and managing change sets to preview stack changes.
+paths:
+  /?Action=CreateChangeSet:
+    post:
+      operationId: createChangeSet
+      summary: Create a Change Set to Preview Stack Changes
+      description: Creates a list of changes that will be applied to a stack so that you can review the changes before executing them. Change sets allow you to see how your changes might impact running resources before implementing them.
+      tags:
+      - Change Sets
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              - ChangeSetName
+              properties:
+                StackName:
+                  type: string
+                ChangeSetName:
+                  type: string
+                  description: The name of the change set. Max 128 characters.
+                  maxLength: 128
+                TemplateBody:
+                  type: string
+                TemplateURL:
+                  type: string
+                  format: uri
+                UsePreviousTemplate:
+                  type: boolean
+                Parameters:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Parameter'
+                Capabilities:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - CAPABILITY_IAM
+                    - CAPABILITY_NAMED_IAM
+                    - CAPABILITY_AUTO_EXPAND
+                ResourceTypes:
+                  type: array
+                  items:
+                    type: string
+                RoleARN:
+                  type: string
+                  minLength: 20
+                  maxLength: 2048
+                RollbackConfiguration:
+                  $ref: '#/components/schemas/RollbackConfiguration'
+                NotificationARNs:
+                  type: array
+                  items:
+                    type: string
+                  maxItems: 5
+                Tags:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Tag'
+                  maxItems: 50
+                ChangeSetType:
+                  type: string
+                  description: The type of change set operation.
+                  enum:
+                  - CREATE
+                  - UPDATE
+                  - IMPORT
+                Description:
+                  type: string
+                  description: A description for the change set.
+                  maxLength: 1024
+                IncludeNestedStacks:
+                  type: boolean
+                ImportExistingResources:
+                  type: boolean
+                ClientToken:
+                  type: string
+                  maxLength: 128
+            examples:
+              CreatechangesetRequestExample:
+                summary: Default createChangeSet request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  ChangeSetName: example_value
+                  TemplateBody: example_value
+                  TemplateURL: https://www.example.com
+                  UsePreviousTemplate: true
+                  Parameters:
+                  - ParameterKey: example_value
+                    ParameterValue: example_value
+                    UsePreviousValue: true
+                    ResolvedValue: example_value
+                  Capabilities:
+                  - CAPABILITY_IAM
+                  ResourceTypes:
+                  - example_value
+                  RoleARN: example_value
+                  RollbackConfiguration:
+                    RollbackTriggers:
+                    - {}
+                    MonitoringTimeInMinutes: 10
+                  NotificationARNs:
+                  - example_value
+                  Tags:
+                  - Key: example_value
+                    Value: example_value
+                  ChangeSetType: CREATE
+                  Description: A sample description.
+                  IncludeNestedStacks: true
+                  ImportExistingResources: true
+                  ClientToken: example_value
+      responses:
+        '200':
+          description: Change set creation initiated.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  CreateChangeSetResult:
+                    type: object
+                    properties:
+                      Id:
+                        type: string
+                        description: The ARN of the change set.
+                      StackId:
+                        type: string
+              examples:
+                Createchangeset200Example:
+                  summary: Default createChangeSet 200 response
+                  x-microcks-default: true
+                  value:
+                    CreateChangeSetResult:
+                      Id: abc123
+                      StackId: '500123'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=DescribeChangeSet:
+    post:
+      operationId: describeChangeSet
+      summary: Describe a Change Set
+      description: Returns the inputs and a list of changes that CloudFormation will make if you execute the change set.
+      tags:
+      - Change Sets
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - ChangeSetName
+              properties:
+                ChangeSetName:
+                  type: string
+                  description: The name or ARN of the change set.
+                StackName:
+                  type: string
+                NextToken:
+                  type: string
+                  maxLength: 1024
+                IncludePropertyValues:
+                  type: boolean
+            examples:
+              DescribechangesetRequestExample:
+                summary: Default describeChangeSet request
+                x-microcks-default: true
+                value:
+                  ChangeSetName: example_value
+                  StackName: example_value
+                  NextToken: example_value
+                  IncludePropertyValues: true
+      responses:
+        '200':
+          description: Change set details returned.
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ChangeSetDetail'
+              examples:
+                Describechangeset200Example:
+                  summary: Default describeChangeSet 200 response
+                  x-microcks-default: true
+                  value:
+                    ChangeSetName: example_value
+                    ChangeSetId: '500123'
+                    StackId: '500123'
+                    StackName: example_value
+                    Description: A sample description.
+                    Parameters:
+                    - ParameterKey: example_value
+                      ParameterValue: example_value
+                      UsePreviousValue: true
+                      ResolvedValue: example_value
+                    CreationTime: '2026-01-15T10:30:00Z'
+                    ExecutionStatus: example_value
+                    Status: example_value
+                    StatusReason: example_value
+                    NotificationARNs:
+                    - example_value
+                    RollbackConfiguration:
+                      RollbackTriggers:
+                      - {}
+                      MonitoringTimeInMinutes: 10
+                    Capabilities:
+                    - example_value
+                    Tags:
+                    - Key: example_value
+                      Value: example_value
+                    Changes:
+                    - Type: Resource
+                    IncludeNestedStacks: true
+                    NextToken: example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          description: Change set not found.
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=ExecuteChangeSet:
+    post:
+      operationId: executeChangeSet
+      summary: Execute a Change Set
+      description: Updates a stack using the input information provided when the specified change set was created. After the call successfully completes, CloudFormation starts updating the stack.
+      tags:
+      - Change Sets
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - ChangeSetName
+              properties:
+                ChangeSetName:
+                  type: string
+                StackName:
+                  type: string
+                ClientRequestToken:
+                  type: string
+                  maxLength: 128
+                DisableRollback:
+                  type: boolean
+                RetainExceptOnCreate:
+                  type: boolean
+            examples:
+              ExecutechangesetRequestExample:
+                summary: Default executeChangeSet request
+                x-microcks-default: true
+                value:
+                  ChangeSetName: example_value
+                  StackName: example_value
+                  ClientRequestToken: example_value
+                  DisableRollback: true
+                  RetainExceptOnCreate: true
+      responses:
+        '200':
+          description: Change set execution initiated.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          description: Change set not found.
+        '409':
+          description: Change set is not in a valid state for execution.
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=DeleteChangeSet:
+    post:
+      operationId: deleteChangeSet
+      summary: Delete a Change Set
+      description: Deletes the specified change set. Deleting change sets ensures that no one executes the wrong change set. Only change sets in CREATE_COMPLETE or FAILED status can be deleted.
+      tags:
+      - Change Sets
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - ChangeSetName
+              properties:
+                ChangeSetName:
+                  type: string
+                StackName:
+                  type: string
+            examples:
+              DeletechangesetRequestExample:
+                summary: Default deleteChangeSet request
+                x-microcks-default: true
+                value:
+                  ChangeSetName: example_value
+                  StackName: example_value
+      responses:
+        '200':
+          description: Change set deleted successfully.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          description: Change set not found.
+        '409':
+          description: Change set cannot be deleted in current status.
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=ListChangeSets:
+    post:
+      operationId: listChangeSets
+      summary: List All Change Sets for a Stack
+      description: Returns the ID and status of each active change set for a stack. For example, CloudFormation lists change sets that are in the CREATE_IN_PROGRESS or CREATE_COMPLETE status.
+      tags:
+      - Change Sets
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              properties:
+                StackName:
+                  type: string
+                NextToken:
+                  type: string
+                  maxLength: 1024
+            examples:
+              ListchangesetsRequestExample:
+                summary: Default listChangeSets request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  NextToken: example_value
+      responses:
+        '200':
+          description: Change set summaries returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ListChangeSetsResult:
+                    type: object
+                    properties:
+                      Summaries:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ChangeSetSummary'
+                      NextToken:
+                        type: string
+              examples:
+                Listchangesets200Example:
+                  summary: Default listChangeSets 200 response
+                  x-microcks-default: true
+                  value:
+                    ListChangeSetsResult:
+                      Summaries:
+                      - StackId: '500123'
+                        StackName: example_value
+                        ChangeSetId: '500123'
+                        ChangeSetName: example_value
+                        ExecutionStatus: UNAVAILABLE
+                        Status: CREATE_PENDING
+                        StatusReason: example_value
+                        CreationTime: '2026-01-15T10:30:00Z'
+                        Description: A sample description.
+                        IncludeNestedStacks: true
+                        ImportExistingResources: true
+                        ParentChangeSetId: '500123'
+                        RootChangeSetId: '500123'
+                      NextToken: example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    ChangeSetSummary:
+      type: object
+      properties:
+        StackId:
+          type: string
+          description: The ID of the stack with which the change set is associated.
+          example: '500123'
+        StackName:
+          type: string
+          example: example_value
+        ChangeSetId:
+          type: string
+          description: The ARN of the change set.
+          example: '500123'
+        ChangeSetName:
+          type: string
+          maxLength: 128
+          example: example_value
+        ExecutionStatus:
+          type: string
+          enum:
+          - UNAVAILABLE
+          - AVAILABLE
+          - EXECUTE_IN_PROGRESS
+          - EXECUTE_COMPLETE
+          - EXECUTE_FAILED
+          - OBSOLETE
+          example: UNAVAILABLE
+        Status:
+          type: string
+          enum:
+          - CREATE_PENDING
+          - CREATE_IN_PROGRESS
+          - CREATE_COMPLETE
+          - DELETE_PENDING
+          - DELETE_IN_PROGRESS
+          - DELETE_COMPLETE
+          - DELETE_FAILED
+          - FAILED
+          example: CREATE_PENDING
+        StatusReason:
+          type: string
+          example: example_value
+        CreationTime:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        Description:
+          type: string
+          maxLength: 1024
+          example: A sample description.
+        IncludeNestedStacks:
+          type: boolean
+          example: true
+        ImportExistingResources:
+          type: boolean
+          example: true
+        ParentChangeSetId:
+          type: string
+          example: '500123'
+        RootChangeSetId:
+          type: string
+          example: '500123'
+    RollbackConfiguration:
+      type: object
+      properties:
+        RollbackTriggers:
+          type: array
+          description: The triggers to monitor during stack creation or update.
+          items:
+            $ref: '#/components/schemas/RollbackTrigger'
+          maxItems: 5
+          example: []
+        MonitoringTimeInMinutes:
+          type: integer
+          description: The amount of time to monitor after stack deployment.
+          minimum: 0
+          maximum: 180
+          example: 10
+    Parameter:
+      type: object
+      properties:
+        ParameterKey:
+          type: string
+          description: The key associated with the parameter.
+          example: example_value
+        ParameterValue:
+          type: string
+          description: The input value associated with the parameter.
+          example: example_value
+        UsePreviousValue:
+          type: boolean
+          description: Use the existing parameter value during stack updates.
+          example: true
+        ResolvedValue:
+          type: string
+          description: The value that resolves to for SSM parameter types.
+          example: example_value
+    Change:
+      type: object
+      properties:
+        Type:
+          type: string
+          enum:
+          - Resource
+          example: Resource
+        ResourceChange:
+          $ref: '#/components/schemas/ResourceChange'
+    Tag:
+      type: object
+      required:
+      - Key
+      - Value
+      properties:
+        Key:
+          type: string
+          description: Tag key.
+          minLength: 1
+          maxLength: 128
+          example: example_value
+        Value:
+          type: string
+          description: Tag value.
+          minLength: 0
+          maxLength: 256
+          example: example_value
+    ChangeSetDetail:
+      type: object
+      properties:
+        ChangeSetName:
+          type: string
+          example: example_value
+        ChangeSetId:
+          type: string
+          example: '500123'
+        StackId:
+          type: string
+          example: '500123'
+        StackName:
+          type: string
+          example: example_value
+        Description:
+          type: string
+          example: A sample description.
+        Parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          example: []
+        CreationTime:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        ExecutionStatus:
+          type: string
+          example: example_value
+        Status:
+          type: string
+          example: example_value
+        StatusReason:
+          type: string
+          example: example_value
+        NotificationARNs:
+          type: array
+          items:
+            type: string
+          example: []
+        RollbackConfiguration:
+          $ref: '#/components/schemas/RollbackConfiguration'
+        Capabilities:
+          type: array
+          items:
+            type: string
+          example: []
+        Tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          example: []
+        Changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Change'
+          example: []
+        IncludeNestedStacks:
+          type: boolean
+          example: true
+        NextToken:
+          type: string
+          example: example_value
+    ResourceChangeDetail:
+      type: object
+      properties:
+        Target:
+          type: object
+          properties:
+            Attribute:
+              type: string
+            Name:
+              type: string
+            RequiresRecreation:
+              type: string
+              enum:
+              - Never
+              - Conditionally
+              - Always
+          example: example_value
+        Evaluation:
+          type: string
+          enum:
+          - Static
+          - Dynamic
+          example: Static
+        ChangeSource:
+          type: string
+          enum:
+          - ResourceReference
+          - ParameterReference
+          - ResourceAttribute
+          - DirectModification
+          - Automatic
+          example: ResourceReference
+        CausingEntity:
+          type: string
+          example: example_value
+    RollbackTrigger:
+      type: object
+      required:
+      - Arn
+      - Type
+      properties:
+        Arn:
+          type: string
+          description: The Amazon Resource Name (ARN) of the rollback trigger.
+          example: example_value
+        Type:
+          type: string
+          description: The resource type of the rollback trigger.
+          example: example_value
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+          example: example_value
+        RequestId:
+          type: string
+          example: '500123'
+    ResourceChange:
+      type: object
+      properties:
+        Action:
+          type: string
+          enum:
+          - Add
+          - Modify
+          - Remove
+          - Import
+          - Dynamic
+          example: Add
+        LogicalResourceId:
+          type: string
+          example: '500123'
+        PhysicalResourceId:
+          type: string
+          example: '500123'
+        ResourceType:
+          type: string
+          example: example_value
+        Replacement:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Conditional
+          example: 'True'
+        Scope:
+          type: array
+          items:
+            type: string
+          example: []
+        Details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceChangeDetail'
+          example: []
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2010-05-15'
+      description: The API version. Fixed to 2010-05-15.
+  responses:
+    InternalError:
+      description: An internal service error occurred.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    AWS_Signature_V4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication.

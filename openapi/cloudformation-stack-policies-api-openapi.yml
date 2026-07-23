@@ -1,0 +1,189 @@
+openapi: 3.1.0
+info:
+  title: AWS Cloud Control Change Sets Stack Policies API
+  description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
+  version: '2021-09-30'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/contact-us/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-logo:
+    url: https://aws.amazon.com/cloudformation/logo.png
+servers:
+- url: https://cloudcontrolapi.{region}.amazonaws.com
+  description: AWS Cloud Control API Regional Endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-central-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- AWS_Signature_V4: []
+tags:
+- name: Stack Policies
+  description: Operations for getting and setting stack policies.
+paths:
+  /?Action=GetStackPolicy:
+    post:
+      operationId: getStackPolicy
+      summary: Retrieve a Stack Policy
+      description: Returns the stack policy for a specified stack. If a stack does not have a policy, a null value is returned.
+      tags:
+      - Stack Policies
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              properties:
+                StackName:
+                  type: string
+            examples:
+              GetstackpolicyRequestExample:
+                summary: Default getStackPolicy request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+      responses:
+        '200':
+          description: Stack policy returned.
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  GetStackPolicyResult:
+                    type: object
+                    properties:
+                      StackPolicyBody:
+                        type: string
+              examples:
+                Getstackpolicy200Example:
+                  summary: Default getStackPolicy 200 response
+                  x-microcks-default: true
+                  value:
+                    GetStackPolicyResult:
+                      StackPolicyBody: example_value
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /?Action=SetStackPolicy:
+    post:
+      operationId: setStackPolicy
+      summary: Set a Stack Policy
+      description: Sets a stack policy for a specified stack. A stack policy controls whether changes to stack resources are allowed during updates.
+      tags:
+      - Stack Policies
+      parameters:
+      - $ref: '#/components/parameters/VersionParam'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - StackName
+              properties:
+                StackName:
+                  type: string
+                StackPolicyBody:
+                  type: string
+                  description: Stack policy body (1-16,384 bytes).
+                StackPolicyURL:
+                  type: string
+                  description: Location of the stack policy in S3.
+                  format: uri
+            examples:
+              SetstackpolicyRequestExample:
+                summary: Default setStackPolicy request
+                x-microcks-default: true
+                value:
+                  StackName: example_value
+                  StackPolicyBody: example_value
+                  StackPolicyURL: https://www.example.com
+      responses:
+        '200':
+          description: Stack policy set successfully.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2010-05-15'
+      description: The API version. Fixed to 2010-05-15.
+  responses:
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: An internal service error occurred.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: The specified resource was not found.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+          example: example_value
+        RequestId:
+          type: string
+          example: '500123'
+  securitySchemes:
+    AWS_Signature_V4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication.
