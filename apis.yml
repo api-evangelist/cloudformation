@@ -2,6 +2,19 @@ name: AWS CloudFormation
 description: >-
   A collection of APIs provided by AWS for infrastructure as code provisioning and management of AWS and third-party
   resources using CloudFormation templates and the Cloud Control API.
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://aws.amazon.com/cloudformation/logo.png
 created: '2024'
 modified: '2026-05-19'
@@ -15,63 +28,374 @@ tags:
   - Infrastructure As Code
   - Stack Management
 apis:
-  - name: AWS CloudFormation API
-    description: >-
-      AWS CloudFormation gives you an easy way to model a collection of related AWS and third-party resources, provision
-      them quickly and consistently, and manage them throughout their lifecycles. It uses templates to define stacks of
-      resources and provides API operations for creating, updating, and deleting stacks.
-    image: https://aws.amazon.com/cloudformation/logo.png
-    humanURL: https://aws.amazon.com/cloudformation/
-    baseURL: https://cloudformation.{region}.amazonaws.com
-    tags:
-      - Infrastructure
-      - Resources
-      - Stacks
-      - Templates
-    properties:
-      - type: Documentation
-        url: https://docs.aws.amazon.com/cloudformation/
-      - type: APIReference
-        url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
-      - type: OpenAPI
-        url: openapi/cloudformation-api.yml
-      - type: Pricing
-        url: https://aws.amazon.com/cloudformation/pricing/
-      - type: GettingStarted
-        url: https://aws.amazon.com/cloudformation/getting-started/
-      - type: ChangeLog
-        url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
-      - type: SDKs
-        url: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
-        title: Python SDK (Boto3)
-    contact:
-      - FN: AWS Support
-        url: https://aws.amazon.com/contact-us/
-        email: ''
-  - name: AWS Cloud Control API
-    description: >-
-      AWS Cloud Control API provides a uniform CRUDL (create, read, update, delete, list) interface for managing AWS and
-      third-party resources. It offers a standardized way to access and provision resource types available in the
-      CloudFormation Registry without needing to learn each individual service API.
-    image: https://aws.amazon.com/cloudformation/logo.png
-    humanURL: https://aws.amazon.com/cloudcontrolapi/
-    baseURL: https://cloudcontrolapi.{region}.amazonaws.com
-    tags:
-      - Cloud Control
-      - CRUDL
-      - Provisioning
-      - Resources
-    properties:
-      - type: Documentation
-        url: https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
-      - type: OpenAPI
-        url: openapi/cloud-control-api.yml
-      - type: APIReference
-        url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
-    contact:
-      - FN: AWS Support
-        url: https://aws.amazon.com/contact-us/
-        email: ''
+- aid: cloudformation:cloudformation-change-sets-api
+  name: AWS CloudFormation Change Sets API
+  description: Operations for creating and managing change sets to preview stack changes.
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - Change Sets
+  properties:
+  - type: OpenAPI
+    url: openapi/cloudformation-change-sets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: Pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: ChangeLog
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: SDKs
+    url: >-
+      https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  - type: Documentation
+    url: >-
+      https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
+- aid: cloudformation:cloudformation-exports-api
+  name: AWS CloudFormation Exports API
+  description: Operations for listing stack exports and imports.
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - Exports
+  properties:
+  - type: OpenAPI
+    url: openapi/cloudformation-exports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: Pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: ChangeLog
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: SDKs
+    url: >-
+      https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  - type: Documentation
+    url: >-
+      https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
+- aid: cloudformation:cloudformation-registry-api
+  name: AWS CloudFormation Registry API
+  description: Operations for managing extension types in the CloudFormation Registry.
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - Registry
+  properties:
+  - type: OpenAPI
+    url: openapi/cloudformation-registry-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: Pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: ChangeLog
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: SDKs
+    url: >-
+      https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  - type: Documentation
+    url: >-
+      https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
+- aid: cloudformation:cloudformation-request-status-api
+  name: AWS CloudFormation Request Status API
+  description: >-
+    Operations for tracking the status of asynchronous resource operations and cancelling in-progress
+    requests.
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - Request Status
+  properties:
+  - type: OpenAPI
+    url: openapi/cloudformation-request-status-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: Pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: ChangeLog
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: SDKs
+    url: >-
+      https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  - type: Documentation
+    url: >-
+      https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
+- aid: cloudformation:cloudformation-resources-api
+  name: AWS CloudFormation Resources API
+  description: >-
+    CRUDL operations for creating, reading, updating, deleting, and listing cloud resources through a
+    uniform interface.
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - Resources
+  properties:
+  - type: OpenAPI
+    url: openapi/cloudformation-resources-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: Pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: ChangeLog
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: SDKs
+    url: >-
+      https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  - type: Documentation
+    url: >-
+      https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
+- aid: cloudformation:cloudformation-stack-drift-api
+  name: AWS CloudFormation Stack Drift API
+  description: Operations for detecting and describing configuration drift.
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - Stack Drift
+  properties:
+  - type: OpenAPI
+    url: openapi/cloudformation-stack-drift-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: Pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: ChangeLog
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: SDKs
+    url: >-
+      https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  - type: Documentation
+    url: >-
+      https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
+- aid: cloudformation:cloudformation-stack-events-api
+  name: AWS CloudFormation Stack Events API
+  description: Operations for retrieving stack-related events.
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - Stack Events
+  properties:
+  - type: OpenAPI
+    url: openapi/cloudformation-stack-events-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: Pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: ChangeLog
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: SDKs
+    url: >-
+      https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  - type: Documentation
+    url: >-
+      https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
+- aid: cloudformation:cloudformation-stack-instances-api
+  name: AWS CloudFormation Stack Instances API
+  description: Operations for managing stack instances within a stack set.
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - Stack Instances
+  properties:
+  - type: OpenAPI
+    url: openapi/cloudformation-stack-instances-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: Pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: ChangeLog
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: SDKs
+    url: >-
+      https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  - type: Documentation
+    url: >-
+      https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
+- aid: cloudformation:cloudformation-stack-policies-api
+  name: AWS CloudFormation Stack Policies API
+  description: Operations for getting and setting stack policies.
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - Stack Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/cloudformation-stack-policies-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: Pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: ChangeLog
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: SDKs
+    url: >-
+      https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  - type: Documentation
+    url: >-
+      https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
+- aid: cloudformation:cloudformation-stack-resources-api
+  name: AWS CloudFormation Stack Resources API
+  description: Operations for describing resources within a stack.
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - Stack Resources
+  properties:
+  - type: OpenAPI
+    url: openapi/cloudformation-stack-resources-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: Pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: ChangeLog
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: SDKs
+    url: >-
+      https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  - type: Documentation
+    url: >-
+      https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
+- aid: cloudformation:cloudformation-stack-sets-api
+  name: AWS CloudFormation Stack Sets API
+  description: Operations for managing stack sets across multiple accounts and regions.
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - Stack Sets
+  properties:
+  - type: OpenAPI
+    url: openapi/cloudformation-stack-sets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: Pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: ChangeLog
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: SDKs
+    url: >-
+      https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  - type: Documentation
+    url: >-
+      https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
+- aid: cloudformation:cloudformation-stacks-api
+  name: AWS CloudFormation Stacks API
+  description: Operations for creating, updating, deleting, and describing CloudFormation stacks.
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - Stacks
+  properties:
+  - type: OpenAPI
+    url: openapi/cloudformation-stacks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: Pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: ChangeLog
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: SDKs
+    url: >-
+      https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  - type: Documentation
+    url: >-
+      https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
+- aid: cloudformation:cloudformation-templates-api
+  name: AWS CloudFormation Templates API
+  description: Operations for retrieving, validating, and summarizing templates.
+  humanURL: https://aws.amazon.com/cloudformation/
+  baseURL: https://cloudformation.{region}.amazonaws.com
+  tags:
+  - Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/cloudformation-templates-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/cloudformation/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/Welcome.html
+  - type: Pricing
+    url: https://aws.amazon.com/cloudformation/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/cloudformation/getting-started/
+  - type: ChangeLog
+    url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/document-history.html
+  - type: SDKs
+    url: >-
+      https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation.html
+  - type: Documentation
+    url: >-
+      https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
 common:
   - type: AgenticAccess
     url: agentic-access/cloudformation-agentic-access.yml
