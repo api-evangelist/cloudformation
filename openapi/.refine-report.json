@@ -1,0 +1,38 @@
+{
+  "provider": "cloudformation",
+  "sources": [
+    "cloudformation-change-sets-api-openapi.yml",
+    "cloudformation-exports-api-openapi.yml",
+    "cloudformation-registry-api-openapi.yml",
+    "cloudformation-request-status-api-openapi.yml",
+    "cloudformation-resources-api-openapi.yml",
+    "cloudformation-stack-drift-api-openapi.yml",
+    "cloudformation-stack-events-api-openapi.yml",
+    "cloudformation-stack-instances-api-openapi.yml",
+    "cloudformation-stack-policies-api-openapi.yml",
+    "cloudformation-stack-resources-api-openapi.yml",
+    "cloudformation-stack-sets-api-openapi.yml",
+    "cloudformation-stacks-api-openapi.yml",
+    "cloudformation-templates-api-openapi.yml"
+  ],
+  "outputs": [
+    "cloudformation-change-sets-api-openapi.yml",
+    "cloudformation-exports-api-openapi.yml",
+    "cloudformation-registry-api-openapi.yml",
+    "cloudformation-request-status-api-openapi.yml",
+    "cloudformation-resources-api-openapi.yml",
+    "cloudformation-stack-drift-api-openapi.yml",
+    "cloudformation-stack-events-api-openapi.yml",
+    "cloudformation-stack-instances-api-openapi.yml",
+    "cloudformation-stack-policies-api-openapi.yml",
+    "cloudformation-stack-resources-api-openapi.yml",
+    "cloudformation-stack-sets-api-openapi.yml",
+    "cloudformation-stacks-api-openapi.yml",
+    "cloudformation-templates-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
