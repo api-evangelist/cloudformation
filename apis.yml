@@ -573,15 +573,6 @@ common:
   - type: Rules
     url: rules/cloudformation-spectral-rules.yml
     title: Spectral Rules
-  - type: Capabilities
-    url: capabilities/infrastructure-provisioning.yaml
-    title: Infrastructure Provisioning Workflow
-  - type: Capabilities
-    url: capabilities/shared/cloudformation.yaml
-    title: CloudFormation Shared Capability
-  - type: Capabilities
-    url: capabilities/shared/cloud-control.yaml
-    title: Cloud Control Shared Capability
   - name: MCP Server
     url: >-
       https://aws.amazon.com/blogs/devops/introducing-the-aws-infrastructure-as-code-mcp-server-ai-powered-cdk-and-cloudformation-assistance/
