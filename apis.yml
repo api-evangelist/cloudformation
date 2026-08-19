@@ -19,7 +19,7 @@ image: https://aws.amazon.com/cloudformation/logo.png
 created: '2024'
 modified: '2026-05-19'
 url: https://docs.aws.amazon.com/cloudformation/
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 tags:
   - Automation
   - AWS
