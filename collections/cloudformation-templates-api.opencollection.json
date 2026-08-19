@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWS Cloud Control Change Sets Templates API",
+    "version": "2021-09-30"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a Stack Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=GetTemplate",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "ChangeSetName",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateStage",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns the template body for a specified stack. You can get the template for running or deleted stacks."
+        },
+        {
+          "info": {
+            "name": "Get Summary Information About a Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=GetTemplateSummary",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                },
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns information about a new or existing template including parameter declarations, a list of resources, and capabilities required."
+        },
+        {
+          "info": {
+            "name": "Validate a Cloudformation Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=ValidateTemplate",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Validates a specified template. CloudFormation checks whether the template is valid JSON or YAML, whether all required values are present, and whether all references are valid."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

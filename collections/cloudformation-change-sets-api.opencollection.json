@@ -1,0 +1,266 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWS Cloud Control Change Sets API",
+    "version": "2021-09-30"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Change Sets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Change Set to Preview Stack Changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=CreateChangeSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "ChangeSetName",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                },
+                {
+                  "name": "UsePreviousTemplate",
+                  "value": ""
+                },
+                {
+                  "name": "Parameters",
+                  "value": ""
+                },
+                {
+                  "name": "Capabilities",
+                  "value": ""
+                },
+                {
+                  "name": "ResourceTypes",
+                  "value": ""
+                },
+                {
+                  "name": "RoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "RollbackConfiguration",
+                  "value": ""
+                },
+                {
+                  "name": "NotificationARNs",
+                  "value": ""
+                },
+                {
+                  "name": "Tags",
+                  "value": ""
+                },
+                {
+                  "name": "ChangeSetType",
+                  "value": ""
+                },
+                {
+                  "name": "Description",
+                  "value": ""
+                },
+                {
+                  "name": "IncludeNestedStacks",
+                  "value": ""
+                },
+                {
+                  "name": "ImportExistingResources",
+                  "value": ""
+                },
+                {
+                  "name": "ClientToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates a list of changes that will be applied to a stack so that you can review the changes before executing them. Change sets allow you to see how your changes might impact running resources before implementing them."
+        },
+        {
+          "info": {
+            "name": "Describe a Change Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DescribeChangeSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "ChangeSetName",
+                  "value": ""
+                },
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                },
+                {
+                  "name": "IncludePropertyValues",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns the inputs and a list of changes that CloudFormation will make if you execute the change set."
+        },
+        {
+          "info": {
+            "name": "Execute a Change Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=ExecuteChangeSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "ChangeSetName",
+                  "value": ""
+                },
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                },
+                {
+                  "name": "DisableRollback",
+                  "value": ""
+                },
+                {
+                  "name": "RetainExceptOnCreate",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Updates a stack using the input information provided when the specified change set was created. After the call successfully completes, CloudFormation starts updating the stack."
+        },
+        {
+          "info": {
+            "name": "Delete a Change Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DeleteChangeSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "ChangeSetName",
+                  "value": ""
+                },
+                {
+                  "name": "StackName",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Deletes the specified change set. Deleting change sets ensures that no one executes the wrong change set. Only change sets in CREATE_COMPLETE or FAILED status can be deleted."
+        },
+        {
+          "info": {
+            "name": "List All Change Sets for a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=ListChangeSets",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns the ID and status of each active change set for a stack. For example, CloudFormation lists change sets that are in the CREATE_IN_PROGRESS or CREATE_COMPLETE status."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

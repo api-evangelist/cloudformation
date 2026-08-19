@@ -1,0 +1,462 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWS Cloud Control Change Sets Stacks API",
+    "version": "2021-09-30"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stacks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a New Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=CreateStack",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                },
+                {
+                  "name": "Parameters",
+                  "value": ""
+                },
+                {
+                  "name": "DisableRollback",
+                  "value": ""
+                },
+                {
+                  "name": "RollbackConfiguration",
+                  "value": ""
+                },
+                {
+                  "name": "TimeoutInMinutes",
+                  "value": ""
+                },
+                {
+                  "name": "NotificationARNs",
+                  "value": ""
+                },
+                {
+                  "name": "Capabilities",
+                  "value": ""
+                },
+                {
+                  "name": "OnFailure",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyBody",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyURL",
+                  "value": ""
+                },
+                {
+                  "name": "Tags",
+                  "value": ""
+                },
+                {
+                  "name": "RoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "EnableTerminationProtection",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                },
+                {
+                  "name": "RetainExceptOnCreate",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates a stack as specified in the template. After the call completes successfully, the stack creation starts. You can check the status of the stack through the DescribeStacks operation."
+        },
+        {
+          "info": {
+            "name": "Update an Existing Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=UpdateStack",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                },
+                {
+                  "name": "UsePreviousTemplate",
+                  "value": ""
+                },
+                {
+                  "name": "Parameters",
+                  "value": ""
+                },
+                {
+                  "name": "Capabilities",
+                  "value": ""
+                },
+                {
+                  "name": "Tags",
+                  "value": ""
+                },
+                {
+                  "name": "RoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "RollbackConfiguration",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyBody",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyURL",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyDuringUpdateBody",
+                  "value": ""
+                },
+                {
+                  "name": "StackPolicyDuringUpdateURL",
+                  "value": ""
+                },
+                {
+                  "name": "NotificationARNs",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                },
+                {
+                  "name": "DisableRollback",
+                  "value": ""
+                },
+                {
+                  "name": "RetainExceptOnCreate",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Updates a stack as specified in the template. After the call completes successfully, the stack update starts. You can check the status of the stack through the DescribeStacks operation."
+        },
+        {
+          "info": {
+            "name": "Delete an Existing Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DeleteStack",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "RetainResources",
+                  "value": ""
+                },
+                {
+                  "name": "RoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                },
+                {
+                  "name": "DeletionMode",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Deletes a specified stack. Once the call completes successfully, stack deletion starts. Deleted stacks do not show up in DescribeStacks calls by default."
+        },
+        {
+          "info": {
+            "name": "Describe One or More Stacks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DescribeStacks",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns the description for the specified stack. If no stack name was specified, then it returns descriptions for all stacks. Use ListStacks instead if you do not need full stack details for performance reasons."
+        },
+        {
+          "info": {
+            "name": "List All Stacks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=ListStacks",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "NextToken",
+                  "value": ""
+                },
+                {
+                  "name": "StackStatusFilter",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns summary information for all stacks. Deleted stacks are included for 90 days after deletion. You can filter by stack status."
+        },
+        {
+          "info": {
+            "name": "Cancel a Stack Update in Progress",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=CancelUpdateStack",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Cancels an update on the specified stack. If the call completes successfully, the stack rolls back the update and reverts to the previous stack configuration."
+        },
+        {
+          "info": {
+            "name": "Continue Rolling Back a Failed Stack Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=ContinueUpdateRollback",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "RoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "ResourcesToSkip",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "For a specified stack in UPDATE_ROLLBACK_FAILED state, continues rolling back to the previous stable state. A stack enters this state when a resource fails during the update rollback process."
+        },
+        {
+          "info": {
+            "name": "Rollback a Stack to a Previous Stable State",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=RollbackStack",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "RoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                },
+                {
+                  "name": "RetainExceptOnCreate",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Rolls back the specified stack to the last known stable state."
+        },
+        {
+          "info": {
+            "name": "Enable or Disable Termination Protection on a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=UpdateTerminationProtection",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "EnableTerminationProtection",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Updates termination protection for the specified stack. If a user attempts to delete a stack with termination protection enabled, the operation fails and the stack remains unchanged."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

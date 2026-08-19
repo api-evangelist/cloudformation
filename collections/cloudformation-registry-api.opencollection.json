@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWS Cloud Control Change Sets Registry API",
+    "version": "2021-09-30"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Registry",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Available Extension Types in the Registry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=ListTypes",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "Visibility",
+                  "value": ""
+                },
+                {
+                  "name": "ProvisioningType",
+                  "value": ""
+                },
+                {
+                  "name": "Type",
+                  "value": ""
+                },
+                {
+                  "name": "Filters",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                },
+                {
+                  "name": "MaxResults",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns summary information about extension types registered in the CloudFormation Registry."
+        },
+        {
+          "info": {
+            "name": "Describe an Extension Type in the Registry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DescribeType",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "Type",
+                  "value": ""
+                },
+                {
+                  "name": "TypeName",
+                  "value": ""
+                },
+                {
+                  "name": "Arn",
+                  "value": ""
+                },
+                {
+                  "name": "VersionId",
+                  "value": ""
+                },
+                {
+                  "name": "PublisherId",
+                  "value": ""
+                },
+                {
+                  "name": "PublicVersionNumber",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns detailed information about an extension type registered in the CloudFormation Registry."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

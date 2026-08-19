@@ -1,0 +1,2379 @@
+{
+  "item": [
+    {
+      "id": "5912d432-47ad-457c-9c02-2d5eecafc76c",
+      "name": "Change Sets",
+      "description": {
+        "content": "Operations for creating and managing change sets to preview stack changes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ff17dc82-e3c1-4513-8964-2ac228c8c8e4",
+          "name": "Create a Change Set to Preview Stack Changes",
+          "request": {
+            "name": "Create a Change Set to Preview Stack Changes",
+            "description": {
+              "content": "Creates a list of changes that will be applied to a stack so that you can review the changes before executing them. Change sets allow you to see how your changes might impact running resources before implementing them.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "CreateChangeSet"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackName",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "ChangeSetName",
+                  "value": "<string>",
+                  "description": "(Required) The name of the change set. Max 128 characters."
+                },
+                {
+                  "disabled": false,
+                  "key": "TemplateBody",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TemplateURL",
+                  "value": "<uri>"
+                },
+                {
+                  "disabled": false,
+                  "key": "UsePreviousTemplate",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Parameters",
+                  "value": "{\"ParameterKey\":\"<string>\",\"ParameterValue\":\"<string>\",\"UsePreviousValue\":\"<boolean>\",\"ResolvedValue\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "Parameters",
+                  "value": "{\"ParameterKey\":\"<string>\",\"ParameterValue\":\"<string>\",\"UsePreviousValue\":\"<boolean>\",\"ResolvedValue\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "Capabilities",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Capabilities",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ResourceTypes",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ResourceTypes",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "RoleARN",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "RollbackTriggers",
+                  "value": "[{\"Arn\":\"<string>\",\"Type\":\"<string>\"},{\"Arn\":\"<string>\",\"Type\":\"<string>\"}]"
+                },
+                {
+                  "disabled": false,
+                  "key": "MonitoringTimeInMinutes",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "NotificationARNs",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "NotificationARNs",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Tags",
+                  "value": "{\"Key\":\"<string>\",\"Value\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "Tags",
+                  "value": "{\"Key\":\"<string>\",\"Value\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "ChangeSetType",
+                  "value": "<string>",
+                  "description": "The type of change set operation."
+                },
+                {
+                  "disabled": false,
+                  "key": "Description",
+                  "value": "<string>",
+                  "description": "A description for the change set."
+                },
+                {
+                  "disabled": false,
+                  "key": "IncludeNestedStacks",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ImportExistingResources",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ClientToken",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a80a5f46-c599-4781-92a5-4a7305563cb3",
+              "name": "Change set creation initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name of the change set. Max 128 characters.",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "UsePreviousTemplate",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ResourceTypes",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RollbackTriggers",
+                      "value": "[{}]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MonitoringTimeInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NotificationARNs",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The type of change set operation.",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetType",
+                      "value": "CREATE"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A description for the change set.",
+                        "type": "text/plain"
+                      },
+                      "key": "Description",
+                      "value": "A sample description."
+                    },
+                    {
+                      "disabled": false,
+                      "key": "IncludeNestedStacks",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ImportExistingResources",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <CreateChangeSetResult>\n    <Id>abc123</Id>\n    <StackId>500123</StackId>\n  </CreateChangeSetResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "f721ee2e-e824-4e45-8f0f-c4d06cb95e77",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name of the change set. Max 128 characters.",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "UsePreviousTemplate",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ResourceTypes",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RollbackTriggers",
+                      "value": "[{}]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MonitoringTimeInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NotificationARNs",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The type of change set operation.",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetType",
+                      "value": "CREATE"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A description for the change set.",
+                        "type": "text/plain"
+                      },
+                      "key": "Description",
+                      "value": "A sample description."
+                    },
+                    {
+                      "disabled": false,
+                      "key": "IncludeNestedStacks",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ImportExistingResources",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "de81dee9-2ff2-468f-8493-05093e8e2709",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name of the change set. Max 128 characters.",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "UsePreviousTemplate",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ResourceTypes",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RollbackTriggers",
+                      "value": "[{}]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MonitoringTimeInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NotificationARNs",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The type of change set operation.",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetType",
+                      "value": "CREATE"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A description for the change set.",
+                        "type": "text/plain"
+                      },
+                      "key": "Description",
+                      "value": "A sample description."
+                    },
+                    {
+                      "disabled": false,
+                      "key": "IncludeNestedStacks",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ImportExistingResources",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5491fb63-94eb-450c-8d8e-5c701c90e950",
+          "name": "Describe a Change Set",
+          "request": {
+            "name": "Describe a Change Set",
+            "description": {
+              "content": "Returns the inputs and a list of changes that CloudFormation will make if you execute the change set.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "DescribeChangeSet"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "ChangeSetName",
+                  "value": "<string>",
+                  "description": "(Required) The name or ARN of the change set."
+                },
+                {
+                  "disabled": false,
+                  "key": "StackName",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "NextToken",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "IncludePropertyValues",
+                  "value": "<boolean>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a69eb544-fb0d-41dd-9ea1-3a22e12415f3",
+              "name": "Change set details returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name or ARN of the change set.",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "IncludePropertyValues",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "68eb618f-18b2-471d-9a25-e1c4c2e32b8b",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name or ARN of the change set.",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "IncludePropertyValues",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "8b1efc9c-c1ff-48fb-bacf-fc9f4eedc168",
+              "name": "Change set not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name or ARN of the change set.",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "IncludePropertyValues",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c24372ab-d784-4638-aad8-afb0c0d328d6",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name or ARN of the change set.",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "IncludePropertyValues",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "df27e588-1598-4651-86c3-998663ea2c65",
+          "name": "Execute a Change Set",
+          "request": {
+            "name": "Execute a Change Set",
+            "description": {
+              "content": "Updates a stack using the input information provided when the specified change set was created. After the call successfully completes, CloudFormation starts updating the stack.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "ExecuteChangeSet"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "ChangeSetName",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "StackName",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ClientRequestToken",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "DisableRollback",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "RetainExceptOnCreate",
+                  "value": "<boolean>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d54256ec-b2a5-4b1b-9dac-abb5514d5c4b",
+              "name": "Change set execution initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "DisableRollback",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7c23b8aa-717d-4822-bbdc-98eb342b1571",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "DisableRollback",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "897bdbbf-2823-4ee1-8f9b-e83c2fc789ab",
+              "name": "Change set not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "DisableRollback",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2ceb4f2f-fc06-4bf2-aa20-d9e6773fe730",
+              "name": "Change set is not in a valid state for execution.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "DisableRollback",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d3e31ea6-eb71-4318-a774-3959d14298d3",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "DisableRollback",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ff05b1c-f6f4-42b1-a014-97501667c828",
+          "name": "Delete a Change Set",
+          "request": {
+            "name": "Delete a Change Set",
+            "description": {
+              "content": "Deletes the specified change set. Deleting change sets ensures that no one executes the wrong change set. Only change sets in CREATE_COMPLETE or FAILED status can be deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "DeleteChangeSet"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "ChangeSetName",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "StackName",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0c71b828-302a-4d86-bcc5-7b989ead721a",
+              "name": "Change set deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a8c24a77-6506-458a-b3e0-cd5ac3a4f4a5",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "a7a83221-7d2f-4c8f-ad4c-f3ca5689262f",
+              "name": "Change set not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "204047de-a47e-47a3-80df-7d0e6933ee4c",
+              "name": "Change set cannot be deleted in current status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "91646554-73fc-4b32-a9a3-32293c2eaac8",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "ChangeSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackName",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9d193079-2af0-43fb-b2cd-5e072186ec3b",
+          "name": "List All Change Sets for a Stack",
+          "request": {
+            "name": "List All Change Sets for a Stack",
+            "description": {
+              "content": "Returns the ID and status of each active change set for a stack. For example, CloudFormation lists change sets that are in the CREATE_IN_PROGRESS or CREATE_COMPLETE status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "ListChangeSets"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackName",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "NextToken",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "299d62b5-2108-45da-b8eb-e6873757d864",
+              "name": "Change set summaries returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <ListChangeSetsResult>\n    <Summaries>\n      <StackId>500123</StackId>\n      <StackName>example_value</StackName>\n      <ChangeSetId>500123</ChangeSetId>\n      <ChangeSetName>example_value</ChangeSetName>\n      <ExecutionStatus>UNAVAILABLE</ExecutionStatus>\n      <Status>CREATE_PENDING</Status>\n      <StatusReason>example_value</StatusReason>\n      <CreationTime>2026-01-15T10:30:00Z</CreationTime>\n      <Description>A sample description.</Description>\n      <IncludeNestedStacks>true</IncludeNestedStacks>\n      <ImportExistingResources>true</ImportExistingResources>\n      <ParentChangeSetId>500123</ParentChangeSetId>\n      <RootChangeSetId>500123</RootChangeSetId>\n    </Summaries>\n    <NextToken>example_value</NextToken>\n  </ListChangeSetsResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "0b30ed58-fb2f-4318-9fd4-fc85d00623b6",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "0b9ded8f-d5f4-454d-95f4-836e34d27650",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "us-east-1",
+      "key": "region"
+    },
+    {
+      "type": "string",
+      "value": "https://cloudcontrolapi.{{region}}.amazonaws.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2de2b5b3-37a2-47a3-a7ba-763feea336c5",
+    "name": "AWS Cloud Control Change Sets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.\n\nContact Support:\n Name: AWS Support",
+      "type": "text/plain"
+    }
+  }
+}

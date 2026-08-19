@@ -1,0 +1,218 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWS Cloud Control Change Sets Stack Instances API",
+    "version": "2021-09-30"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stack Instances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Stack Instances in Accounts and Regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=CreateStackInstances",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "Accounts",
+                  "value": ""
+                },
+                {
+                  "name": "Regions",
+                  "value": ""
+                },
+                {
+                  "name": "ParameterOverrides",
+                  "value": ""
+                },
+                {
+                  "name": "OperationPreferences",
+                  "value": ""
+                },
+                {
+                  "name": "OperationId",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates stack instances for the specified accounts in the specified regions. A stack instance refers to a stack in a specific account and region."
+        },
+        {
+          "info": {
+            "name": "Describe a Stack Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DescribeStackInstance",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "StackInstanceAccount",
+                  "value": ""
+                },
+                {
+                  "name": "StackInstanceRegion",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns the stack instance associated with the specified stack set, account, and region."
+        },
+        {
+          "info": {
+            "name": "List Stack Instances in a Stack Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=ListStackInstances",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                },
+                {
+                  "name": "MaxResults",
+                  "value": ""
+                },
+                {
+                  "name": "StackInstanceAccount",
+                  "value": ""
+                },
+                {
+                  "name": "StackInstanceRegion",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns summary information about stack instances associated with the specified stack set."
+        },
+        {
+          "info": {
+            "name": "Delete Stack Instances From a Stack Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DeleteStackInstances",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "Accounts",
+                  "value": ""
+                },
+                {
+                  "name": "Regions",
+                  "value": ""
+                },
+                {
+                  "name": "RetainStacks",
+                  "value": ""
+                },
+                {
+                  "name": "OperationPreferences",
+                  "value": ""
+                },
+                {
+                  "name": "OperationId",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Deletes stack instances for the specified accounts in the specified regions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

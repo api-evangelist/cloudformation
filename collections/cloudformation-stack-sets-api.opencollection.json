@@ -1,0 +1,290 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWS Cloud Control Change Sets Stack Sets API",
+    "version": "2021-09-30"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stack Sets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Stack Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=CreateStackSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "Description",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                },
+                {
+                  "name": "Parameters",
+                  "value": ""
+                },
+                {
+                  "name": "Capabilities",
+                  "value": ""
+                },
+                {
+                  "name": "Tags",
+                  "value": ""
+                },
+                {
+                  "name": "AdministrationRoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "ExecutionRoleName",
+                  "value": ""
+                },
+                {
+                  "name": "PermissionModel",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                },
+                {
+                  "name": "ClientRequestToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates a stack set with the specified name and template. A stack set lets you create stacks in AWS accounts across regions by using a single CloudFormation template."
+        },
+        {
+          "info": {
+            "name": "Describe a Stack Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DescribeStackSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns the description of the specified stack set."
+        },
+        {
+          "info": {
+            "name": "Update a Stack Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=UpdateStackSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "Description",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateBody",
+                  "value": ""
+                },
+                {
+                  "name": "TemplateURL",
+                  "value": ""
+                },
+                {
+                  "name": "UsePreviousTemplate",
+                  "value": ""
+                },
+                {
+                  "name": "Parameters",
+                  "value": ""
+                },
+                {
+                  "name": "Capabilities",
+                  "value": ""
+                },
+                {
+                  "name": "Tags",
+                  "value": ""
+                },
+                {
+                  "name": "OperationPreferences",
+                  "value": ""
+                },
+                {
+                  "name": "AdministrationRoleARN",
+                  "value": ""
+                },
+                {
+                  "name": "ExecutionRoleName",
+                  "value": ""
+                },
+                {
+                  "name": "PermissionModel",
+                  "value": ""
+                },
+                {
+                  "name": "Accounts",
+                  "value": ""
+                },
+                {
+                  "name": "Regions",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                },
+                {
+                  "name": "OperationId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Updates the stack set, and associated stack instances in the specified accounts and regions."
+        },
+        {
+          "info": {
+            "name": "Delete a Stack Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DeleteStackSet",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackSetName",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Deletes a stack set. Before you can delete a stack set, all its member stack instances must be deleted."
+        },
+        {
+          "info": {
+            "name": "List All Stack Sets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=ListStackSets",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "NextToken",
+                  "value": ""
+                },
+                {
+                  "name": "MaxResults",
+                  "value": ""
+                },
+                {
+                  "name": "Status",
+                  "value": ""
+                },
+                {
+                  "name": "CallAs",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns summary information about stack sets in the caller's account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

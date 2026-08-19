@@ -1,0 +1,4738 @@
+{
+  "item": [
+    {
+      "id": "43ff2945-98d0-4607-b798-cc1c377e9cfc",
+      "name": "Stacks",
+      "description": {
+        "content": "Operations for creating, updating, deleting, and describing CloudFormation stacks.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bcba38d1-f517-4a36-bf64-9085b02adb16",
+          "name": "Create a New Stack",
+          "request": {
+            "name": "Create a New Stack",
+            "description": {
+              "content": "Creates a stack as specified in the template. After the call completes successfully, the stack creation starts. You can check the status of the stack through the DescribeStacks operation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "CreateStack"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackName",
+                  "value": "<string>",
+                  "description": "(Required) The name associated with the stack. Must be unique within a region. Max 128 characters, alphanumeric and hyphens."
+                },
+                {
+                  "disabled": false,
+                  "key": "TemplateBody",
+                  "value": "<string>",
+                  "description": "Structure containing the template body with a minimum length of 1 byte and a maximum length of 51,200 bytes."
+                },
+                {
+                  "disabled": false,
+                  "key": "TemplateURL",
+                  "value": "<uri>",
+                  "description": "Location of file containing the template body. Must be a URL pointing to a template in an Amazon S3 bucket (max 1 MB)."
+                },
+                {
+                  "disabled": false,
+                  "key": "Parameters",
+                  "value": "{\"ParameterKey\":\"<string>\",\"ParameterValue\":\"<string>\",\"UsePreviousValue\":\"<boolean>\",\"ResolvedValue\":\"<string>\"}",
+                  "description": "A list of Parameter structures specifying input parameters for the stack."
+                },
+                {
+                  "disabled": false,
+                  "key": "Parameters",
+                  "value": "{\"ParameterKey\":\"<string>\",\"ParameterValue\":\"<string>\",\"UsePreviousValue\":\"<boolean>\",\"ResolvedValue\":\"<string>\"}",
+                  "description": "A list of Parameter structures specifying input parameters for the stack."
+                },
+                {
+                  "disabled": false,
+                  "key": "DisableRollback",
+                  "value": "false",
+                  "description": "Set to true to disable rollback of the stack if stack creation fails."
+                },
+                {
+                  "disabled": false,
+                  "key": "RollbackTriggers",
+                  "value": "[{\"Arn\":\"<string>\",\"Type\":\"<string>\"},{\"Arn\":\"<string>\",\"Type\":\"<string>\"}]"
+                },
+                {
+                  "disabled": false,
+                  "key": "MonitoringTimeInMinutes",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TimeoutInMinutes",
+                  "value": "<integer>",
+                  "description": "The amount of time that can pass before the stack status becomes CREATE_FAILED."
+                },
+                {
+                  "disabled": false,
+                  "key": "NotificationARNs",
+                  "value": "<string>",
+                  "description": "The Amazon SNS topic ARNs to publish stack related events."
+                },
+                {
+                  "disabled": false,
+                  "key": "NotificationARNs",
+                  "value": "<string>",
+                  "description": "The Amazon SNS topic ARNs to publish stack related events."
+                },
+                {
+                  "disabled": false,
+                  "key": "Capabilities",
+                  "value": "<string>",
+                  "description": "A list of capabilities that you must specify before CloudFormation can create certain stacks."
+                },
+                {
+                  "disabled": false,
+                  "key": "Capabilities",
+                  "value": "<string>",
+                  "description": "A list of capabilities that you must specify before CloudFormation can create certain stacks."
+                },
+                {
+                  "disabled": false,
+                  "key": "OnFailure",
+                  "value": "ROLLBACK",
+                  "description": "Determines what action to take if stack creation fails."
+                },
+                {
+                  "disabled": false,
+                  "key": "StackPolicyBody",
+                  "value": "<string>",
+                  "description": "Structure containing the stack policy body (1-16,384 bytes)."
+                },
+                {
+                  "disabled": false,
+                  "key": "StackPolicyURL",
+                  "value": "<uri>",
+                  "description": "Location of a file containing the stack policy."
+                },
+                {
+                  "disabled": false,
+                  "key": "Tags",
+                  "value": "{\"Key\":\"<string>\",\"Value\":\"<string>\"}",
+                  "description": "Key-value pairs to associate with this stack. Max 50 tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "Tags",
+                  "value": "{\"Key\":\"<string>\",\"Value\":\"<string>\"}",
+                  "description": "Key-value pairs to associate with this stack. Max 50 tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "RoleARN",
+                  "value": "<string>",
+                  "description": "The Amazon Resource Name (ARN) of an IAM role that CloudFormation assumes to create the stack."
+                },
+                {
+                  "disabled": false,
+                  "key": "EnableTerminationProtection",
+                  "value": "false",
+                  "description": "Whether to enable termination protection on the stack."
+                },
+                {
+                  "disabled": false,
+                  "key": "ClientRequestToken",
+                  "value": "<string>",
+                  "description": "A unique identifier for this CreateStack request. Max 128 characters."
+                },
+                {
+                  "disabled": false,
+                  "key": "RetainExceptOnCreate",
+                  "value": "false",
+                  "description": "When true, newly created resources are deleted when the operation rolls back."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ae06d97c-b40e-41c6-aa01-e2058eb9c6a1",
+              "name": "Stack creation initiated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name associated with the stack. Must be unique within a region. Max 128 characters, alphanumeric and hyphens.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Structure containing the template body with a minimum length of 1 byte and a maximum length of 51,200 bytes.",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of file containing the template body. Must be a URL pointing to a template in an Amazon S3 bucket (max 1 MB).",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A list of Parameter structures specifying input parameters for the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Set to true to disable rollback of the stack if stack creation fails.",
+                        "type": "text/plain"
+                      },
+                      "key": "DisableRollback",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RollbackTriggers",
+                      "value": "[{}]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MonitoringTimeInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The amount of time that can pass before the stack status becomes CREATE_FAILED.",
+                        "type": "text/plain"
+                      },
+                      "key": "TimeoutInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The Amazon SNS topic ARNs to publish stack related events.",
+                        "type": "text/plain"
+                      },
+                      "key": "NotificationARNs",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A list of capabilities that you must specify before CloudFormation can create certain stacks.",
+                        "type": "text/plain"
+                      },
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Determines what action to take if stack creation fails.",
+                        "type": "text/plain"
+                      },
+                      "key": "OnFailure",
+                      "value": "DO_NOTHING"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Structure containing the stack policy body (1-16,384 bytes).",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of a file containing the stack policy.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Key-value pairs to associate with this stack. Max 50 tags.",
+                        "type": "text/plain"
+                      },
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The Amazon Resource Name (ARN) of an IAM role that CloudFormation assumes to create the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Whether to enable termination protection on the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "EnableTerminationProtection",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A unique identifier for this CreateStack request. Max 128 characters.",
+                        "type": "text/plain"
+                      },
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "When true, newly created resources are deleted when the operation rolls back.",
+                        "type": "text/plain"
+                      },
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <CreateStackResult>\n    <StackId>500123</StackId>\n  </CreateStackResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "31e773a1-f036-4671-ae20-d7e275a85244",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name associated with the stack. Must be unique within a region. Max 128 characters, alphanumeric and hyphens.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Structure containing the template body with a minimum length of 1 byte and a maximum length of 51,200 bytes.",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of file containing the template body. Must be a URL pointing to a template in an Amazon S3 bucket (max 1 MB).",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A list of Parameter structures specifying input parameters for the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Set to true to disable rollback of the stack if stack creation fails.",
+                        "type": "text/plain"
+                      },
+                      "key": "DisableRollback",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RollbackTriggers",
+                      "value": "[{}]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MonitoringTimeInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The amount of time that can pass before the stack status becomes CREATE_FAILED.",
+                        "type": "text/plain"
+                      },
+                      "key": "TimeoutInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The Amazon SNS topic ARNs to publish stack related events.",
+                        "type": "text/plain"
+                      },
+                      "key": "NotificationARNs",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A list of capabilities that you must specify before CloudFormation can create certain stacks.",
+                        "type": "text/plain"
+                      },
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Determines what action to take if stack creation fails.",
+                        "type": "text/plain"
+                      },
+                      "key": "OnFailure",
+                      "value": "DO_NOTHING"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Structure containing the stack policy body (1-16,384 bytes).",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of a file containing the stack policy.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Key-value pairs to associate with this stack. Max 50 tags.",
+                        "type": "text/plain"
+                      },
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The Amazon Resource Name (ARN) of an IAM role that CloudFormation assumes to create the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Whether to enable termination protection on the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "EnableTerminationProtection",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A unique identifier for this CreateStack request. Max 128 characters.",
+                        "type": "text/plain"
+                      },
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "When true, newly created resources are deleted when the operation rolls back.",
+                        "type": "text/plain"
+                      },
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "5dea5281-1d5e-43b4-81c1-d3962f5f3c16",
+              "name": "The resource already exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name associated with the stack. Must be unique within a region. Max 128 characters, alphanumeric and hyphens.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Structure containing the template body with a minimum length of 1 byte and a maximum length of 51,200 bytes.",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of file containing the template body. Must be a URL pointing to a template in an Amazon S3 bucket (max 1 MB).",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A list of Parameter structures specifying input parameters for the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Set to true to disable rollback of the stack if stack creation fails.",
+                        "type": "text/plain"
+                      },
+                      "key": "DisableRollback",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RollbackTriggers",
+                      "value": "[{}]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MonitoringTimeInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The amount of time that can pass before the stack status becomes CREATE_FAILED.",
+                        "type": "text/plain"
+                      },
+                      "key": "TimeoutInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The Amazon SNS topic ARNs to publish stack related events.",
+                        "type": "text/plain"
+                      },
+                      "key": "NotificationARNs",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A list of capabilities that you must specify before CloudFormation can create certain stacks.",
+                        "type": "text/plain"
+                      },
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Determines what action to take if stack creation fails.",
+                        "type": "text/plain"
+                      },
+                      "key": "OnFailure",
+                      "value": "DO_NOTHING"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Structure containing the stack policy body (1-16,384 bytes).",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of a file containing the stack policy.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Key-value pairs to associate with this stack. Max 50 tags.",
+                        "type": "text/plain"
+                      },
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The Amazon Resource Name (ARN) of an IAM role that CloudFormation assumes to create the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Whether to enable termination protection on the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "EnableTerminationProtection",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A unique identifier for this CreateStack request. Max 128 characters.",
+                        "type": "text/plain"
+                      },
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "When true, newly created resources are deleted when the operation rolls back.",
+                        "type": "text/plain"
+                      },
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "e183147d-56c6-49f1-86f0-2fd6a8aefafe",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name associated with the stack. Must be unique within a region. Max 128 characters, alphanumeric and hyphens.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Structure containing the template body with a minimum length of 1 byte and a maximum length of 51,200 bytes.",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of file containing the template body. Must be a URL pointing to a template in an Amazon S3 bucket (max 1 MB).",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A list of Parameter structures specifying input parameters for the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Set to true to disable rollback of the stack if stack creation fails.",
+                        "type": "text/plain"
+                      },
+                      "key": "DisableRollback",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RollbackTriggers",
+                      "value": "[{}]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MonitoringTimeInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The amount of time that can pass before the stack status becomes CREATE_FAILED.",
+                        "type": "text/plain"
+                      },
+                      "key": "TimeoutInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The Amazon SNS topic ARNs to publish stack related events.",
+                        "type": "text/plain"
+                      },
+                      "key": "NotificationARNs",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A list of capabilities that you must specify before CloudFormation can create certain stacks.",
+                        "type": "text/plain"
+                      },
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Determines what action to take if stack creation fails.",
+                        "type": "text/plain"
+                      },
+                      "key": "OnFailure",
+                      "value": "DO_NOTHING"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Structure containing the stack policy body (1-16,384 bytes).",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of a file containing the stack policy.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Key-value pairs to associate with this stack. Max 50 tags.",
+                        "type": "text/plain"
+                      },
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The Amazon Resource Name (ARN) of an IAM role that CloudFormation assumes to create the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Whether to enable termination protection on the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "EnableTerminationProtection",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A unique identifier for this CreateStack request. Max 128 characters.",
+                        "type": "text/plain"
+                      },
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "When true, newly created resources are deleted when the operation rolls back.",
+                        "type": "text/plain"
+                      },
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0f1a461f-b037-4798-9cb1-85016fb396c0",
+          "name": "Update an Existing Stack",
+          "request": {
+            "name": "Update an Existing Stack",
+            "description": {
+              "content": "Updates a stack as specified in the template. After the call completes successfully, the stack update starts. You can check the status of the stack through the DescribeStacks operation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "UpdateStack"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackName",
+                  "value": "<string>",
+                  "description": "(Required) The name or unique stack ID of the stack to update."
+                },
+                {
+                  "disabled": false,
+                  "key": "TemplateBody",
+                  "value": "<string>",
+                  "description": "Structure containing the updated template body."
+                },
+                {
+                  "disabled": false,
+                  "key": "TemplateURL",
+                  "value": "<uri>",
+                  "description": "Location of the updated template in Amazon S3."
+                },
+                {
+                  "disabled": false,
+                  "key": "UsePreviousTemplate",
+                  "value": "<boolean>",
+                  "description": "Reuse the existing template associated with the stack."
+                },
+                {
+                  "disabled": false,
+                  "key": "Parameters",
+                  "value": "{\"ParameterKey\":\"<string>\",\"ParameterValue\":\"<string>\",\"UsePreviousValue\":\"<boolean>\",\"ResolvedValue\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "Parameters",
+                  "value": "{\"ParameterKey\":\"<string>\",\"ParameterValue\":\"<string>\",\"UsePreviousValue\":\"<boolean>\",\"ResolvedValue\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "Capabilities",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Capabilities",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Tags",
+                  "value": "{\"Key\":\"<string>\",\"Value\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "Tags",
+                  "value": "{\"Key\":\"<string>\",\"Value\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "RoleARN",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "RollbackTriggers",
+                  "value": "[{\"Arn\":\"<string>\",\"Type\":\"<string>\"},{\"Arn\":\"<string>\",\"Type\":\"<string>\"}]"
+                },
+                {
+                  "disabled": false,
+                  "key": "MonitoringTimeInMinutes",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "StackPolicyBody",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "StackPolicyURL",
+                  "value": "<uri>"
+                },
+                {
+                  "disabled": false,
+                  "key": "StackPolicyDuringUpdateBody",
+                  "value": "<string>",
+                  "description": "Temporary stack policy body used during the update."
+                },
+                {
+                  "disabled": false,
+                  "key": "StackPolicyDuringUpdateURL",
+                  "value": "<uri>",
+                  "description": "Temporary stack policy URL used during the update."
+                },
+                {
+                  "disabled": false,
+                  "key": "NotificationARNs",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "NotificationARNs",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ClientRequestToken",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "DisableRollback",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "RetainExceptOnCreate",
+                  "value": "<boolean>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "233c2717-a51e-4427-a795-14605b4b63ec",
+              "name": "Stack update initiated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name or unique stack ID of the stack to update.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Structure containing the updated template body.",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of the updated template in Amazon S3.",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Reuse the existing template associated with the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "UsePreviousTemplate",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RollbackTriggers",
+                      "value": "[{}]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MonitoringTimeInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackPolicyBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackPolicyURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Temporary stack policy body used during the update.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyDuringUpdateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Temporary stack policy URL used during the update.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyDuringUpdateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NotificationARNs",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "DisableRollback",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <UpdateStackResult>\n    <StackId>500123</StackId>\n  </UpdateStackResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "57bededa-2f4f-4193-9860-9e369758af3c",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name or unique stack ID of the stack to update.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Structure containing the updated template body.",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of the updated template in Amazon S3.",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Reuse the existing template associated with the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "UsePreviousTemplate",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RollbackTriggers",
+                      "value": "[{}]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MonitoringTimeInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackPolicyBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackPolicyURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Temporary stack policy body used during the update.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyDuringUpdateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Temporary stack policy URL used during the update.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyDuringUpdateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NotificationARNs",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "DisableRollback",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "0a58b5fb-4db1-449c-861b-d8bf5818f17c",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name or unique stack ID of the stack to update.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Structure containing the updated template body.",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of the updated template in Amazon S3.",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Reuse the existing template associated with the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "UsePreviousTemplate",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RollbackTriggers",
+                      "value": "[{}]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MonitoringTimeInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackPolicyBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackPolicyURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Temporary stack policy body used during the update.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyDuringUpdateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Temporary stack policy URL used during the update.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyDuringUpdateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NotificationARNs",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "DisableRollback",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "3996f578-d42e-4b30-bdac-1133e80860e4",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name or unique stack ID of the stack to update.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Structure containing the updated template body.",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of the updated template in Amazon S3.",
+                        "type": "text/plain"
+                      },
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Reuse the existing template associated with the stack.",
+                        "type": "text/plain"
+                      },
+                      "key": "UsePreviousTemplate",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RollbackTriggers",
+                      "value": "[{}]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MonitoringTimeInMinutes",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackPolicyBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StackPolicyURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Temporary stack policy body used during the update.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyDuringUpdateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Temporary stack policy URL used during the update.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackPolicyDuringUpdateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NotificationARNs",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "DisableRollback",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34f566e5-7e23-4ef9-9309-2a20f5456778",
+          "name": "Delete an Existing Stack",
+          "request": {
+            "name": "Delete an Existing Stack",
+            "description": {
+              "content": "Deletes a specified stack. Once the call completes successfully, stack deletion starts. Deleted stacks do not show up in DescribeStacks calls by default.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "DeleteStack"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackName",
+                  "value": "<string>",
+                  "description": "(Required) The name or unique stack ID of the stack to delete."
+                },
+                {
+                  "disabled": false,
+                  "key": "RetainResources",
+                  "value": "<string>",
+                  "description": "A list of logical resource IDs for resources you want to retain after stack deletion."
+                },
+                {
+                  "disabled": false,
+                  "key": "RetainResources",
+                  "value": "<string>",
+                  "description": "A list of logical resource IDs for resources you want to retain after stack deletion."
+                },
+                {
+                  "disabled": false,
+                  "key": "RoleARN",
+                  "value": "<string>",
+                  "description": "IAM role ARN for CloudFormation to assume during deletion."
+                },
+                {
+                  "disabled": false,
+                  "key": "ClientRequestToken",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "DeletionMode",
+                  "value": "<string>",
+                  "description": "Specifies the deletion mode."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ad8440f0-6eb3-4c3d-9257-01efc0e03094",
+              "name": "Stack deletion initiated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name or unique stack ID of the stack to delete.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A list of logical resource IDs for resources you want to retain after stack deletion.",
+                        "type": "text/plain"
+                      },
+                      "key": "RetainResources",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "IAM role ARN for CloudFormation to assume during deletion.",
+                        "type": "text/plain"
+                      },
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Specifies the deletion mode.",
+                        "type": "text/plain"
+                      },
+                      "key": "DeletionMode",
+                      "value": "STANDARD"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "eb03e561-1442-4e7c-9b60-e52d13dc5fd2",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name or unique stack ID of the stack to delete.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A list of logical resource IDs for resources you want to retain after stack deletion.",
+                        "type": "text/plain"
+                      },
+                      "key": "RetainResources",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "IAM role ARN for CloudFormation to assume during deletion.",
+                        "type": "text/plain"
+                      },
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Specifies the deletion mode.",
+                        "type": "text/plain"
+                      },
+                      "key": "DeletionMode",
+                      "value": "STANDARD"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "e5748641-478e-408f-bc79-0e34fa30a329",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name or unique stack ID of the stack to delete.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A list of logical resource IDs for resources you want to retain after stack deletion.",
+                        "type": "text/plain"
+                      },
+                      "key": "RetainResources",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "IAM role ARN for CloudFormation to assume during deletion.",
+                        "type": "text/plain"
+                      },
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Specifies the deletion mode.",
+                        "type": "text/plain"
+                      },
+                      "key": "DeletionMode",
+                      "value": "STANDARD"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "87eed75c-3437-4260-bdef-404eeada092c",
+              "name": "Stack cannot be deleted due to termination protection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name or unique stack ID of the stack to delete.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A list of logical resource IDs for resources you want to retain after stack deletion.",
+                        "type": "text/plain"
+                      },
+                      "key": "RetainResources",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "IAM role ARN for CloudFormation to assume during deletion.",
+                        "type": "text/plain"
+                      },
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Specifies the deletion mode.",
+                        "type": "text/plain"
+                      },
+                      "key": "DeletionMode",
+                      "value": "STANDARD"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ede93047-5274-4d49-8df0-f7d9611e8e79",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The name or unique stack ID of the stack to delete.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A list of logical resource IDs for resources you want to retain after stack deletion.",
+                        "type": "text/plain"
+                      },
+                      "key": "RetainResources",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "IAM role ARN for CloudFormation to assume during deletion.",
+                        "type": "text/plain"
+                      },
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Specifies the deletion mode.",
+                        "type": "text/plain"
+                      },
+                      "key": "DeletionMode",
+                      "value": "STANDARD"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c4571d0-39e0-4c8d-84dc-d73d59bc7912",
+          "name": "Describe One or More Stacks",
+          "request": {
+            "name": "Describe One or More Stacks",
+            "description": {
+              "content": "Returns the description for the specified stack. If no stack name was specified, then it returns descriptions for all stacks. Use ListStacks instead if you do not need full stack details for performance reasons.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "DescribeStacks"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackName",
+                  "value": "<string>",
+                  "description": "Stack name or unique ID. Required for deleted stacks to use unique ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "NextToken",
+                  "value": "<string>",
+                  "description": "Token for pagination from a prior call."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6ec47136-e866-4cb5-8bc1-f5f6e8a044c2",
+              "name": "Stack details returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Stack name or unique ID. Required for deleted stacks to use unique ID.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Token for pagination from a prior call.",
+                        "type": "text/plain"
+                      },
+                      "key": "NextToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <DescribeStacksResult>\n    <Stacks>\n      <StackId>500123</StackId>\n      <StackName>example_value</StackName>\n      <ChangeSetId>500123</ChangeSetId>\n      <Description>A sample description.</Description>\n      <CreationTime>2026-01-15T10:30:00Z</CreationTime>\n      <DeletionTime>2026-01-15T10:30:00Z</DeletionTime>\n      <LastUpdatedTime>2026-01-15T10:30:00Z</LastUpdatedTime>\n      <StackStatusReason>example_value</StackStatusReason>\n      <DisableRollback>true</DisableRollback>\n      <NotificationARNs/>\n      <TimeoutInMinutes>10</TimeoutInMinutes>\n      <Capabilities/>\n      <Outputs/>\n      <RoleARN>example_value</RoleARN>\n      <Tags/>\n      <EnableTerminationProtection>true</EnableTerminationProtection>\n      <Parameters/>\n      <ParentId>500123</ParentId>\n      <RootId>500123</RootId>\n      <DeletionMode>STANDARD</DeletionMode>\n      <DetailedStatus>CONFIGURATION_COMPLETE</DetailedStatus>\n      <RetainExceptOnCreate>true</RetainExceptOnCreate>\n    </Stacks>\n    <NextToken>example_value</NextToken>\n  </DescribeStacksResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "e8fa3a4a-98a2-4f40-86c0-4df1dcee950a",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Stack name or unique ID. Required for deleted stacks to use unique ID.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Token for pagination from a prior call.",
+                        "type": "text/plain"
+                      },
+                      "key": "NextToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "fe128d4e-f73e-4c91-8fde-f9b587d9cd61",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Stack name or unique ID. Required for deleted stacks to use unique ID.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Token for pagination from a prior call.",
+                        "type": "text/plain"
+                      },
+                      "key": "NextToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ad9759ef-cf1a-41f3-a462-a88150c1a032",
+          "name": "List All Stacks",
+          "request": {
+            "name": "List All Stacks",
+            "description": {
+              "content": "Returns summary information for all stacks. Deleted stacks are included for 90 days after deletion. You can filter by stack status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "ListStacks"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "NextToken",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "StackStatusFilter",
+                  "value": "<string>",
+                  "description": "Filter stacks by status."
+                },
+                {
+                  "disabled": false,
+                  "key": "StackStatusFilter",
+                  "value": "<string>",
+                  "description": "Filter stacks by status."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c666cf87-9834-46e4-81bd-8997c5a00ab0",
+              "name": "Stack summaries returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Filter stacks by status.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackStatusFilter",
+                      "value": "CREATE_IN_PROGRESS"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <ListStacksResult>\n    <StackSummaries>\n      <StackId>500123</StackId>\n      <StackName>example_value</StackName>\n      <TemplateDescription>example_value</TemplateDescription>\n      <CreationTime>2026-01-15T10:30:00Z</CreationTime>\n      <LastUpdatedTime>2026-01-15T10:30:00Z</LastUpdatedTime>\n      <DeletionTime>2026-01-15T10:30:00Z</DeletionTime>\n      <StackStatusReason>example_value</StackStatusReason>\n      <ParentId>500123</ParentId>\n      <RootId>500123</RootId>\n    </StackSummaries>\n    <NextToken>example_value</NextToken>\n  </ListStacksResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "e88b703b-1024-47aa-9867-72f6d2e1e14b",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Filter stacks by status.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackStatusFilter",
+                      "value": "CREATE_IN_PROGRESS"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "615d613d-5c25-4fdf-afb4-2e2097060b62",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Filter stacks by status.",
+                        "type": "text/plain"
+                      },
+                      "key": "StackStatusFilter",
+                      "value": "CREATE_IN_PROGRESS"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0bb77e5-7fe3-4b21-8cd1-c095cbc7988e",
+          "name": "Cancel a Stack Update in Progress",
+          "request": {
+            "name": "Cancel a Stack Update in Progress",
+            "description": {
+              "content": "Cancels an update on the specified stack. If the call completes successfully, the stack rolls back the update and reverts to the previous stack configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "CancelUpdateStack"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackName",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "ClientRequestToken",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "857fcca9-7d1c-4e00-bf2e-475a2184a615",
+              "name": "Stack update cancellation initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7e801e20-eed1-4f97-bf52-f671243a568a",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "bad18145-1cc1-44ce-894b-e346d2f6ae22",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "163b31d9-cb31-4130-b51a-7e1a9df14ff0",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dd59690a-d220-4216-b8b1-f0bfb5ae559b",
+          "name": "Continue Rolling Back a Failed Stack Update",
+          "request": {
+            "name": "Continue Rolling Back a Failed Stack Update",
+            "description": {
+              "content": "For a specified stack in UPDATE_ROLLBACK_FAILED state, continues rolling back to the previous stable state. A stack enters this state when a resource fails during the update rollback process.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "ContinueUpdateRollback"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackName",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "RoleARN",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ResourcesToSkip",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ResourcesToSkip",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ClientRequestToken",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c6e01dfb-3fb4-4c0e-a39b-27596856e061",
+              "name": "Update rollback continuation initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ResourcesToSkip",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2ca25ee7-7ed6-49a7-9af2-f568bfb2a803",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ResourcesToSkip",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "9b42fa8c-c983-48b0-9651-eccb0c7bf50a",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ResourcesToSkip",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "fd1a4e75-a684-456a-98f0-8c93ab07de8b",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ResourcesToSkip",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "37930aa0-c8e6-43a1-a1f6-714527929204",
+          "name": "Rollback a Stack to a Previous Stable State",
+          "request": {
+            "name": "Rollback a Stack to a Previous Stable State",
+            "description": {
+              "content": "Rolls back the specified stack to the last known stable state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "RollbackStack"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackName",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "RoleARN",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ClientRequestToken",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "RetainExceptOnCreate",
+                  "value": "<boolean>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "93a0053b-ba93-4a7c-a3c4-f4e637f50cf3",
+              "name": "Stack rollback initiated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <RollbackStackResult>\n    <StackId>500123</StackId>\n  </RollbackStackResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "9a7cc056-fb7f-4824-a3bf-ae5de8d73479",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "2f638f98-9d82-4f87-bc98-76650013b6cb",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "03e625fc-7a75-4070-8d94-b4fcb0c0324b",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RetainExceptOnCreate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66417948-cce5-4d23-864b-7e24efa00bef",
+          "name": "Enable or Disable Termination Protection on a Stack",
+          "request": {
+            "name": "Enable or Disable Termination Protection on a Stack",
+            "description": {
+              "content": "Updates termination protection for the specified stack. If a user attempts to delete a stack with termination protection enabled, the operation fails and the stack remains unchanged.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "UpdateTerminationProtection"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackName",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "EnableTerminationProtection",
+                  "value": "<boolean>",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "11def43d-66e7-419e-83c7-9af3fc34abf9",
+              "name": "Termination protection updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "EnableTerminationProtection",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <UpdateTerminationProtectionResult>\n    <StackId>500123</StackId>\n  </UpdateTerminationProtectionResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "08cec255-83d3-4398-80e8-dca07935fcd7",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "EnableTerminationProtection",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "9f4b7575-f65c-40a5-8aec-67d10936eec8",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "EnableTerminationProtection",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "8803d5c1-133c-4258-93ee-330272f4ea04",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "EnableTerminationProtection",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "us-east-1",
+      "key": "region"
+    },
+    {
+      "type": "string",
+      "value": "https://cloudcontrolapi.{{region}}.amazonaws.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1929e6d4-96d9-46ac-ad83-bdf1cfd7f13a",
+    "name": "AWS Cloud Control Change Sets Stacks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.\n\nContact Support:\n Name: AWS Support",
+      "type": "text/plain"
+    }
+  }
+}

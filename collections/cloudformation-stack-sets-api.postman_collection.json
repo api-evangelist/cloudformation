@@ -1,0 +1,2594 @@
+{
+  "item": [
+    {
+      "id": "011db781-24fa-44a0-8a6d-29f89c1176bd",
+      "name": "Stack Sets",
+      "description": {
+        "content": "Operations for managing stack sets across multiple accounts and regions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "487de429-6236-4872-852e-6d1691bfc77c",
+          "name": "Create a Stack Set",
+          "request": {
+            "name": "Create a Stack Set",
+            "description": {
+              "content": "Creates a stack set with the specified name and template. A stack set lets you create stacks in AWS accounts across regions by using a single CloudFormation template.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "CreateStackSet"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackSetName",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "Description",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TemplateBody",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TemplateURL",
+                  "value": "<uri>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Parameters",
+                  "value": "{\"ParameterKey\":\"<string>\",\"ParameterValue\":\"<string>\",\"UsePreviousValue\":\"<boolean>\",\"ResolvedValue\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "Parameters",
+                  "value": "{\"ParameterKey\":\"<string>\",\"ParameterValue\":\"<string>\",\"UsePreviousValue\":\"<boolean>\",\"ResolvedValue\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "Capabilities",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Capabilities",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Tags",
+                  "value": "{\"Key\":\"<string>\",\"Value\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "Tags",
+                  "value": "{\"Key\":\"<string>\",\"Value\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "AdministrationRoleARN",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ExecutionRoleName",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "PermissionModel",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "CallAs",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ClientRequestToken",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "872998eb-39ee-4fd7-868f-514f37f27248",
+              "name": "Stack set created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Description",
+                      "value": "A sample description."
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "AdministrationRoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ExecutionRoleName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PermissionModel",
+                      "value": "SERVICE_MANAGED"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <CreateStackSetResult>\n    <StackSetId>500123</StackSetId>\n  </CreateStackSetResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "676ac222-89cf-476c-b2f3-7f5ee7b65a45",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Description",
+                      "value": "A sample description."
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "AdministrationRoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ExecutionRoleName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PermissionModel",
+                      "value": "SERVICE_MANAGED"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "67f1a580-4bf9-4b1d-94da-f871a4f6e6e0",
+              "name": "The resource already exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Description",
+                      "value": "A sample description."
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "AdministrationRoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ExecutionRoleName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PermissionModel",
+                      "value": "SERVICE_MANAGED"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "6d49b930-64af-40ed-b56a-321c5cbf4781",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Description",
+                      "value": "A sample description."
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "CAPABILITY_IAM"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "AdministrationRoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ExecutionRoleName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PermissionModel",
+                      "value": "SERVICE_MANAGED"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ClientRequestToken",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5b356ba2-674a-4c87-a64e-27b68c8292ee",
+          "name": "Describe a Stack Set",
+          "request": {
+            "name": "Describe a Stack Set",
+            "description": {
+              "content": "Returns the description of the specified stack set.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "DescribeStackSet"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackSetName",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "CallAs",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "484eefe8-2b4a-4f06-9e30-58bde5886a3a",
+              "name": "Stack set details returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <DescribeStackSetResult>\n    <StackSet>\n      <StackSetName>example_value</StackSetName>\n      <StackSetId>500123</StackSetId>\n      <Description>A sample description.</Description>\n      <Status>ACTIVE</Status>\n      <TemplateBody>example_value</TemplateBody>\n      <Parameters/>\n      <Capabilities/>\n      <Tags/>\n      <StackSetARN>example_value</StackSetARN>\n      <AdministrationRoleARN>example_value</AdministrationRoleARN>\n      <ExecutionRoleName>example_value</ExecutionRoleName>\n      <PermissionModel>SERVICE_MANAGED</PermissionModel>\n    </StackSet>\n  </DescribeStackSetResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "8808bb6b-0b3a-450a-872d-a2c31670faae",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "08edd756-316e-4d91-ace9-6d1fa6921b9c",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f8b4db4c-4a81-4b32-a5d1-d7b391f0e818",
+          "name": "Update a Stack Set",
+          "request": {
+            "name": "Update a Stack Set",
+            "description": {
+              "content": "Updates the stack set, and associated stack instances in the specified accounts and regions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "UpdateStackSet"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackSetName",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "Description",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TemplateBody",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TemplateURL",
+                  "value": "<uri>"
+                },
+                {
+                  "disabled": false,
+                  "key": "UsePreviousTemplate",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Parameters",
+                  "value": "{\"ParameterKey\":\"<string>\",\"ParameterValue\":\"<string>\",\"UsePreviousValue\":\"<boolean>\",\"ResolvedValue\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "Parameters",
+                  "value": "{\"ParameterKey\":\"<string>\",\"ParameterValue\":\"<string>\",\"UsePreviousValue\":\"<boolean>\",\"ResolvedValue\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "Capabilities",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Capabilities",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Tags",
+                  "value": "{\"Key\":\"<string>\",\"Value\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "Tags",
+                  "value": "{\"Key\":\"<string>\",\"Value\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "RegionConcurrencyType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "RegionOrder",
+                  "value": "[\"<string>\",\"<string>\"]"
+                },
+                {
+                  "disabled": false,
+                  "key": "FailureToleranceCount",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "FailureTolerancePercentage",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "MaxConcurrentCount",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "MaxConcurrentPercentage",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "AdministrationRoleARN",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ExecutionRoleName",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "PermissionModel",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Accounts",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Accounts",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Regions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Regions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "CallAs",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "OperationId",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fac8b582-30a3-4cd7-9d6d-64546026cd11",
+              "name": "Stack set update initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Description",
+                      "value": "A sample description."
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "UsePreviousTemplate",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RegionConcurrencyType",
+                      "value": "SEQUENTIAL"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RegionOrder",
+                      "value": "[\"example_value\"]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "FailureToleranceCount",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "FailureTolerancePercentage",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxConcurrentCount",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxConcurrentPercentage",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "AdministrationRoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ExecutionRoleName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PermissionModel",
+                      "value": "SERVICE_MANAGED"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Accounts",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Regions",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "OperationId",
+                      "value": "500123"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <UpdateStackSetResult>\n    <OperationId>500123</OperationId>\n  </UpdateStackSetResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "8c5bbcaf-2530-4314-a288-c3a7d36bb780",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Description",
+                      "value": "A sample description."
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "UsePreviousTemplate",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RegionConcurrencyType",
+                      "value": "SEQUENTIAL"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RegionOrder",
+                      "value": "[\"example_value\"]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "FailureToleranceCount",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "FailureTolerancePercentage",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxConcurrentCount",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxConcurrentPercentage",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "AdministrationRoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ExecutionRoleName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PermissionModel",
+                      "value": "SERVICE_MANAGED"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Accounts",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Regions",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "OperationId",
+                      "value": "500123"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "e61ffc75-3160-467b-beac-c7a26790bdab",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Description",
+                      "value": "A sample description."
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "UsePreviousTemplate",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RegionConcurrencyType",
+                      "value": "SEQUENTIAL"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RegionOrder",
+                      "value": "[\"example_value\"]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "FailureToleranceCount",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "FailureTolerancePercentage",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxConcurrentCount",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxConcurrentPercentage",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "AdministrationRoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ExecutionRoleName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PermissionModel",
+                      "value": "SERVICE_MANAGED"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Accounts",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Regions",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "OperationId",
+                      "value": "500123"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "a9b8951e-309f-43e7-a224-cf25fddeb093",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Description",
+                      "value": "A sample description."
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateBody",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TemplateURL",
+                      "value": "https://www.example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "UsePreviousTemplate",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Parameters",
+                      "value": "{\"ParameterKey\":\"example_value\",\"ParameterValue\":\"example_value\",\"UsePreviousValue\":true,\"ResolvedValue\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Capabilities",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Tags",
+                      "value": "{\"Key\":\"example_value\",\"Value\":\"example_value\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RegionConcurrencyType",
+                      "value": "SEQUENTIAL"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "RegionOrder",
+                      "value": "[\"example_value\"]"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "FailureToleranceCount",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "FailureTolerancePercentage",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxConcurrentCount",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxConcurrentPercentage",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "AdministrationRoleARN",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ExecutionRoleName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PermissionModel",
+                      "value": "SERVICE_MANAGED"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Accounts",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Regions",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "OperationId",
+                      "value": "500123"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d11f2551-8b4f-4680-88ee-d5975ee0d719",
+          "name": "Delete a Stack Set",
+          "request": {
+            "name": "Delete a Stack Set",
+            "description": {
+              "content": "Deletes a stack set. Before you can delete a stack set, all its member stack instances must be deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "DeleteStackSet"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "StackSetName",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "CallAs",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bd808e64-cf52-48d3-ac7e-97994a256604",
+              "name": "Stack set deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e3560541-6715-4065-86be-ff1f84defe80",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "b608b234-d884-4a2a-87f3-afd992d0608b",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "bd9b33c0-bf1d-4cf1-b0d2-061ad327195a",
+              "name": "Stack set has active instances and cannot be deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "22ad7c9c-c511-492e-a1d1-8670ad5eb336",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "StackSetName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c279dc79-c4ec-4ce5-8fdc-884441b092a8",
+          "name": "List All Stack Sets",
+          "request": {
+            "name": "List All Stack Sets",
+            "description": {
+              "content": "Returns summary information about stack sets in the caller's account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "ListStackSets"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "NextToken",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "MaxResults",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "CallAs",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "adafc906-4087-44e6-9016-63ce32c0e69e",
+              "name": "Stack set summaries returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxResults",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Status",
+                      "value": "ACTIVE"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <ListStackSetsResult>\n    <Summaries>\n      <StackSetName>example_value</StackSetName>\n      <StackSetId>500123</StackSetId>\n      <Description>A sample description.</Description>\n      <Status>ACTIVE</Status>\n      <PermissionModel>SERVICE_MANAGED</PermissionModel>\n      <DriftStatus>DRIFTED</DriftStatus>\n      <LastDriftCheckTimestamp>2026-01-15T10:30:00Z</LastDriftCheckTimestamp>\n    </Summaries>\n    <NextToken>example_value</NextToken>\n  </ListStackSetsResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "a3ce0e3f-b3c3-4fb6-94b8-f7d68cee6713",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxResults",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Status",
+                      "value": "ACTIVE"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "a61556b9-f6dd-4e40-bf24-9909cd1924ca",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxResults",
+                      "value": "10"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Status",
+                      "value": "ACTIVE"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CallAs",
+                      "value": "SELF"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "us-east-1",
+      "key": "region"
+    },
+    {
+      "type": "string",
+      "value": "https://cloudcontrolapi.{{region}}.amazonaws.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9c33ac02-84ea-4f82-8bdc-ecd69f476b89",
+    "name": "AWS Cloud Control Change Sets Stack Sets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.\n\nContact Support:\n Name: AWS Support",
+      "type": "text/plain"
+    }
+  }
+}

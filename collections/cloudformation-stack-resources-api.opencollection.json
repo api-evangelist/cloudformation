@@ -1,0 +1,166 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWS Cloud Control Change Sets Stack Resources API",
+    "version": "2021-09-30"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stack Resources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Describe a Specific Resource in a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DescribeStackResource",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "LogicalResourceId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns a description of the specified resource in the specified stack."
+        },
+        {
+          "info": {
+            "name": "Describe All Resources in a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DescribeStackResources",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "LogicalResourceId",
+                  "value": ""
+                },
+                {
+                  "name": "PhysicalResourceId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns AWS resource descriptions for running or deleted stacks. You must specify a StackName or PhysicalResourceId."
+        },
+        {
+          "info": {
+            "name": "List Resources in a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=ListStackResources",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns descriptions of all resources of the specified stack."
+        },
+        {
+          "info": {
+            "name": "Send a Signal to a Resource in a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=SignalResource",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "LogicalResourceId",
+                  "value": ""
+                },
+                {
+                  "name": "UniqueId",
+                  "value": ""
+                },
+                {
+                  "name": "Status",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Sends a signal to the specified resource with a success or failure status. You can use the SignalResource operation in conjunction with a creation policy or update policy."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWS Cloud Control Change Sets Stack Drift API",
+    "version": "2021-09-30"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stack Drift",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Detect Configuration Drift on a Stack",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DetectStackDrift",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "LogicalResourceIds",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Detects whether a stack's actual configuration differs from its expected configuration as defined in the stack template. Returns a drift detection ID you can use to monitor the progress of the operation."
+        },
+        {
+          "info": {
+            "name": "Check Status of Drift Detection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DescribeStackDriftDetectionStatus",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackDriftDetectionId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns information about a stack drift detection operation. Provides the current status and results of the operation."
+        },
+        {
+          "info": {
+            "name": "Get Drift Information for Stack Resources",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DescribeStackResourceDrifts",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "StackResourceDriftStatusFilters",
+                  "value": ""
+                },
+                {
+                  "name": "NextToken",
+                  "value": ""
+                },
+                {
+                  "name": "MaxResults",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns drift information for the resources that have been checked for drift in the specified stack."
+        },
+        {
+          "info": {
+            "name": "Detect Drift on a Specific Resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloudcontrolapi.{region}.amazonaws.com/?Action=DetectStackResourceDrift",
+            "params": [
+              {
+                "name": "Version",
+                "value": "",
+                "type": "query",
+                "description": "The API version. Fixed to 2010-05-15."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "StackName",
+                  "value": ""
+                },
+                {
+                  "name": "LogicalResourceId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns information about whether a resource's actual configuration differs from its expected configuration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

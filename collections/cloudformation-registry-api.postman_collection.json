@@ -1,0 +1,816 @@
+{
+  "item": [
+    {
+      "id": "1d110702-2b5e-41e0-83af-fbad4274dbaa",
+      "name": "Registry",
+      "description": {
+        "content": "Operations for managing extension types in the CloudFormation Registry.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5db3fa5e-90c7-4751-b53e-ab0eb626d632",
+          "name": "List Available Extension Types in the Registry",
+          "request": {
+            "name": "List Available Extension Types in the Registry",
+            "description": {
+              "content": "Returns summary information about extension types registered in the CloudFormation Registry.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "ListTypes"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "Visibility",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ProvisioningType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Category",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "PublisherId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TypeNamePrefix",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "NextToken",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "MaxResults",
+                  "value": "<integer>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6c43643c-4541-4519-a749-bb62240721af",
+              "name": "Type summaries returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "Visibility",
+                      "value": "PUBLIC"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ProvisioningType",
+                      "value": "NON_PROVISIONABLE"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Type",
+                      "value": "RESOURCE"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Category",
+                      "value": "REGISTERED"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PublisherId",
+                      "value": "500123"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TypeNamePrefix",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxResults",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <ListTypesResult>\n    <TypeSummaries>\n      <Type>RESOURCE</Type>\n      <TypeName>example_value</TypeName>\n      <TypeArn>example_value</TypeArn>\n      <DefaultVersionId>500123</DefaultVersionId>\n      <Description>A sample description.</Description>\n      <LastUpdated>2026-01-15T10:30:00Z</LastUpdated>\n      <PublisherId>500123</PublisherId>\n      <PublisherName>example_value</PublisherName>\n      <IsActivated>true</IsActivated>\n      <OriginalTypeName>example_value</OriginalTypeName>\n      <PublicVersionNumber>example_value</PublicVersionNumber>\n      <LatestPublicVersion>example_value</LatestPublicVersion>\n    </TypeSummaries>\n    <NextToken>example_value</NextToken>\n  </ListTypesResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "63792269-2a40-4ad4-a947-34167d1f5b1d",
+              "name": "The input fails to satisfy the constraints specified by the service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "Visibility",
+                      "value": "PUBLIC"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ProvisioningType",
+                      "value": "NON_PROVISIONABLE"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Type",
+                      "value": "RESOURCE"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Category",
+                      "value": "REGISTERED"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PublisherId",
+                      "value": "500123"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TypeNamePrefix",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxResults",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "38d31a22-5c46-4fe6-bf51-466379b8f9a9",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "Visibility",
+                      "value": "PUBLIC"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ProvisioningType",
+                      "value": "NON_PROVISIONABLE"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Type",
+                      "value": "RESOURCE"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Category",
+                      "value": "REGISTERED"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PublisherId",
+                      "value": "500123"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TypeNamePrefix",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "NextToken",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "MaxResults",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb7356d6-3679-44e0-83c7-3082281982fd",
+          "name": "Describe an Extension Type in the Registry",
+          "request": {
+            "name": "Describe an Extension Type in the Registry",
+            "description": {
+              "content": "Returns detailed information about an extension type registered in the CloudFormation Registry.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "DescribeType"
+                },
+                {
+                  "disabled": false,
+                  "key": "Version",
+                  "value": "2010-05-15",
+                  "description": "(Required) The API version. Fixed to 2010-05-15."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "Type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TypeName",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Arn",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "VersionId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "PublisherId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "PublicVersionNumber",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d849d144-8ad3-44b3-9bb6-aa794e9b1951",
+              "name": "Type details returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "Type",
+                      "value": "RESOURCE"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TypeName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Arn",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "VersionId",
+                      "value": "500123"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PublisherId",
+                      "value": "500123"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PublicVersionNumber",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <DescribeTypeResult>\n    <Arn>example_value</Arn>\n    <Type>example_value</Type>\n    <TypeName>example_value</TypeName>\n    <Description>A sample description.</Description>\n    <Schema>example_value</Schema>\n    <ProvisioningType>example_value</ProvisioningType>\n    <Visibility>example_value</Visibility>\n    <DefaultVersionId>500123</DefaultVersionId>\n    <IsDefaultVersion>true</IsDefaultVersion>\n    <TimeCreated>2026-01-15T10:30:00Z</TimeCreated>\n    <LastUpdated>2026-01-15T10:30:00Z</LastUpdated>\n  </DescribeTypeResult>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "bcb0607f-ccc7-4b80-b1b9-119970c089a2",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "Type",
+                      "value": "RESOURCE"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TypeName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Arn",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "VersionId",
+                      "value": "500123"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PublisherId",
+                      "value": "500123"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PublicVersionNumber",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "205aa924-9e6e-4ca1-a1f8-9a4a438a31b5",
+              "name": "An internal service error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Version",
+                      "value": "2010-05-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "Type",
+                      "value": "RESOURCE"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "TypeName",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Arn",
+                      "value": "example_value"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "VersionId",
+                      "value": "500123"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PublisherId",
+                      "value": "500123"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "PublicVersionNumber",
+                      "value": "example_value"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\nexample_value\n  <RequestId>500123</RequestId>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "AWS region (This can only be one of us-east-1,us-east-2,us-west-1,us-west-2,eu-west-1,eu-west-2,eu-central-1,ap-southeast-1,ap-southeast-2,ap-northeast-1)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "us-east-1",
+      "key": "region"
+    },
+    {
+      "type": "string",
+      "value": "https://cloudcontrolapi.{{region}}.amazonaws.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "91573373-448c-4ea0-a50f-aa625825f255",
+    "name": "AWS Cloud Control Change Sets Registry API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.\n\nContact Support:\n Name: AWS Support",
+      "type": "text/plain"
+    }
+  }
+}
