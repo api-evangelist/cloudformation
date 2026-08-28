@@ -1,0 +1,78 @@
+slug: cloudformation
+provider: AWS CloudFormation
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 7
+edges:
+- tag: Resources
+  spec_file: cloudformation-resources-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: '"Create a New Cloud Resource", "Delete a Cloud Resource", "List Resources of a Specified
+    Type"'
+  reason: CRUDL provisioning of cloud infrastructure resources — this is IT infrastructure management
+    (compute, storage, network, cloud infrastructure).
+- tag: Stacks
+  spec_file: cloudformation-stacks-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: '"Create a New Stack", "Rollback a Stack to a Previous Stable State", "Enable or Disable Termination
+    Protection on a Stack"'
+  reason: Core infrastructure-as-code stack provisioning and lifecycle — cloud infrastructure management.
+- tag: Stack Instances
+  spec_file: cloudformation-stack-instances-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: '"Create Stack Instances in Accounts and Regions", "Delete Stack Instances From a Stack Set"'
+  reason: Provisioning infrastructure stack instances across accounts and regions — cloud infrastructure
+    provisioning.
+- tag: Stack Resources
+  spec_file: cloudformation-stack-resources-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: '"Describe All Resources in a Stack", "Send a Signal to a Resource in a Stack"'
+  reason: Inspection and signalling of provisioned cloud infrastructure resources within stacks.
+- tag: Stack Sets
+  spec_file: cloudformation-stack-sets-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: '"Create a Stack Set", "Update a Stack Set", schema "StackSetOperationPreferences"'
+  reason: Lifecycle management of infrastructure-as-code stack sets deployed across the cloud estate.
+- tag: Stack Drift
+  spec_file: cloudformation-stack-drift-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: '"Detect Configuration Drift on a Stack", schema "StackResourceDrift"'
+  reason: Detecting configuration drift of provisioned cloud infrastructure stacks; infrastructure-as-code
+    state management under IT Infrastructure Management.
+- tag: Templates
+  spec_file: cloudformation-templates-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: '"Validate a Cloudformation Template", "Retrieve a Stack Template"'
+  reason: CloudFormation templates are infrastructure-as-code definitions; retrieval and validation supports
+    cloud infrastructure provisioning.

@@ -2,6 +2,18 @@ name: AWS CloudFormation
 description: >-
   A collection of APIs provided by AWS for infrastructure as code provisioning and management of AWS and third-party
   resources using CloudFormation templates and the Cloud Control API.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -408,6 +420,9 @@ apis:
   - type: APIReference
     url: https://docs.aws.amazon.com/cloudcontrolapi/index.html
 common:
+  - type: CapabilityMap
+    url: capabilities/cloudformation-capability-edges.yml
+    name: AWS CloudFormation Business Capability Map
   - type: AgenticAccess
     url: agentic-access/cloudformation-agentic-access.yml
   - type: TrustCenter
