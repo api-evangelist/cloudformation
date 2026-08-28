@@ -13,8 +13,14 @@ info:
     without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: cloudformationApi
-  url: ../openapi/cloudformation-api.yml
+- name: stackEventsApi
+  url: ../openapi/cloudformation-stack-events-api-openapi.yml
+  type: openapi
+- name: stacksApi
+  url: ../openapi/cloudformation-stacks-api-openapi.yml
+  type: openapi
+- name: templatesApi
+  url: ../openapi/cloudformation-templates-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: safe-stack-update

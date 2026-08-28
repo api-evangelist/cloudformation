@@ -12,8 +12,8 @@ info:
     without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: cloudformationApi
-  url: ../openapi/cloudformation-api.yml
+- name: exportsApi
+  url: ../openapi/cloudformation-exports-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: audit-exports

@@ -13,8 +13,11 @@ info:
     the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: cloudformationApi
-  url: ../openapi/cloudformation-api.yml
+- name: changeSetsApi
+  url: ../openapi/cloudformation-change-sets-api-openapi.yml
+  type: openapi
+- name: stacksApi
+  url: ../openapi/cloudformation-stacks-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: change-set-deploy

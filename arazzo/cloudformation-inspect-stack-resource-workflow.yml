@@ -12,8 +12,11 @@ info:
     without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: cloudformationApi
-  url: ../openapi/cloudformation-api.yml
+- name: stackDriftApi
+  url: ../openapi/cloudformation-stack-drift-api-openapi.yml
+  type: openapi
+- name: stackResourcesApi
+  url: ../openapi/cloudformation-stack-resources-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: inspect-stack-resource

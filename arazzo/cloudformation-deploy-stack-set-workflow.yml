@@ -12,8 +12,11 @@ info:
     read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: cloudformationApi
-  url: ../openapi/cloudformation-api.yml
+- name: stackInstancesApi
+  url: ../openapi/cloudformation-stack-instances-api-openapi.yml
+  type: openapi
+- name: stackSetsApi
+  url: ../openapi/cloudformation-stack-sets-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: deploy-stack-set
