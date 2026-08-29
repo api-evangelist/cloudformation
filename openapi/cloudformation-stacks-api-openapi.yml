@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: AWS Cloud Control Change Sets Stacks API
-  description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
-  version: '2021-09-30'
+  title: AWS CloudFormation Stacks API
+  description: AWS CloudFormation gives you an easy way to model a collection of related AWS and third-party resources, provision them quickly and consistently, and manage them throughout their lifecycles. It uses templates to define stacks of resources and provides API operations for creating, updating, and deleting stacks. The API uses a query-style interface where all operations are submitted as POST requests with an Action parameter.
+  version: '2010-05-15'
   contact:
     name: AWS Support
     url: https://aws.amazon.com/contact-us/
@@ -12,8 +12,8 @@ info:
   x-logo:
     url: https://aws.amazon.com/cloudformation/logo.png
 servers:
-- url: https://cloudcontrolapi.{region}.amazonaws.com
-  description: AWS Cloud Control API Regional Endpoint
+- url: https://cloudformation.{region}.amazonaws.com
+  description: AWS CloudFormation Regional Endpoint
   variables:
     region:
       default: us-east-1
@@ -777,16 +777,113 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    VersionParam:
-      name: Version
-      in: query
-      required: true
-      schema:
-        type: string
-        default: '2010-05-15'
-      description: The API version. Fixed to 2010-05-15.
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+          example: example_value
+        RequestId:
+          type: string
+          example: '500123'
+    StackDriftInformation:
+      type: object
+      required:
+      - StackDriftStatus
+      properties:
+        StackDriftStatus:
+          type: string
+          enum:
+          - DRIFTED
+          - IN_SYNC
+          - UNKNOWN
+          - NOT_CHECKED
+          example: DRIFTED
+        LastCheckTimestamp:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+    StackSummary:
+      type: object
+      required:
+      - StackName
+      - CreationTime
+      - StackStatus
+      properties:
+        StackId:
+          type: string
+          example: '500123'
+        StackName:
+          type: string
+          example: example_value
+        TemplateDescription:
+          type: string
+          example: example_value
+        CreationTime:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        LastUpdatedTime:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        DeletionTime:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        StackStatus:
+          $ref: '#/components/schemas/StackStatus'
+        StackStatusReason:
+          type: string
+          example: example_value
+        ParentId:
+          type: string
+          example: '500123'
+        RootId:
+          type: string
+          example: '500123'
+        DriftInformation:
+          $ref: '#/components/schemas/StackDriftInformation'
+    Tag:
+      type: object
+      required:
+      - Key
+      - Value
+      properties:
+        Key:
+          type: string
+          description: Tag key.
+          minLength: 1
+          maxLength: 128
+          example: example_value
+        Value:
+          type: string
+          description: Tag value.
+          minLength: 0
+          maxLength: 256
+          example: example_value
+    RollbackTrigger:
+      type: object
+      required:
+      - Arn
+      - Type
+      properties:
+        Arn:
+          type: string
+          description: The Amazon Resource Name (ARN) of the rollback trigger.
+          example: example_value
+        Type:
+          type: string
+          description: The resource type of the rollback trigger.
+          example: example_value
     RollbackConfiguration:
       type: object
       properties:
@@ -803,6 +900,32 @@ components:
           minimum: 0
           maximum: 180
           example: 10
+    StackStatus:
+      type: string
+      enum:
+      - CREATE_IN_PROGRESS
+      - CREATE_FAILED
+      - CREATE_COMPLETE
+      - ROLLBACK_IN_PROGRESS
+      - ROLLBACK_FAILED
+      - ROLLBACK_COMPLETE
+      - DELETE_IN_PROGRESS
+      - DELETE_FAILED
+      - DELETE_COMPLETE
+      - UPDATE_IN_PROGRESS
+      - UPDATE_COMPLETE_CLEANUP_IN_PROGRESS
+      - UPDATE_COMPLETE
+      - UPDATE_FAILED
+      - UPDATE_ROLLBACK_IN_PROGRESS
+      - UPDATE_ROLLBACK_FAILED
+      - UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS
+      - UPDATE_ROLLBACK_COMPLETE
+      - REVIEW_IN_PROGRESS
+      - IMPORT_IN_PROGRESS
+      - IMPORT_COMPLETE
+      - IMPORT_ROLLBACK_IN_PROGRESS
+      - IMPORT_ROLLBACK_FAILED
+      - IMPORT_ROLLBACK_COMPLETE
     Stack:
       type: object
       required:
@@ -928,157 +1051,6 @@ components:
         RetainExceptOnCreate:
           type: boolean
           example: true
-    StackDriftInformation:
-      type: object
-      required:
-      - StackDriftStatus
-      properties:
-        StackDriftStatus:
-          type: string
-          enum:
-          - DRIFTED
-          - IN_SYNC
-          - UNKNOWN
-          - NOT_CHECKED
-          example: DRIFTED
-        LastCheckTimestamp:
-          type: string
-          format: date-time
-          example: '2026-01-15T10:30:00Z'
-    StackSummary:
-      type: object
-      required:
-      - StackName
-      - CreationTime
-      - StackStatus
-      properties:
-        StackId:
-          type: string
-          example: '500123'
-        StackName:
-          type: string
-          example: example_value
-        TemplateDescription:
-          type: string
-          example: example_value
-        CreationTime:
-          type: string
-          format: date-time
-          example: '2026-01-15T10:30:00Z'
-        LastUpdatedTime:
-          type: string
-          format: date-time
-          example: '2026-01-15T10:30:00Z'
-        DeletionTime:
-          type: string
-          format: date-time
-          example: '2026-01-15T10:30:00Z'
-        StackStatus:
-          $ref: '#/components/schemas/StackStatus'
-        StackStatusReason:
-          type: string
-          example: example_value
-        ParentId:
-          type: string
-          example: '500123'
-        RootId:
-          type: string
-          example: '500123'
-        DriftInformation:
-          $ref: '#/components/schemas/StackDriftInformation'
-    Tag:
-      type: object
-      required:
-      - Key
-      - Value
-      properties:
-        Key:
-          type: string
-          description: Tag key.
-          minLength: 1
-          maxLength: 128
-          example: example_value
-        Value:
-          type: string
-          description: Tag value.
-          minLength: 0
-          maxLength: 256
-          example: example_value
-    StackStatus:
-      type: string
-      enum:
-      - CREATE_IN_PROGRESS
-      - CREATE_FAILED
-      - CREATE_COMPLETE
-      - ROLLBACK_IN_PROGRESS
-      - ROLLBACK_FAILED
-      - ROLLBACK_COMPLETE
-      - DELETE_IN_PROGRESS
-      - DELETE_FAILED
-      - DELETE_COMPLETE
-      - UPDATE_IN_PROGRESS
-      - UPDATE_COMPLETE_CLEANUP_IN_PROGRESS
-      - UPDATE_COMPLETE
-      - UPDATE_FAILED
-      - UPDATE_ROLLBACK_IN_PROGRESS
-      - UPDATE_ROLLBACK_FAILED
-      - UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS
-      - UPDATE_ROLLBACK_COMPLETE
-      - REVIEW_IN_PROGRESS
-      - IMPORT_IN_PROGRESS
-      - IMPORT_COMPLETE
-      - IMPORT_ROLLBACK_IN_PROGRESS
-      - IMPORT_ROLLBACK_FAILED
-      - IMPORT_ROLLBACK_COMPLETE
-    Parameter:
-      type: object
-      properties:
-        ParameterKey:
-          type: string
-          description: The key associated with the parameter.
-          example: example_value
-        ParameterValue:
-          type: string
-          description: The input value associated with the parameter.
-          example: example_value
-        UsePreviousValue:
-          type: boolean
-          description: Use the existing parameter value during stack updates.
-          example: true
-        ResolvedValue:
-          type: string
-          description: The value that resolves to for SSM parameter types.
-          example: example_value
-    RollbackTrigger:
-      type: object
-      required:
-      - Arn
-      - Type
-      properties:
-        Arn:
-          type: string
-          description: The Amazon Resource Name (ARN) of the rollback trigger.
-          example: example_value
-        Type:
-          type: string
-          description: The resource type of the rollback trigger.
-          example: example_value
-    ErrorResponse:
-      type: object
-      properties:
-        Error:
-          type: object
-          properties:
-            Type:
-              type: string
-            Code:
-              type: string
-            Message:
-              type: string
-          example: example_value
-        RequestId:
-          type: string
-          example: '500123'
     Output:
       type: object
       properties:
@@ -1098,27 +1070,55 @@ components:
           type: string
           description: The name of the export associated with the output.
           example: example_value
+    Parameter:
+      type: object
+      properties:
+        ParameterKey:
+          type: string
+          description: The key associated with the parameter.
+          example: example_value
+        ParameterValue:
+          type: string
+          description: The input value associated with the parameter.
+          example: example_value
+        UsePreviousValue:
+          type: boolean
+          description: Use the existing parameter value during stack updates.
+          example: true
+        ResolvedValue:
+          type: string
+          description: The value that resolves to for SSM parameter types.
+          example: example_value
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2010-05-15'
+      description: The API version. Fixed to 2010-05-15.
   responses:
-    ValidationError:
-      description: The input fails to satisfy the constraints specified by the service.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     InternalError:
       description: An internal service error occurred.
       content:
         application/xml:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    AlreadyExistsError:
-      description: The resource already exists.
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
       content:
         application/xml:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
     NotFoundError:
       description: The specified resource was not found.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    AlreadyExistsError:
+      description: The resource already exists.
       content:
         application/xml:
           schema:

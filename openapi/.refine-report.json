@@ -1,26 +1,15 @@
 {
   "provider": "cloudformation",
   "sources": [
-    "cloudformation-change-sets-api-openapi.yml",
-    "cloudformation-exports-api-openapi.yml",
-    "cloudformation-registry-api-openapi.yml",
-    "cloudformation-request-status-api-openapi.yml",
-    "cloudformation-resources-api-openapi.yml",
-    "cloudformation-stack-drift-api-openapi.yml",
-    "cloudformation-stack-events-api-openapi.yml",
-    "cloudformation-stack-instances-api-openapi.yml",
-    "cloudformation-stack-policies-api-openapi.yml",
-    "cloudformation-stack-resources-api-openapi.yml",
-    "cloudformation-stack-sets-api-openapi.yml",
-    "cloudformation-stacks-api-openapi.yml",
-    "cloudformation-templates-api-openapi.yml"
+    "_original/cloud-control-api.yml",
+    "_original/cloudformation-api.yml"
   ],
   "outputs": [
+    "cloudformation-request-status-api-openapi.yml",
+    "cloudformation-resources-api-openapi.yml",
     "cloudformation-change-sets-api-openapi.yml",
     "cloudformation-exports-api-openapi.yml",
     "cloudformation-registry-api-openapi.yml",
-    "cloudformation-request-status-api-openapi.yml",
-    "cloudformation-resources-api-openapi.yml",
     "cloudformation-stack-drift-api-openapi.yml",
     "cloudformation-stack-events-api-openapi.yml",
     "cloudformation-stack-instances-api-openapi.yml",
@@ -33,6 +22,24 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "cloud-control-api.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "cloudformation-api.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0"
+  ],
+  "skipped": [
+    "cloudformation-change-sets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cloudformation-exports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cloudformation-registry-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cloudformation-request-status-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cloudformation-resources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cloudformation-stack-drift-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cloudformation-stack-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cloudformation-stack-instances-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cloudformation-stack-policies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cloudformation-stack-resources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cloudformation-stack-sets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cloudformation-stacks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cloudformation-templates-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

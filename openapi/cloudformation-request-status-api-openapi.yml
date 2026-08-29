@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: AWS Cloud Control Change Sets Request Status API
+  title: AWS Cloud Control Request Status API
   description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
   version: '2021-09-30'
   contact:
@@ -290,24 +290,9 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    VersionParam:
-      name: Version
-      in: query
-      required: true
-      schema:
-        type: string
-        default: '2021-09-30'
-      description: The API version. Fixed to 2021-09-30.
   responses:
     ThrottlingError:
       description: The request was denied due to request throttling.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    ValidationError:
-      description: The input fails to satisfy the constraints specified by the service.
       content:
         application/json:
           schema:
@@ -318,7 +303,70 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        Message:
+          type: string
+          description: The error message.
+          example: example_value
+        Code:
+          type: string
+          description: The error code.
+          example: example_value
+    HookProgressEvent:
+      type: object
+      description: Represents the progress of a hook invocation.
+      properties:
+        HookTypeName:
+          type: string
+          description: The type name of the hook.
+          example: example_value
+        HookTypeVersionId:
+          type: string
+          description: The version of the hook type.
+          example: '500123'
+        HookTypeArn:
+          type: string
+          description: The ARN of the hook type.
+          example: example_value
+        InvocationPoint:
+          type: string
+          description: The point in the provisioning workflow where the hook runs.
+          enum:
+          - PRE_PROVISION
+          example: PRE_PROVISION
+        HookStatus:
+          type: string
+          description: The status of the hook invocation.
+          enum:
+          - HOOK_IN_PROGRESS
+          - HOOK_COMPLETE_SUCCEEDED
+          - HOOK_COMPLETE_FAILED
+          - HOOK_FAILED
+          example: HOOK_IN_PROGRESS
+        HookEventTime:
+          type: number
+          description: The time the hook event occurred.
+          example: 42.5
+        HookStatusMessage:
+          type: string
+          description: A message about the hook status.
+          example: example_value
+        FailureMode:
+          type: string
+          description: How the hook failure should affect the overall operation.
+          enum:
+          - FAIL
+          - WARN
+          example: FAIL
     ProgressEvent:
       type: object
       description: Represents the current status of a resource operation request.
@@ -398,63 +446,15 @@ components:
           type: number
           description: When to retry the operation (Unix timestamp).
           example: 42.5
-    ErrorResponse:
-      type: object
-      properties:
-        Message:
-          type: string
-          description: The error message.
-          example: example_value
-        Code:
-          type: string
-          description: The error code.
-          example: example_value
-    HookProgressEvent:
-      type: object
-      description: Represents the progress of a hook invocation.
-      properties:
-        HookTypeName:
-          type: string
-          description: The type name of the hook.
-          example: example_value
-        HookTypeVersionId:
-          type: string
-          description: The version of the hook type.
-          example: '500123'
-        HookTypeArn:
-          type: string
-          description: The ARN of the hook type.
-          example: example_value
-        InvocationPoint:
-          type: string
-          description: The point in the provisioning workflow where the hook runs.
-          enum:
-          - PRE_PROVISION
-          example: PRE_PROVISION
-        HookStatus:
-          type: string
-          description: The status of the hook invocation.
-          enum:
-          - HOOK_IN_PROGRESS
-          - HOOK_COMPLETE_SUCCEEDED
-          - HOOK_COMPLETE_FAILED
-          - HOOK_FAILED
-          example: HOOK_IN_PROGRESS
-        HookEventTime:
-          type: number
-          description: The time the hook event occurred.
-          example: 42.5
-        HookStatusMessage:
-          type: string
-          description: A message about the hook status.
-          example: example_value
-        FailureMode:
-          type: string
-          description: How the hook failure should affect the overall operation.
-          enum:
-          - FAIL
-          - WARN
-          example: FAIL
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2021-09-30'
+      description: The API version. Fixed to 2021-09-30.
   securitySchemes:
     AWS_Signature_V4:
       type: apiKey

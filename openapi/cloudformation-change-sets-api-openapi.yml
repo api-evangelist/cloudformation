@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: AWS Cloud Control Change Sets API
-  description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
-  version: '2021-09-30'
+  title: AWS CloudFormation Change Sets API
+  description: AWS CloudFormation gives you an easy way to model a collection of related AWS and third-party resources, provision them quickly and consistently, and manage them throughout their lifecycles. It uses templates to define stacks of resources and provides API operations for creating, updating, and deleting stacks. The API uses a query-style interface where all operations are submitted as POST requests with an Action parameter.
+  version: '2010-05-15'
   contact:
     name: AWS Support
     url: https://aws.amazon.com/contact-us/
@@ -12,8 +12,8 @@ info:
   x-logo:
     url: https://aws.amazon.com/cloudformation/logo.png
 servers:
-- url: https://cloudcontrolapi.{region}.amazonaws.com
-  description: AWS Cloud Control API Regional Endpoint
+- url: https://cloudformation.{region}.amazonaws.com
+  description: AWS CloudFormation Regional Endpoint
   variables:
     region:
       default: us-east-1
@@ -442,6 +442,75 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+          example: example_value
+        RequestId:
+          type: string
+          example: '500123'
+    ResourceChangeDetail:
+      type: object
+      properties:
+        Target:
+          type: object
+          properties:
+            Attribute:
+              type: string
+            Name:
+              type: string
+            RequiresRecreation:
+              type: string
+              enum:
+              - Never
+              - Conditionally
+              - Always
+          example: example_value
+        Evaluation:
+          type: string
+          enum:
+          - Static
+          - Dynamic
+          example: Static
+        ChangeSource:
+          type: string
+          enum:
+          - ResourceReference
+          - ParameterReference
+          - ResourceAttribute
+          - DirectModification
+          - Automatic
+          example: ResourceReference
+        CausingEntity:
+          type: string
+          example: example_value
+    Tag:
+      type: object
+      required:
+      - Key
+      - Value
+      properties:
+        Key:
+          type: string
+          description: Tag key.
+          minLength: 1
+          maxLength: 128
+          example: example_value
+        Value:
+          type: string
+          description: Tag value.
+          minLength: 0
+          maxLength: 256
+          example: example_value
     ChangeSetSummary:
       type: object
       properties:
@@ -505,6 +574,20 @@ components:
         RootChangeSetId:
           type: string
           example: '500123'
+    RollbackTrigger:
+      type: object
+      required:
+      - Arn
+      - Type
+      properties:
+        Arn:
+          type: string
+          description: The Amazon Resource Name (ARN) of the rollback trigger.
+          example: example_value
+        Type:
+          type: string
+          description: The resource type of the rollback trigger.
+          example: example_value
     RollbackConfiguration:
       type: object
       properties:
@@ -540,34 +623,44 @@ components:
           type: string
           description: The value that resolves to for SSM parameter types.
           example: example_value
-    Change:
+    ResourceChange:
       type: object
       properties:
-        Type:
+        Action:
           type: string
           enum:
-          - Resource
-          example: Resource
-        ResourceChange:
-          $ref: '#/components/schemas/ResourceChange'
-    Tag:
-      type: object
-      required:
-      - Key
-      - Value
-      properties:
-        Key:
+          - Add
+          - Modify
+          - Remove
+          - Import
+          - Dynamic
+          example: Add
+        LogicalResourceId:
           type: string
-          description: Tag key.
-          minLength: 1
-          maxLength: 128
-          example: example_value
-        Value:
+          example: '500123'
+        PhysicalResourceId:
           type: string
-          description: Tag value.
-          minLength: 0
-          maxLength: 256
+          example: '500123'
+        ResourceType:
+          type: string
           example: example_value
+        Replacement:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Conditional
+          example: 'True'
+        Scope:
+          type: array
+          items:
+            type: string
+          example: []
+        Details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceChangeDetail'
+          example: []
     ChangeSetDetail:
       type: object
       properties:
@@ -632,109 +725,16 @@ components:
         NextToken:
           type: string
           example: example_value
-    ResourceChangeDetail:
+    Change:
       type: object
       properties:
-        Target:
-          type: object
-          properties:
-            Attribute:
-              type: string
-            Name:
-              type: string
-            RequiresRecreation:
-              type: string
-              enum:
-              - Never
-              - Conditionally
-              - Always
-          example: example_value
-        Evaluation:
-          type: string
-          enum:
-          - Static
-          - Dynamic
-          example: Static
-        ChangeSource:
-          type: string
-          enum:
-          - ResourceReference
-          - ParameterReference
-          - ResourceAttribute
-          - DirectModification
-          - Automatic
-          example: ResourceReference
-        CausingEntity:
-          type: string
-          example: example_value
-    RollbackTrigger:
-      type: object
-      required:
-      - Arn
-      - Type
-      properties:
-        Arn:
-          type: string
-          description: The Amazon Resource Name (ARN) of the rollback trigger.
-          example: example_value
         Type:
           type: string
-          description: The resource type of the rollback trigger.
-          example: example_value
-    ErrorResponse:
-      type: object
-      properties:
-        Error:
-          type: object
-          properties:
-            Type:
-              type: string
-            Code:
-              type: string
-            Message:
-              type: string
-          example: example_value
-        RequestId:
-          type: string
-          example: '500123'
-    ResourceChange:
-      type: object
-      properties:
-        Action:
-          type: string
           enum:
-          - Add
-          - Modify
-          - Remove
-          - Import
-          - Dynamic
-          example: Add
-        LogicalResourceId:
-          type: string
-          example: '500123'
-        PhysicalResourceId:
-          type: string
-          example: '500123'
-        ResourceType:
-          type: string
-          example: example_value
-        Replacement:
-          type: string
-          enum:
-          - 'True'
-          - 'False'
-          - Conditional
-          example: 'True'
-        Scope:
-          type: array
-          items:
-            type: string
-          example: []
-        Details:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceChangeDetail'
-          example: []
+          - Resource
+          example: Resource
+        ResourceChange:
+          $ref: '#/components/schemas/ResourceChange'
   parameters:
     VersionParam:
       name: Version

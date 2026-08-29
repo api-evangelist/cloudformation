@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: AWS Cloud Control Change Sets Stack Resources API
-  description: AWS Cloud Control API provides a uniform set of five API operations to create, read, update, delete, and list (CRUDL) supported cloud resources. It offers a standardized way to manage AWS and third-party resource types available in the CloudFormation Registry, without needing to learn each individual service API. You specify the resource type and a JSON blob of desired state, and Cloud Control API handles the rest.
-  version: '2021-09-30'
+  title: AWS CloudFormation Stack Resources API
+  description: AWS CloudFormation gives you an easy way to model a collection of related AWS and third-party resources, provision them quickly and consistently, and manage them throughout their lifecycles. It uses templates to define stacks of resources and provides API operations for creating, updating, and deleting stacks. The API uses a query-style interface where all operations are submitted as POST requests with an Action parameter.
+  version: '2010-05-15'
   contact:
     name: AWS Support
     url: https://aws.amazon.com/contact-us/
@@ -12,8 +12,8 @@ info:
   x-logo:
     url: https://aws.amazon.com/cloudformation/logo.png
 servers:
-- url: https://cloudcontrolapi.{region}.amazonaws.com
-  description: AWS Cloud Control API Regional Endpoint
+- url: https://cloudformation.{region}.amazonaws.com
+  description: AWS CloudFormation Regional Endpoint
   variables:
     region:
       default: us-east-1
@@ -295,16 +295,51 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    VersionParam:
-      name: Version
-      in: query
-      required: true
-      schema:
-        type: string
-        default: '2010-05-15'
-      description: The API version. Fixed to 2010-05-15.
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        Error:
+          type: object
+          properties:
+            Type:
+              type: string
+            Code:
+              type: string
+            Message:
+              type: string
+          example: example_value
+        RequestId:
+          type: string
+          example: '500123'
+    StackResourceDriftInformation:
+      type: object
+      required:
+      - StackResourceDriftStatus
+      properties:
+        StackResourceDriftStatus:
+          type: string
+          enum:
+          - IN_SYNC
+          - MODIFIED
+          - DELETED
+          - NOT_CHECKED
+          example: IN_SYNC
+        LastCheckTimestamp:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+    ModuleInfo:
+      type: object
+      properties:
+        TypeHierarchy:
+          type: string
+          description: A concatenated list of the module type hierarchy. For modules within other modules the format is Module1::Module2.
+          example: example_value
+        LogicalIdHierarchy:
+          type: string
+          description: A concatenated list of the logical IDs of the module.
+          example: example_value
     StackResource:
       type: object
       required:
@@ -406,59 +441,24 @@ components:
           $ref: '#/components/schemas/StackResourceDriftInformation'
         ModuleInfo:
           $ref: '#/components/schemas/ModuleInfo'
-    StackResourceDriftInformation:
-      type: object
-      required:
-      - StackResourceDriftStatus
-      properties:
-        StackResourceDriftStatus:
-          type: string
-          enum:
-          - IN_SYNC
-          - MODIFIED
-          - DELETED
-          - NOT_CHECKED
-          example: IN_SYNC
-        LastCheckTimestamp:
-          type: string
-          format: date-time
-          example: '2026-01-15T10:30:00Z'
-    ErrorResponse:
-      type: object
-      properties:
-        Error:
-          type: object
-          properties:
-            Type:
-              type: string
-            Code:
-              type: string
-            Message:
-              type: string
-          example: example_value
-        RequestId:
-          type: string
-          example: '500123'
-    ModuleInfo:
-      type: object
-      properties:
-        TypeHierarchy:
-          type: string
-          description: A concatenated list of the module type hierarchy. For modules within other modules the format is Module1::Module2.
-          example: example_value
-        LogicalIdHierarchy:
-          type: string
-          description: A concatenated list of the logical IDs of the module.
-          example: example_value
+  parameters:
+    VersionParam:
+      name: Version
+      in: query
+      required: true
+      schema:
+        type: string
+        default: '2010-05-15'
+      description: The API version. Fixed to 2010-05-15.
   responses:
-    ValidationError:
-      description: The input fails to satisfy the constraints specified by the service.
+    InternalError:
+      description: An internal service error occurred.
       content:
         application/xml:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    InternalError:
-      description: An internal service error occurred.
+    ValidationError:
+      description: The input fails to satisfy the constraints specified by the service.
       content:
         application/xml:
           schema:
