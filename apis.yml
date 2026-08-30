@@ -37,7 +37,7 @@ tags:
   - AWS
   - Cloud Resources
   - IaC
-  - Infrastructure as Code
+  - Infrastructure As Code
   - Stack Management
 tags_raw:
   - Automation
@@ -53,7 +53,7 @@ apis:
   humanURL: https://aws.amazon.com/cloudformation/
   baseURL: https://cloudformation.{region}.amazonaws.com
   tags:
-  - Changesets
+  - Change Sets
   tags_raw:
   - Change Sets
   properties:
